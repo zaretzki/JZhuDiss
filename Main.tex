@@ -1,0 +1,59 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{todonotes}
+
+
+
+%PUT YOUR MACROS HERE
+\input{00-preamble}
+
+\shownotes{1}
+
+% Note that the summary and data sections are needed as a separate documents
+%                by FastLane, so uncommenting each of these generates
+%                each. Leave commented during preparation.
+%\includeonly{summary}
+%\includeonly{description}
+%\includeonly{data}
+
+\begin{document}
+\title{Julia's Disseration}
+\author{Principal Investigator: Julia Zhu \\
+}
+%\maketitle
+\newpage
+
+
+\setcounter{page}{1}
+\include{abstract}
+
+\setcounter{page}{1}
+\include{Introduction}
+
+%%% Budget
+
+%%% Supplementary docs
+\setcounter{page}{1} 
+\include{Chpater 1}
+
+\setcounter{page}{1} 
+\include{Chapter 2}
+
+\setcounter{page}{1}
+\include{Conclusion}
+
+\setcounter{page}{1}
+\bibliographystyle{IEEEtran}   
+\bibliography{bigdatabib}
+
+% \newpage
+% \includepdf[pages=-,pagecommand={\pagestyle{plain}}]{docs/facilities.pdf}
+% 
+% \newpage
+% \includepdf[pages=-,pagecommand={\pagestyle{plain}}]{docs/bios_haileab.pdf}
+% \includepdf[pages=-,pagecommand={\pagestyle{plain}}]{docs/bios_schmidt.pdf}
+% \includepdf[pages=-,pagecommand={\pagestyle{plain}}]{docs/bios_zaretzki.pdf}
+
+\end{document}
