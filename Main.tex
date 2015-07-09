@@ -289,13 +289,13 @@ The right censoring simulation result shows Cox PH model coefficient estimate, b
 	\caption{Right censoring simulation statistics}
 	\begin{tabular}{ccrrrc}
 		\hline
-		\multirow{2}[2]{*}{Models} & \multirow{2}[2]{*}{Events} & \multicolumn{3}{c}{Variable estimate} & \multirow{2}[2]{*}{$-$ loglikelihood} \\ \cline{3-5}
+		\multirow{2}[2]{*}{Models} & \multirow{2}[2]{*}{Events} & \multicolumn{3}{c}{Variable estimate}  \\ \cline{3-5}
 		
 		&       & Age   & Scale & Shape &  \\\hline
-		No Censor & 4000  & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{2.668} & \multicolumn{1}{c}{1.494} & 4127.4 \\
-		25\% Censored & 3000  & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{2.779} & \multicolumn{1}{c}{1.480} & 3446.3 \\
-		50\% Censored & 1999  & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{2.675} & \multicolumn{1}{c}{1.487} & 2574.1 \\
-		75\% Censored & 1000  & \multicolumn{1}{c}{0.026} & \multicolumn{1}{c}{2.643} & \multicolumn{1}{c}{1.539} & 1486.9 \\
+		No Censor & 4000  & \multicolumn{1}{c}{0.0249} & \multicolumn{1}{c}{2.713} & \multicolumn{1}{c}{1.501}  \\
+		25\% Censored & 3000  & \multicolumn{1}{c}{0.0248} & \multicolumn{1}{c}{2.709} & \multicolumn{1}{c}{1.500} \\
+		50\% Censored & 2000  & \multicolumn{1}{c}{0.0246} & \multicolumn{1}{c}{2.673} & \multicolumn{1}{c}{1.506}  \\
+		75\% Censored & 1000  & \multicolumn{1}{c}{0.0247} & \multicolumn{1}{c}{2.706} & \multicolumn{1}{c}{1.502}  \\
 		\hline
 	\end{tabular}%
 	\label{table:rightcensor}%
@@ -321,14 +321,14 @@ Therefore, the left truncation simulation test shows that the Cox PH model perfo
 	\caption{Left truncation simulation statistics}
 	\begin{tabular}{ccccccc}
 		\hline
-		\multirow{2}[4]{*}{Model} & \multirow{2}[4]{*}{Events} & \multicolumn{3}{c}{Variable Estimates} & \multirow{2}{3cm}{$-$ log.Likelihood} & \multirow{2}{3cm}{Predicted Total Failure No.}  \\
+		\multirow{2}[4]{*}{Model} & \multirow{2}[4]{*}{Events} & \multicolumn{3}{c}{Variable Estimates} & \multirow{2}{3cm}{Predicted Total Failure No.}  \\
 		\cline{3-5} % \cline{i-j} partial horizontal line beginning in column i and ending in column j		
 		&       & Age   & Scale & Shape &  &\\				
 		\hline
-		No left Truncation & 4000  & 0.024 & 2.656 & 1.483 & 4167.8  &4005\\
-		25\%  left Truncation & 3000  & 0.023 & 2.620  & 1.501 & 3041.2 & 2992\\
-		50\%  left Truncation & 2000  & 0.023 & 2.664 & 1.504 & 1990.8 & 2051\\
-		75\%  left Truncation & 1000  & 0.025 & 2.748 & 1.539 & 885.55 &2059\\
+		No left Truncation & 4000  & 0.0250 & 2.721 & 1.500  & 4005\\
+		25\%  left Truncation & 3000  & 0.0250 & 2.724  & 1.500  & 2992\\
+		50\%  left Truncation & 2000  & 0.0251 & 2.727 & 1.504  & 2051\\
+		75\%  left Truncation & 1000  & 0.0254 & 2.747 & 1.500  & 2059\\
 		\hline
 	\end{tabular}%
 	\label{tab:lefttruncation}%
