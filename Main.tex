@@ -8,7 +8,7 @@
 \usepackage{float}                      % figure floats
 \usepackage{natbib}                     % this package allows you to link your references
 \usepackage{graphicx}					% graphics package
-\graphicspath{ {figures/}{figures/eps/}{figures/pdf/} }% specify the path where figures are located
+\graphicspath{ {figure/} }
 \usepackage{fancyhdr}                   % fancy headers and footers
 \usepackage{url}                        % nicely format url breaks
 \usepackage[inactive]{srcltx}		 	% necessary to use forward and inverse searching in DVI
@@ -459,56 +459,6 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
 
 The variables tested in the model are payroll, cocscode, division, gender, years of service at hire, age at start, policy, P85 (binary indicator of 85 retirement points) and the interaction term of P85 and A65. We find that gender, cocs code and payroll were not significant predictors in the presence of the other variables. These indicates employees' gender, job types, or working full time or part time does not impact on retirement.
 The statistically significant factors are division, years of service at hire, age at start, policy, P85 and the interaction term of P85 and A65 in the Cox PH model as shown in the table \ref{tab:paraest.}. The reference levels of these variables are division 1, policy at 0, P85 at 0, P85*A65 at 0, 2.75 years of service at hire and 45.59 years of age, which is equal to the average age of the whole population. P85 is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, the hazard ratio is $e^{1.53} = 4.62$.  So the hazard of retirement becomes 4.62 times more likely after the person exceeds 85 points.  While not surprising, this quantification is important in predicting individual and aggregate retirement time.
-
-Another alternative eligibility criteria occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see figure \ref{fig:basepred} (explain).  However, by including an interaction between the Age 65 and points 85 indicator, we can estimate how the impact of reaching 85 points diminishes beyond regular retirement age.  In this case, the interaction term is estimated at -1.59 leading to a decreasing effect of the 85 points criteria to $e^{1.53-1.59} = 0.943$ indicating that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer).
-
-
-Starting age(age at beginning of period).  Naturally
-
-According to our model, retirement can also be influenced by employee's age and their years of service at the time of hiring (YCSH).  The estimates for age are -0.171. As the reference age is 45.49, it means the employee's survival probability is $S(t)^{1.186}(S(t)^{e^{0.171}})$ when the employee started age is one year younger than 45.49,  where $S(t)$ is the baseline survival probability at time t for a reference employee of average age, in the case 45.49 years old at the start of the current interval. The employee's survival probability is $S(t)^{0.843}(S(t)^{e^{-0.171}})$ for every one year increase beyond 45.49 in the employee's starting age. This indicates that at any given age, the employee who starts earlier than 45.49 years old is more likely to retire , because they have more years of service and are much likely to reach retirement requirement (85 points) earlier than the employee who starts at older age. Similar as the years of service, the employee with less than 2.75 years of service when they are hired has negative estimates (-0.019) and lower hazard ratio (0.981). The survival probability is $S(t)^{0.9811}$ for the employee is one year of service less than 2.75. On the other hand, the employee who is hired with more than 2.75 years of service has positive estimates (0.019) and higher hazard ratio (1.019) than those have 2.75 years of service. The survival probability is $S(t)^{1.019}$ for the employee is one year of service more than 2.75. This indicates that the employee who has more years of service are more likely to retire than the employee who has less years of service.
-
-
-Years of service at hire.
-
-%Need significant details about the policy.
-
-\citet{Wang2010} review
-
-In the fiscal year 2008, the employer in the study created a temporary early retirement buyout option. The response window for this option was 3 months although the specific details of this are unknown. In order to deal with the increased level of retirement during this period we including a time dependent indicator variable.  The coefficient for this indicator was 1.252 leading to a hazard ratio of 3.496 which indicates that, on average, an individuals hazard of retirement increased by almost 3.5 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate would be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors(work on this last part - why do we need to include). We further test the policy effect on the employee who are eligible for getting pension. The test results shows the policy had a significant effect for the employee who are eligible for getting the full pension benefit rather than the employee who are eligible for getting partial retirement plan as the interaction term of between policy and points 75 or points 65 are not statistically significant. The hazard ratio for the policy effect on those employee substantially increase to 15.85 from 2.36, which is about seven times of the basic policy effect, after the model adding a interaction term of policy and points 85.
-
-Then, we further test the policy effects on divisions. The test results shows policy have different impact on divisions. Three divisions (2, 4, and 8) are significantly impacted by policy as their p value of interaction term are less than 0.05. The employee in division 2 and 3 are more likely to accept the early retirement incentive. On the other hand, the employee in division 8 are not likely to accept the retirement incentive, since their interaction term estimation is negative, leading the hazard ratio from 3.2 to 2.7.
-
-
-Summarize external
-
-Summarize the predictive capabilities at the individual level.  Strengths and weaknesses.
-
-Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
-
-Three divisions (2, 3, and 9) have negative estimates (-0.969, -0.239, and -3.026) and the hazard ratios lower than 1 (0.380, 0.788, and 0.049). The survival probabilities for the employees in these division are $S(t)^{0.380}, S(t)^{0.788}$, and $S(t)^{0.049}$ adjusting for the other variables, where $S(t)$ is the baseline function or the survival probability for the employee of division 1 at time t. The division 9 have the lowest hazard ratio, which indicates the employee in division 9 are much less likely to retire than division 1. Three divisions (6, 7 and 8) have positive estimates (2.124, 2.434, and 2.360). Two divisions (division 6 and 7) have very high hazard ratio: 8.363 and 11.405. The survival probability for the employee in these two division are $S(t)^{8.363}$ and $S(t)^{11.405}$ adjusting for the other variables, which indicates that the employee in division 6 and division 7 are much more likely to retire than the employee in division 1. The other divisions (4 and 5) are not statistically significant, which indicates that the employee in division 4 and 5 has the similar chance to retire with the employee in the division 1.
-
-
-
-
-
-\item Baseline - describe the features of the baseline maybe use a plot.
-
-The survival function, hazard function, and cumulative hazard function are shown in figure \ref{fig:basepred} as the baseline function. The survival probability is 1 before age 49 as shown in figure \ref{fig:Surv}, which indicates that no employee retire before age at 49. Survival probability starts to slowly decease from age 50 to age 62. The survival probability is around 0.75 for the employee who less than 62 years old, which indicates the employee who is less than 62 years has a probability of 25\% to retire.  The slope of survival function decrease sharply and causes the survival probability steeply decreasing from 0.75 to almost 0 from age 62 to age 70, which indicates the employee are much more likely to retire from age 62 to 70. Accompany with the survival function, the cumulative hazard starts to rise up from age 62 as shown in figure \ref{fig:Cumh}. The trend for hazard function tend to increase by age increasing as shown in figure \ref{fig:Hazard}. The hazard ratio causes the employee retire probability increasing sharply.
-
-\item prediction results
-
-The prediction for the employee retirement is shown in the figure \ref{fig:predict}, table \ref{tab:cocscode} and \ref{tab:division}. The prediction of the model captures the fluctuation of actual retirement, and also captures the peak of the special year 2008 which is the buyout policy of workforce due to budget reduction in the organization as shown in the figure \ref{fig:predict}. The prediction number for holdout years (2011 and 2012) are very close to the actual number, indicates the model performs well. The table \ref{tab:cocscode} and \ref{tab:division} shows the prediction by cocscode (job classification) and division for years, which is the summation of the retire probability by job classification and division, separately. The Cox PH model can also provides the prediction by gender, payroll, and other categories.
-
-
-%\item Employee Profile 1: The employee's pattern for employees retire right away.
-
-%\item Employee Profile 2: The employee's pattern who did not retire after eligible for retirement.
-
-%\item New Chapter: Short term prediction model.  Logistic regression for 1 year on elgible retirees.  Possible prediction?
-
-\end{enumerate}
-
-
 \begin{table}[htbp]
 	\centering
 	\scriptsize
@@ -536,14 +486,46 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 	\end{tabular}%
 	\label{tab:paraest.}%
 \end{table}%
+Another alternative eligibility criteria occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see figure \ref{fig:basepred} (explain).  However, by including an interaction between the Age 65 and points 85 indicator, we can estimate how the impact of reaching 85 points diminishes beyond regular retirement age.  In this case, the interaction term is estimated at -1.59 leading to a decreasing effect of the 85 points criteria to $e^{1.53-1.59} = 0.943$ indicating that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer).
+
+
+Starting age(age at beginning of period).  Naturally
+
+According to our model, retirement can also be influenced by employee's age and their years of service at the time of hiring (YCSH).  The estimates for age are -0.171. As the reference age is 45.49, it means the employee's survival probability is $S(t)^{1.186}(S(t)^{e^{0.171}})$ when the employee started age is one year younger than 45.49,  where $S(t)$ is the baseline survival probability at time t for a reference employee of average age, in the case 45.49 years old at the start of the current interval. The employee's survival probability is $S(t)^{0.843}(S(t)^{e^{-0.171}})$ for every one year increase beyond 45.49 in the employee's starting age. This indicates that at any given age, the employee who starts earlier than 45.49 years old is more likely to retire , because they have more years of service and are much likely to reach retirement requirement (85 points) earlier than the employee who starts at older age. Similar as the years of service, the employee with less than 2.75 years of service when they are hired has negative estimates (-0.019) and lower hazard ratio (0.981). The survival probability is $S(t)^{0.9811}$ for the employee is one year of service less than 2.75. On the other hand, the employee who is hired with more than 2.75 years of service has positive estimates (0.019) and higher hazard ratio (1.019) than those have 2.75 years of service. The survival probability is $S(t)^{1.019}$ for the employee is one year of service more than 2.75. This indicates that the employee who has more years of service are more likely to retire than the employee who has less years of service.
+
+
+Years of service at hire.
+
+%Need significant details about the policy.
+
+\citet{Wang2010} review
+
+In the fiscal year 2008, the employer in the study created a temporary early retirement buyout option. The response window for this option was 3 months although the specific details of this are unknown. In order to deal with the increased level of retirement during this period we including a time dependent indicator variable.  The coefficient for this indicator was 1.252 leading to a hazard ratio of 3.496 which indicates that, on average, an individuals hazard of retirement increased by almost 3.5 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate would be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors(work on this last part - why do we need to include). We further test the policy effect on the employee who are eligible for getting pension. The test results shows the policy had a significant effect for the employee who are eligible for getting the full pension benefit rather than the employee who are eligible for getting partial retirement plan as the interaction term of between policy and points 75 or points 65 are not statistically significant. The hazard ratio for the policy effect on those employee substantially increase to 15.85 from 2.36, which is about seven times of the basic policy effect, after the model adding a interaction term of policy and points 85.
+
+Then, we further test the policy effects on divisions. The test results shows policy have different impact on divisions. Three divisions (2, 4, and 8) are significantly impacted by policy as their p value of interaction term are less than 0.05. The employee in division 2 and 3 are more likely to accept the early retirement incentive. On the other hand, the employee in division 8 are not likely to accept the retirement incentive, since their interaction term estimation is negative, leading the hazard ratio from 3.2 to 2.7.
+
+
+Summarize external
+
+Summarize the predictive capabilities at the individual level.  Strengths and weaknesses.
+
+Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
+
+Three divisions (2, 3, and 9) have negative estimates (-0.969, -0.239, and -3.026) and the hazard ratios lower than 1 (0.380, 0.788, and 0.049). The survival probabilities for the employees in these division are $S(t)^{0.380}, S(t)^{0.788}$, and $S(t)^{0.049}$ adjusting for the other variables, where $S(t)$ is the baseline function or the survival probability for the employee of division 1 at time t. The division 9 have the lowest hazard ratio, which indicates the employee in division 9 are much less likely to retire than division 1. Three divisions (6, 7 and 8) have positive estimates (2.124, 2.434, and 2.360). Two divisions (division 6 and 7) have very high hazard ratio: 8.363 and 11.405. The survival probability for the employee in these two division are $S(t)^{8.363}$ and $S(t)^{11.405}$ adjusting for the other variables, which indicates that the employee in division 6 and division 7 are much more likely to retire than the employee in division 1. The other divisions (4 and 5) are not statistically significant, which indicates that the employee in division 4 and 5 has the similar chance to retire with the employee in the division 1.
+
+\item Baseline - describe the features of the baseline maybe use a plot.
+The baseline survival function and log hazard function are shown in figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in figure \ref{fig:Surv}, which indicates that no employee retire before age at 49. Survival probability starts to slowly decease from age 50 to age 62. The survival probability is around 0.75 for the employee who less than 62 years old, which indicates the employee who is less than 62 years has a probability of 25\% to retire.  The slope of survival function decrease sharply and causes the survival probability steeply decreasing from 0.75 to almost 0 from age 62 to age 70, which indicates the employee are much more likely to retire from age 62 to 70. Accompany with the survival function, the log hazard ratio starts to rise up from age 62 as shown in figure \ref{fig:Hazard}. The trend for hazard function tend to increase by age increasing. The hazard ratio causes the employee retire probability increasing sharply.
 \begin{figure}[h!]
 	\centering
-	\subfloat[Survival function]{\label{fig:Surv}\includegraphics[width=0.35\textwidth]{Surv.png}}
-	\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{Hazard.png}}
-	\subfloat[Cumulative hazard]{\label{fig:Cumh}\includegraphics[width=0.35\textwidth]{Cumh.png}}
+	\subfloat[Survival function]{\label{fig:Surv}\includegraphics[width=0.5\textwidth]{Surv.png}}
+	\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.5\textwidth]{loghazard.png}}
+%	\subfloat[Cumulative hazard]{\label{fig:Cumh}\includegraphics[width=0.35\textwidth]{Cumh.png}}
 	\caption{Baselines with 95\% confident intervals}
 	\label{fig:basepred}
 \end{figure}
+\item prediction results
+
+The prediction for the employee retirement is shown in the figure \ref{fig:predict}, table \ref{tab:cocscode} and \ref{tab:division}. The prediction of the model captures the fluctuation of actual retirement, and also captures the peak of the special year 2008 which is the buyout policy of workforce due to budget reduction in the organization as shown in the figure \ref{fig:predict}. The prediction number for holdout years (2011 and 2012) are very close to the actual number, indicates the model performs well. The table \ref{tab:cocscode} and \ref{tab:division} shows the prediction by cocscode (job classification) and division for years, which is the summation of the retire probability by job classification and division, separately. The Cox PH model can also provides the prediction by gender, payroll, and other categories.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=5in]{retire2.png}
@@ -552,109 +534,124 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 	
 \end{figure}
 
- \begin{table}[htbp]
- 	\centering
- 	\scriptsize
- 	\smallskip
- 	\caption{Predictions by job classification}
- 	\begin{threeparttable}
-     \begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
-     	\hline
-     	Year  &  Crafts & Engineers& General Admin. & Laborers& Managers& Prof. Admin.& Operators& Scientists& Technicians& Total \\
-     	\hline
-     	    	2001  & 23\tnote{1} (16)\tnote{2} & 12 (10) & 4 (1) & 6 (5) & 11 (14) & 10 (9) & 8 (2) & 2 (1) & 4 (4) & 80 (62) \\
-     			2002  & 31 (29) & 15 (16) & 5 (15) & 7 (11) & 15 (26) & 13 (18) & 11 (6) & 2 (1) & 6 (4) & 105 (126) \\
-     			2003  & 37 (26) & 19 (13) & 6 (5) & 9 (6) & 17 (21) & 18 (13) & 16 (15) & 4 (2) & 8 (2) & 134 (103) \\
-     			2004  & 44 (32) & 23 (23) & 8 (9) & 11 (7) & 21 (30) & 23 (25) & 16 (15) & 4 (3) & 10 (6) & 160 (150) \\
-     			2005  & 40 (39) & 24 (17) & 8 (13) & 9 (7) & 20 (27) & 24 (31) & 12 (15) & 3 (4) & 11 (12) & 151 (165) \\
-     			2006  & 31 (58) & 20 (29) & 6 (10) & 8 (9) & 19 (32) & 25 (37) & 9 (13) & 2 (4) & 9 (15) & 129 (207) \\
-     			2007  & 19 (44) & 14 (25) & 7 (9) & 6 (9) & 18 (26) & 27 (40) & 8 (6) & 3 (4) & 7 (6) & 109 (169) \\
-     			2008  & 54 (71) & 30 (33) & 20 (20) & 22 (12) & 64 (63) & 80 (84) & 26 (32) & 6 (7) & 22 (23) & 324 (345) \\
-     			2009  & 16 (14) & 9 (6) & 7 (3) & 7 (7) & 21 (8) & 25 (10) & 8 (11) & 1 (1) & 5 (5) & 99 (65) \\
-     			2010  & 19 (19) & 11 (17) & 9 (1) & 7 (8) & 28 (23) & 34 (16) & 8 (4) & 1 (3) & 7 (3) & 124 (94) \\
-     			2011  & 22 (36) & 13 (25) & 11 (8) & 9 (9) & 34 (27) & 40 (34) & 9 (5) & 2 (1) & 8 (13) & 148 (158) \\
-     			2012  & 24 (29) & 16 (23) & 14 (11) & 12 (10) & 41 (46) & 49 (36) & 12 (4) & 3 (2) & 9 (16) & 180 (177) \\
-          	\hline
-     \end{tabular}%
-     \begin{tablenotes}
-     	\item[1] the number before the parentheses is predicted retirement number.
-     	\item[2] the number inside the parentheses is actual retirement number.
-     \end{tablenotes}
+\begin{table}[h!]
+	\centering
+	\scriptsize
+	\smallskip
+	\caption{Predictions by job classification}
+	\begin{threeparttable}
+		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
+			\hline
+			Year  &  Crafts & Engineers& General Admin. & Laborers& Managers& Prof. Admin.& Operators& Scientists& Technicians& Total \\
+			\hline
+			2001  & 23\tnote{1} (16)\tnote{2} & 12 (10) & 4 (1) & 6 (5) & 11 (14) & 10 (9) & 8 (2) & 2 (1) & 4 (4) & 80 (62) \\
+			2002  & 31 (29) & 15 (16) & 5 (15) & 7 (11) & 15 (26) & 13 (18) & 11 (6) & 2 (1) & 6 (4) & 105 (126) \\
+			2003  & 37 (26) & 19 (13) & 6 (5) & 9 (6) & 17 (21) & 18 (13) & 16 (15) & 4 (2) & 8 (2) & 134 (103) \\
+			2004  & 44 (32) & 23 (23) & 8 (9) & 11 (7) & 21 (30) & 23 (25) & 16 (15) & 4 (3) & 10 (6) & 160 (150) \\
+			2005  & 40 (39) & 24 (17) & 8 (13) & 9 (7) & 20 (27) & 24 (31) & 12 (15) & 3 (4) & 11 (12) & 151 (165) \\
+			2006  & 31 (58) & 20 (29) & 6 (10) & 8 (9) & 19 (32) & 25 (37) & 9 (13) & 2 (4) & 9 (15) & 129 (207) \\
+			2007  & 19 (44) & 14 (25) & 7 (9) & 6 (9) & 18 (26) & 27 (40) & 8 (6) & 3 (4) & 7 (6) & 109 (169) \\
+			2008  & 54 (71) & 30 (33) & 20 (20) & 22 (12) & 64 (63) & 80 (84) & 26 (32) & 6 (7) & 22 (23) & 324 (345) \\
+			2009  & 16 (14) & 9 (6) & 7 (3) & 7 (7) & 21 (8) & 25 (10) & 8 (11) & 1 (1) & 5 (5) & 99 (65) \\
+			2010  & 19 (19) & 11 (17) & 9 (1) & 7 (8) & 28 (23) & 34 (16) & 8 (4) & 1 (3) & 7 (3) & 124 (94) \\
+			2011  & 22 (36) & 13 (25) & 11 (8) & 9 (9) & 34 (27) & 40 (34) & 9 (5) & 2 (1) & 8 (13) & 148 (158) \\
+			2012  & 24 (29) & 16 (23) & 14 (11) & 12 (10) & 41 (46) & 49 (36) & 12 (4) & 3 (2) & 9 (16) & 180 (177) \\
+			\hline
+		\end{tabular}%
+		\begin{tablenotes}
+			\item[1] the number before the parentheses is predicted retirement number.
+			\item[2] the number inside the parentheses is actual retirement number.
+		\end{tablenotes}
+		
+	\end{threeparttable}
+	\label{tab:cocscode}
+\end{table}
 
-    \end{threeparttable}
-     \label{tab:cocscode}
-    \end{table}
+
+% Table generated by Excel2LaTeX from sheet 'Sheet4'
+\begin{table}[h!]
+	\centering
+	\scriptsize
+	\caption{Prediction by division}
+	\begin{threeparttable}
+		\begin{tabular}{clllllllllll}
+			\toprule
+			Year  & \multicolumn{1}{c}{Division1} & \multicolumn{1}{c}{Division2} & \multicolumn{1}{c}{Division3} & \multicolumn{1}{c}{Division4} & \multicolumn{1}{c}{Division5} & \multicolumn{1}{c}{Division6} & \multicolumn{1}{c}{Division7} & \multicolumn{1}{c}{Division8} & \multicolumn{1}{c}{Division9} & \multicolumn{1}{c}{Division10} \\
+			\midrule
+			2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 56 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
+			2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 8 (32) \\
+			2003  & 6 (0) & 1 (0) & 2 (0) & 0 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
+			2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
+			2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 88 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
+			2006  & 19 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
+			2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
+			2008  & 85 (97) & 14 (23) & 51 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 86 (82) \\
+			2009  & 27 (17) & 5 (4) & 15 (21) & 4 (3) & 4 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
+			2010  & 32 (25) & 7 (10) & 19 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
+			2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 34 (23) \\
+			2012  & 42 (36) & 13 (15) & 30 (15) & 9 (3) & 10 (3) & 0 (0) & 0 (0) & 32 (14) & 1 (8) & 41 (15) \\
+			\bottomrule
+		\end{tabular}%
+		\begin{tablenotes}
+			\item[1] the number before the parentheses is predicted retirement number.
+			\item[2] the number inside the parentheses is actual retirement number.
+		\end{tablenotes}
+	\end{threeparttable}
+	\label{tab:division}%
+\end{table}%
 
 
- % Table generated by Excel2LaTeX from sheet 'Sheet4'
- \begin{table}[htbp]
- 	\centering
- 	\scriptsize
- 	\caption{Prediction by division}
- 	\begin{threeparttable}
- 	\begin{tabular}{clllllllllll}
- 		\toprule
- 		Year  & \multicolumn{1}{c}{Division1} & \multicolumn{1}{c}{Division2} & \multicolumn{1}{c}{Division3} & \multicolumn{1}{c}{Division4} & \multicolumn{1}{c}{Division5} & \multicolumn{1}{c}{Division6} & \multicolumn{1}{c}{Division7} & \multicolumn{1}{c}{Division8} & \multicolumn{1}{c}{Division9} & \multicolumn{1}{c}{Division10} \\
- 		\midrule
- 		2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 56 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
- 		2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 8 (32) \\
- 		2003  & 6 (0) & 1 (0) & 2 (0) & 0 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
- 		2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
- 		2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 88 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
- 		2006  & 19 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
- 		2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
- 		2008  & 85 (97) & 14 (23) & 51 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 86 (82) \\
- 		2009  & 27 (17) & 5 (4) & 15 (21) & 4 (3) & 4 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
- 		2010  & 32 (25) & 7 (10) & 19 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
- 		2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 34 (23) \\
- 		2012  & 42 (36) & 13 (15) & 30 (15) & 9 (3) & 10 (3) & 0 (0) & 0 (0) & 32 (14) & 1 (8) & 41 (15) \\
- 		\bottomrule
- 	\end{tabular}%
- 	 \begin{tablenotes}
- 	 	\item[1] the number before the parentheses is predicted retirement number.
- 	 	\item[2] the number inside the parentheses is actual retirement number.
- 	 \end{tablenotes}
- 	 \end{threeparttable}
- 	\label{tab:division}%
- \end{table}%
+%\item Employee Profile 1: The employee's pattern for employees retire right away.
+
+%\item Employee Profile 2: The employee's pattern who did not retire after eligible for retirement.
+
+%\item New Chapter: Short term prediction model.  Logistic regression for 1 year on elgible retirees.  Possible prediction?
+
+\end{enumerate}
+
+
+
+
 
 
 \subsection{Retirement model with external variables}
-     best model and tested which variable does significantly impact on retirement.
-% Table generated by Excel2LaTeX from sheet 'Ecnomic indicator'
+     The economic indicators are tested in the selected model by adding these variables one by one. We found three indicators are statistically significant and also improve the model forecasting due to lower MAPE and $G^2$ than the values of selected model without economic indicator, which are S\&P500, Real Earnings and Wilshire 5000 as shown in table \ref{tab:EI}. Although Real price is also statistically significant, its coefficient estimates is 0.0004 leading hazard ratio is 1, which indicate it does not impact the employee's retirement behaviors. As shown in table \ref{tab:EI}, Real earnings is the most important factor among all the indicators as it has lowest $G^2$. The test results show that it has strong impact on the retire behaviors. Two market indicators(S\&P500 and Wilshire 5000) are both significantly impact the employee retirement behavior with $>1$ hazard ratio, which indicating the employee are more likely to retire when the economics is under good condition. 
 \begin{table}[htbp]
 	\scriptsize
 	\centering
-	\caption{Add caption}
-	\begin{tabular}{L{3cm}llllll}
+	\caption{Economic index test statistics}
+	\begin{threeparttable}
+	\begin{tabular}{L{3cm}lllll}
 		\hline
-		Economic Inidcator & Chi-square  & P-value & Hazard ratio & MAPE  & Training G2 & Holdout G2 \\
+	    Economic Inidcator & Chi-square  & P-value & Hazard ratio & MAPE  & $G^2$ \\
 		\hline
-		Without econmic indicator &       &       &       & 21.31 & 139.43 & 8.0 \\
-		MHP\_NSA & 129.61 & $<.0001$ & 1.020  & 17.84 & 34.21 & 186.45 \\
-		MHP\_SA & 129.52 & $<.0001$ & 1.020  & 17.86 & 34.27 & 187.40 \\
-		SP500 & 13.32 & 0.0003 & 1.001 & 20.79 & 128.34 & 1.50 \\
-		Dividend & 1.04  & 0.3067 & 1.015 & 22.63 & 137.13 & 12.91 \\
-		Earnings & 84.90 & $<.0001$ & 1.016 & 21.40 & 76.48 & 28.58 \\
-		Consumer\_Price\_Index & 5.40  & 0.0201 & 1.013 & 21.36 & 130.98 & 2.59 \\
-		Real\_Price & 5.52  & 0.0188 & 1.000    & 21.22 & 134.96 & 3.76 \\
-		Real\_Dividend & 1.93  & 0.1653 & 1.022 & 23.39 & 136.00 & 18.84 \\
-		Real\_Earnings & 80.36 & $<.0001$ & 1.013 & 20.33 & 80.43 & 14.58 \\
-		Long\_Interest Rate & 1.54  & 0.2147 & 1.082 & 22.0263 & 138.05 & 10.96 \\
-		ES\_MHP\_NSA & 68.06 & $<.0001$ & 1.03  & 23.37 & 69.98 & 108.40 \\
-		ES\_MHP\_SA & 67.87 & $<.0001$ & 1.03  & 23.40 & 70.07 & 109.80 \\
-		unemploy & 32.21 & $<.0001$ & 0.849 & 25.08 & 114.01 & 65.48 \\
-		P\_E10 & 0.04  & 0.8393 & 0.998 & 21.31 & 139.36 & 8.61 \\
-		WILL5000 & 22.39 & $<.0001$ & 1.028 & 20.83 & 120.03 & 1.56 \\
+	Without Econmic indicator &       &       &       & 21.31 & 147.43 \\
+	MHP NSA & 129.614 & $<.001$ & 1.020  & 17.84 & 220.65 \\
+	MHP SA & 129.516 & $<.001$ & 1.020  & 17.86 & 221.66 \\
+	Southeast MHP NSA & 68.055 & $<.001$ & 1.030  & 23.37 & 178.38 \\
+	Southeast MHP SA & 67.871 & $<.001$& 1.030  & 23.40 & 179.87 \\
+	S\&P500 & 13.319 & $<.001$ & 1.001 & 20.79 & 129.83 \\
+	Dividend & 1.045 & 0.307 & 1.015 & 22.63 & 150.03 \\
+	Earnings & 84.895 & $<.001$ & 1.016 & 21.40 & 105.06 \\
+	Consumer Price Index & 5.404 & 0.020 & 1.013 & 21.36 & 133.57 \\
+	Real Price & 5.522 & 0.019 & 1.000     & 21.22 & 138.72 \\
+	Real Dividend & 1.925 & 0.165 & 1.022 & 23.39 & 154.84 \\
+	Real Earnings & 80.358 & $<.001$ & 1.013 & 20.33 & 95.02 \\
+	Long Interest Rate & 1.539 & 0.215 & 1.082 & 22.03 & 149.01 \\
+	Unemployment Rate & 32.212 & $<.001$ & 0.849 & 25.08 & 179.49 \\
+	P E10 & 0.041 & 0.839 & 0.998 & 21.31 & 147.97 \\
+	Wilshire5000 & 22.392 & $<.001$ & 1.028 & 20.83 & 121.58 \\
 		\hline
 	\end{tabular}%
-	\label{tab:addlabel}%
+	\begin{tablenotes}
+		\item[1] it is the selected model without economic indicator.
+	\end{tablenotes}
+\end{threeparttable}
+	\label{tab:EI}%
 \end{table}%
 
 
 \section{Conclusions and Managerial Implications}
-
-
 	\bibliographystyle{abbrvnat}%Choose a bibliograhpic style%
 	\bibliography{Bib}
 \end{document}
