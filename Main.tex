@@ -68,6 +68,18 @@ As a funded research project, a large organizational secondary dataset including
 %this study is to forecast employee turnover in organizational level using time series and individual level using survival analysis, to examine the internal and external factors contributing on employee turnover, to identify why employee turnover, and to measure the effect of human resource policy on employee turnover based on employee demographic dataset.
 
 \section{Literature Review}
+\subsection{impact of employee retirement}
+\subsection{Methods for retirement forecasting}
+\subsection{Survival analysis application}
+Survival analysis is widely used to analyze lifetime data in many areas, such as medical health, business,and reliability area.
+\citet{claus1991} investigated the familial risk of breast cancer in a large population-based, case-control study using recurrent life time analysis. The effect of genotypon the risk of breast cancer is illustrated as a function of a woman's age. The carriers of the allele appear to be at greater risk at all ages compared with non-carriers. And the specific risks is greatest at young ages and declines steadily thereafter. 
+\citet{de1999} applied a parametric mixture model to survival rates of colon cancer patients from the Finnish population-based  cancer registry. The study divided survival into two different components to effectively perform the analysis and to interpret the role of prognostic factors on survival patterns. The studies found that age plays a different role in determining the probability of cure and life expectancy of fatal cases. 
+\citet{lu2002} applied survival analysis techniques to predict customer churn by using data from a telecommunications company. The study helped the companies understand customer churn risk and hazard by predicting which customers will churn and when they will churn. Their study provided a tool for telecommunication companies to make retention plan to reduce the customer churn.
+\citet{braun2011} used a hierarchical competing risks analysis to model when and why customers terminate their service by using the data from a provider of land-based telecommunication services. Their study focused on three mainly causes: value (price), personal, non-pay or abuse. %The data was is divided as two parts calibration and holdout ranging from January 2007 to June, 2008 with right censored. 
+This study provided a tool for assistant market manager to target their customers and to determine retention strategies to prevent or delay the customer churn due to different causes.
+%Technical Literature - predictive models and survival. 
+\citet{carrion2010} estimates the time to failure of the pipes in water supply network dataset under left-truncation and right-censoring (2000-2005) by using the extend Nelson estimator (ESE) developed by Pan and Chappell \citeyearpar{pan1998}. The Cox regression model is applied into the data to identify the factors / covariates which affect the reliability for the water supply network. The result shows that the materials of the water pipe, length, and diameter of the pipe section and road traffic conditions are all significant. %The final model is built and verified by the Cox-snell, Scaled Schonenfeld, {\it dfbeta} and Deviance residuals. 
+%\citet{royston2013} describe validation methods to evaluate Cox regression (prognostic) model performance based on external dataset. The prognostic model are necessary to be evaluated before applying to the medical area. This study built the cox prognostic model by the breast cancer dataset from Roterdam tumor bank and then it provided three levels evaluation to validate the model by the external dataset from German Breast Cancer Study Group: (1) changes in prediction index for the validation dataset, (2) the prediction index for four risk groups combined with Kaplan-Meier curves, and (3) the prediction performance for the four risk groups according to the survival baseline generated from cox regression model. The paper applied seven methods to evaluate the model in validation dataset: prediction index using regression in validation dataset, check model misspecification/fit using offset, using Harell c-index, Gonon \& Heller K and explained variation to measure model discriminations, comparison of Kaplan-Meier curves for four risk groups, log rank or Cox test between risk groups, hazard ratio comparison among four groups, and  the prediction of the mean values and the predicted mean survival curves comparison by Kaplan-Meier curves. The result shows the model also has a reasonable performance in the validation dataset. It proved that these validation methods can be applied in many areas as a tool to evaluate the reliability for cox regression models.
 \section{Data Preparation}
 %objective is to forecast employee retirement and voluntarily quit using statistical model\\
 %1. data description \\
@@ -75,9 +87,12 @@ As a funded research project, a large organizational secondary dataset including
 The turnover dataset is a large real world secondary dataset from a multipurpose research organization in the U.S. The dataset consists 4316 current active and 3782 terminated full-time employees' information including metrics such as payroll category, hired date, company start date, company credit service date, termination date, age at hired , years of service at hired (YCSH), gender, job classification (named as Cocs code), and Organization level (named as division). The company credit service date is the date that the organization starts to credit their retirement plan. Years of service (YCS) is the total years credit for employees' pension plan. The employees are eligible to get a full pension, when their age is at least 65 or their points is greater than 85, which is the sum of age and year of service. Employees have different YCS when they are hired because their YCS can be transferred from their previous job if their previous job also accounts for the pension plan. %Some employees do not have pension plan when they were hired but they got pension later, so their company credit service date was later than hired date.
 Common Occupational Classification System (COCS) code is a standardized code used to describe the job category by the organization for reporting to Common Occupational Classification System. In this study, COCS code is highly correlated with payroll category: managers, engineers, administrative, and scientists are monthly payroll, general administrative and technicians are weekly payroll, the other categories are hourly payroll.
 Organization level code is used to distinguish the departments. In this study, the division in the organization do not stabilize like COCS code for an employee, because the division can be renamed, reduced, or dismissed by the change of production plan or organization's budget. The division is considered as time independent variable for employees due to no historical record for divisions provided by HR department.
+
 The window of time for the turnover dataset is from November 2000 to December 2012, i.e. the dataset consists the records only for the employees working in the organization from November 2000 to December 2012, indicating there is no records for employees leaving the organization before November 2000 and no termination date for 4316 current employees. These two kinds of unknown information cause two kinds of bias: right censor and left truncation. The right censor is due to the no termiation date for current employees, and the left truncation is due to no records for employee leaving before November 2000.
 
-The turnover dataset is split into two datasets: training and holdout dataset. The training part is used to build the model  and the holdout part is to validate the model performance. Two methods are used to slipt the dataset in order to validate the model performance: One is split data by a time point November 1 2010: training (November 1, 2000 - October 31, 2010) and holdout (November 1st, 2010 - December 31, 2012). The other on is to random split the turnover dataset into 2/3 of the dataset as training and 1/3 of the dataset as holdout. %Age of employees is used to build the model as dependent variable rather than the length of service time in the organization. The age is calculated based on two time points: start age and leaving age. Start age is the age of an employee at hired in the organization, or the age at November 1st 2000, when the employee was hired before November 1st, 2000; leaving age is the age at the date who left the organization or the age at October 31st 2010, if the employee was still working in the organization at that time which are treated as censored data.
+In the organization, all the employees hired before January 2012 are eligible for define benefit retirement plan. That organization started to use 401k retirement plan for part of new employees from January 2012. The two requirements for getting the full define benefit retirement plan are either a employee is at least 65 years old, or their points reach 85. The points is the summation of age and credit years of service.
+
+%The turnover dataset is split into two datasets: training and holdout dataset. The training part is used to build the model  and the holdout part is to validate the model performance. Two methods are used to slipt the dataset in order to validate the model performance: One is split data by a time point November 1 2010: training (November 1, 2000 - October 31, 2010) and holdout (November 1st, 2010 - December 31, 2012). The other on is to random split the turnover dataset into 2/3 of the dataset as training and 1/3 of the dataset as holdout. %Age of employees is used to build the model as dependent variable rather than the length of service time in the organization. The age is calculated based on two time points: start age and leaving age. Start age is the age of an employee at hired in the organization, or the age at November 1st 2000, when the employee was hired before November 1st, 2000; leaving age is the age at the date who left the organization or the age at October 31st 2010, if the employee was still working in the organization at that time which are treated as censored data.
 The covariates identified from the turnover dataset and used to build the models are payroll, gender, division, cocs code (Job category), age at hired, and year of service at hired:
 \begin{itemize}
 	\item Payroll (PR): hourly, weekly, or monthly payroll,
@@ -190,7 +205,7 @@ An alternative for handling nonproportional hazards is stratification.  A strati
 where $z$ represents the grouping variable, and $h^z\sigma_0(t)$ is a baseline hazard based for stratam z and $\beta_i$ are common effects of covariates ac. Note that the strata covariates cannot be the covariates in the Cox PH model.
 
 %II. how to select a stratify variable\\
-The proportional hazard assumption can be tested using Schoenfeld residuals which works even if the model includes time-dependent covariates; see \citet{allison2010,collett1994}. An alternative is to test the interaction between time-dependent and time-independent covariates in the Cox PH model. The assumption is valid if the interaction is not statistically significant ($P>0.05$).  Including a stratified covariate, when appropriate, can improve the Cox model's performance.  The C-statistic is used to compare models with and without stratification with a higher C value indicating a better model \citep{lemke2012}.
+The proportional hazard assumption can be tested using Schoenfeld residuals which works even if the model includes time-dependent covariates; see \citet{allison2010,collett2015}. An alternative is to test the interaction between time-dependent and time-independent covariates in the Cox PH model. The assumption is valid if the interaction is not statistically significant ($P>0.05$).  Including a stratified covariate, when appropriate, can improve the Cox model's performance.  The C-statistic is used to compare models with and without stratification with a higher C value indicating a better model \citep{lemke2012}.
 
 \subsection{Competing risks}
 %  what is competing risks. competing ricks can help forecasting employee retirement and voluntary quit. \\
@@ -355,19 +370,7 @@ The predicted events in the sixth column is the total predicted failure number c
 	\label{tab:right2}%
 \end{table}%
 
-%\begin{table}[htbp]
-%	\centering
-%	\includegraphics[width=7in]{Table1.pdf}
-%	\caption{Table}
-%	\label{table:3}
-%\end{table}
 
-%\begin{figure}[htbp]
-%		\centering
-%		\includegraphics[width=5in]{Fig7-1}
-%		\caption{Actual vs. predicted failure number with various censoring}
-%		\label{fig:7}
-%\end{figure}
 \begin{figure}[h!]
 	\centering
 	\subfloat[No right censor ]{\label{fig:baseno}\includegraphics[width=3in]{base0.png}}
@@ -446,14 +449,57 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
 
 % Table generated by Excel2LaTeX from sheet 'Sheet6'
 
-\subsection{Retirement model without external variables}
 
 
+\subsection{Data pattern/Descriptive Analysis}
 \begin{enumerate}
-
 
 \item Descriptive Analysis - number of females, histograms of age ranges by division, min and max, means.  summary() and hist(age~division) in R.
 
+Data descriptive statistics for categorical variables are shown in table \ref{tab:descriptive} by count and percentage. 
+Two histograms of employees' retired age and points are plotted as shown in figure \ref{fig:hist}. 
+Age 62 is the peak of the histogram (\ref{fig:age}), indicating that age 62 is the most frequently retiring age. The histogram also shows most retired employees retired before 70 years old. 
+
+The point 85 is the highest frequency in retired employees as shown in figure \ref{fig:point}. Because 85 points is one of the requirements to get full defined benefit, most employees retired after they reaching 85 points.  
+
+\begin{table}[htbp]
+	\centering
+	\scriptsize
+	\caption{Descriptive Statistics}
+	\begin{tabular}{lll||lll}
+		\toprule
+		& Count & N \%  &       & Count & N \% \\
+		\midrule
+		\textbf{Cocscode} &       &       & \textbf{Gender} &       &  \\
+		C     & 1295  & 16.0\% & F     & 2296  & 28.4\% \\
+		E     & 1361  & 16.8\% & M     & 5802  & 71.6\% \\
+		G     & 574   & 7.1\% & \textbf{Division} &       &  \\
+		L     & 613   & 7.6\% & divison1 & 1542  & 19.0\% \\
+		M     & 1178  & 14.5\% & divison2 & 751   & 9.3\% \\
+		P     & 1621  & 20.0\% & divison3 & 1042  & 12.9\% \\
+		R     & 595   & 7.3\% & divison4 & 369   & 4.6\% \\
+		S     & 208   & 2.6\% & divison5 & 398   & 4.9\% \\
+		T     & 652   & 8.1\% & divison6 & 1199  & 14.8\% \\
+		Missing & 1     & 0.0\% & divison7 & 302   & 3.8\% \\
+		\textbf{Payroll} &       &       & divison8 & 823   & 10.2\% \\
+		Hourly & 2503  & 30.9\% & divison9 & 404   & 5.0\% \\
+		Monthly & 4369  & 54.0\% & divison10 & 1268  & 15.7\% \\
+		Weekly & 1226  & 15.1\% &       &       &  \\
+		\bottomrule
+	\end{tabular}%
+	\label{tab:descriptive}%
+\end{table}%
+
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[]{\label{fig:age}\includegraphics[width=0.5\textwidth]{Agetdhist.png}}
+	\subfloat[]{\label{fig:point}\includegraphics[width=0.5\textwidth]{pointdhist.png}}
+	%\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{loghazard.png}}
+	\caption{Histogram of Age and point at retire}
+	\label{fig:hist}
+\end{figure}
+\subsection{Retirement model without external variables}
 \item Set up - what are the reference groups for the categorical variables.  Division 1 is the reference group with hazard ratio as 1. Two divisions (6 and 7) have very high hazard ratio: 8.363 and 11.405, which indicates that the employee in division 6 and division 7 are much more likely to retire than the division 1.
 \item Practical Significance \& Interpretations.  Provide Hazard ratios and change in survival functions related to each variable/parameter.  Explain what the parameters mean.
 
@@ -673,12 +719,8 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 \end{enumerate}
 
 
-
-
-
-
 \subsection{Retirement model with external variables}
-  Because the previous model cannot account for the time changing features of the economic indicators, we use a new counting process model with yearly interval based on calendar year to test their effects on retirement. This model has the similar parameter estimation as the selected model as shown in the right part of the table \ref{tab:paraest.}. We found three indicators are statistically significant and also improve the model forecasting due to lower MAPE and $G^2$ than the values of selected model without economic indicator, which are S\&P500, Real Earnings and Wilshire 5000 as shown in table \ref{tab:EI}. Although Real price is also statistically significant, its coefficient estimates is 0.0004 leading hazard ratio is 1, which indicate it does not impact the employee's retirement behaviors. As shown in table \ref{tab:EI}, Real earnings is the most important factor among all the indicators as it has lowest $G^2$. The test results show that it has strong impact on the retire behaviors. Two market indicators(S\&P500 and Wilshire 5000) are both significantly impact the employee retirement behavior with $>1$ hazard ratio, which indicating the employee are more likely to retire when the economics is under good condition. 
+  Because the previous model cannot account for the time varying features of the economic indicators, we use a new counting process model with yearly interval based on calendar year to test their effects on retirement. This model has the similar parameter estimation as the selected model as shown in the right part of the table \ref{tab:paraest.}. We found three indicators are statistically significant and also improve the model forecasting due to lower MAPE and $G^2$ than the values of selected model without economic indicator, which are S\&P500, Real Earnings and Wilshire 5000 as shown in table \ref{tab:EI}. Although Real price is also statistically significant, its coefficient estimates is 0.0004 leading hazard ratio is 1, which indicate it does not impact the employee's retirement behaviors. As shown in table \ref{tab:EI}, Real earnings is the most important factor among all the indicators as it has lowest $G^2$. The test results show that it has strong impact on the retire behaviors. As shown in figure \ref{fig:real}, the fluctuation of retirement plot is corresponding with 1 year lag of the trend of Real earnings. Unadjusted Monthly Housing Price (MHP) is another influential index with the lowest MAPE value. It has significantly impacts on the retire number as it increases as shown in figure \ref{fig:MHP}. However, the retire number does not decrease coinciding with the decreasing of MHP. Two market indicators(S\&P500 and Wilshire 5000) are both significantly impact the employee retirement behavior with $>1$ hazard ratio, which indicating the employee are more likely to retire when the economics is under good condition. 
 \begin{table}[htbp]
 	\scriptsize
 	\centering
@@ -688,7 +730,7 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 		\hline
 	    Economic Inidcator & Chi-square  & P-value & Hazard ratio & MAPE  & $G^2$ \\
 		\hline
-	Without Econmic indicator &       &       &       & 21.31 & 147.43 \\
+	Without Econmic indicator\tnote{1} &       &       &       & 21.31 & 147.43 \\
 	MHP NSA & 129.614 & $<.001$ & 1.020  & 17.84 & 220.65 \\
 	MHP SA & 129.516 & $<.001$ & 1.020  & 17.86 & 221.66 \\
 	Southeast MHP NSA & 68.055 & $<.001$ & 1.030  & 23.37 & 178.38 \\
@@ -712,9 +754,20 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 \end{threeparttable}
 	\label{tab:EI}%
 \end{table}%
-
+\begin{figure}[h!]
+	\centering
+	\subfloat[Monthly Housing Price]{\label{fig:MHP}\includegraphics[width=0.5\textwidth]{MHP.png}}
+	\subfloat[Real Earnings]{\label{fig:Real}\includegraphics[width=0.5\textwidth]{realearnings.png}}
+	%\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{loghazard.png}}
+	\caption{Economic indicators and retirement prediciting plot}
+	\label{fig:EIndex}
+\end{figure}
 
 \section{Conclusions and Managerial Implications}
+
+
+
+
 	\bibliographystyle{abbrvnat}%Choose a bibliograhpic style%
 	\bibliography{Bib}
 \end{document}
