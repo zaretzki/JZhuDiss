@@ -102,7 +102,7 @@ However, until now, little has been done in the area of human resources.   While
 
 
 
-\subsection{Survival analysis application}
+\subsection{Survival analysis applications}
 As discussed above survival analysis is widely used to analyze lifetime data in many areas, particularly in the health care and engineering areas.  These method have been applied to thousands of epidemiological studies retrospective biomedical studies, and clinical trials over the past 40 years. provide a detailed review of the methodology.  For example, \citet{claus1991} investigated the familial risk of breast cancer in a large population-based, case-control study using recurrent life time analysis and found that the risks of breast cancer are a function of women's age.  \citet{KleinMoesch2006} provide a thorough book length overview of the methods and include specific case studies focused on medical applications.
 %\citet{de1999} applied a parametric mixture model to survival rates of colon cancer patients from the Finnish population-based  cancer registry and found that age plays a different role in determining the probability of cure and life expectancy of fatal cases.
 Survival analysis is also widely used in reliability area. For example, \citet{carrion2010} estimates the time to failure of the pipes in water supply network dataset under left-truncation and right-censoring by using the extend Nelson estimator \citep{pan1998}.  Book length treatments of these methods in engineering applications include \citet{lawless2002,Meeker1997}.
@@ -157,23 +157,28 @@ Beyond employee level information, we also investigate the potential impact of e
 \section{Model Development and Evaluation}
 This study aims to develop accurate predictive models of retirement and quitting behavior. The model will be used to address several key questions:
 \begin{enumerate}
-\item How accurately can retirement(quitting) be predicted? 
-\item What factors indicate an individual is more likely to retire(quit)? 
-\item Which external economic factors are most predictive of retirement or quitting? 
+\item How accurately can retirement(quitting) be predicted?
+\item What factors indicate an individual is more likely to retire(quit)?
+\item Which external economic factors are most predictive of retirement or quitting?
 \item What is the magnitude  of impact of an Early Retirement Incentive Programs (ERIP)?
 \item How do the tenure and age impact retirement?
 \item How many employees will retire(quit) next year by occupational category and division?
 \end{enumerate}
 
-%In developing a model for this we must account for the presence of biases due to missing %data. both right censoring and left truncation existing in the dataset. 
+%In developing a model for this we must account for the presence of biases due to missing %data. both right censoring and left truncation existing in the dataset.
 
  Survival or lifetime data analysis is methodology that is used to study the distribution of time that it takes for a subject from a population to experience an event such as mechanical failure, death or recovery. Survival regression models relate aspects of the lifetime distribution such as the hazard function to a linear function of explanatory variables.  Statistical survival models are often separated into two categories: parametric survival models and semi-parametric proportional hazards (PH) models or Cox models. In this study, the Cox PH model is employed to build predictive models of retirement and quitting, to estimate a employees' baseline hazard of retirement or quitting, and to identify significant factors that may impact turnover. The parametric models are not appropriate for this study for several reasons. First, it is unlikely that hazards for events like retirement would match common parametric distributions such as weibull or log-normal since the risk should stay close to zero until the usual range of retirement at which time it spikes and then drops quickly again.  Furthermore, as mentioned in the introduction, the sampling scheme used in this data involved several biases, which can most easily be adjusted for using the Cox PH model. A third advantage of the cox model is the ability to incorporate time dependent covariates in the model. In the case of the current model these are required to incorporate the impact of a 2008 early retirement intervention promotion (ERIP) in the organization, as well as examining the effects of two retirement key variables and outside economic indicators. A special version of the model known as the competing risks analysis is applied for modeling a population which can experience two types of events, in this case employee retirement and voluntary quitting. In addition to the model fitting, a simulation study is performed to examine the impact of data bias on the forecasting capability of Cox proportional hazard model.
  %There are several reasons for employee leaving the organization: retirement, voluntary quit, layoff, transferring, leave of absence, or death. In this study, retirement and voluntary quit are selected and modelled respectively using competing risks analysis.
+
+
+Procedure was:
+identify biases and appropriate model Cox PH with competing risks: left truncation, right censoring, competing risks.  Identified response variable is age vs. years of service.  then we time varying covariates along with response and need for baseline meant that we needed to use the counting process approach.  Then we wanted to evaluate predictive accuracy so we used a holdout and identfied metrics for evaluating that.  Testing PH assumption and used stratification.
+
  \subsection{Missing data biases: right censoring and left truncation}
  % what is right censor, how to deal with right censor\\
  % what is left truncation how to deal with left truncation\\
  Right censoring and left truncation are both commonly observed forms of missing data in survival analysis data sets. In the current, the study window is from November 2000 to December 2012 as shown in the figure \ref{fig:1}.  Anyone that was an active employee during this period has their complete record included in the dataset whether or not their tenure began or ended outside of the study window.  Conversely, those employees whose tenure ended before the study window or for whom the start date occurred after the study window ended are not included in the study.
- 
+
  \begin{figure}[htbp]
  	\centering
  	\includegraphics[width=3.5in]{fig1.png}
@@ -181,7 +186,7 @@ This study aims to develop accurate predictive models of retirement and quitting
  	\label{fig:1}
  \end{figure}
   Let $T_i$ be the time at which the $i^th$ individual experiences the event of interest and let $C_i$ denote the final time at which the individual is observed. An observation is called {\it right censored} if $T_i> C_i$, indicating that actual event time for the individual  is not recorded but is only known to be greater than $C_i$. Thus, employees that are currently active at the end of the observation window are right censored. These right censored observations do contain information, although incomplete, about a subjects lifetime and require special treatment in order to draw proper inference.
- 
+
  \begin{align*}
  	\delta_i&=
  	\begin{cases}
@@ -191,61 +196,63 @@ This study aims to develop accurate predictive models of retirement and quitting
  \end{align*}
  where, $i$ denotes the ith observation, and the failure time of event for ith observation is minimum time between $t_i$ and $c_i$, i.e., $min(t_i, c_i)$, that is when $ c_i <t_i $, $c_i$ is taken as end time of the ith observation in order to do next  analysis.
 
- Left truncation is another interesting artifact of the window sampling scheme. Let $T$ again denote the time that the event of interest occurs and let $X$ denotes the time an individual enters the study. Only the individuals with $T \geq X$ are observed in the study window.  Those individuals with $T \leq X$ are referred to as left truncated because they cannot be included in this study based on the sampling window as shown in the figure \ref{fig:1}. Left truncation exaggerates the number of longer life individuals leading to a biased sample. To see this consider Figure \ref{fig:1}. The longest arrow represents a life span for an employee hired in 1950 and retiring in 2006. While this employee and any in his cohort that are still active are in the sample, others that began in 1950 but retired in 1998, for example, are not. Hence, because of the sampling window approach the longer someone continues working, the more likely they are to appear in our dataset.  We therefore see an overabundance of longer lived individuals in our data.  The presence of left truncation and the associated bias in the data must be taken into account to achieve accurate estimation of survival analysis \citep{carrion2010}. 
- 
+ Left truncation is another interesting artifact of the window sampling scheme. Let $T$ again denote the time that the event of interest occurs and let $X$ denotes the time an individual enters the study. Only the individuals with $T \geq X$ are observed in the study window.  Those individuals with $T \leq X$ are referred to as left truncated because they cannot be included in this study based on the sampling window as shown in the figure \ref{fig:1}. Left truncation exaggerates the number of longer life individuals leading to a biased sample. To see this consider Figure \ref{fig:1}. The longest arrow represents a life span for an employee hired in 1950 and retiring in 2006. While this employee and any in his cohort that are still active are in the sample, others that began in 1950 but retired in 1998, for example, are not. Hence, because of the sampling window approach the longer someone continues working, the more likely they are to appear in our dataset.  We therefore see an overabundance of longer lived individuals in our data.  The presence of left truncation and the associated bias in the data must be taken into account to achieve accurate estimation of survival analysis \citep{carrion2010}.
+
  %Let $t_{i0}$ denotes the start time of the ith observation, i.e., hired time or age at %hired of ith employee, $x_{i}$ denotes the entry time of the ith observation, i.e., the %start time of study (November 1st, 2000) or age at November 1st, 2000. The start time of %the observation is maximum value between $t_{i0}$ and $x_i$, that is when $t_{i0} < x_i %$, $x_i$ is taken as start time of the ith observation in order to eliminate the left %truncation bias \citep{allison1995}. The number of failures in the $t_j$ is redefined for %left truncation. When $x_i < t_j \le t_i$, the observation is in the risk set. When %$t_{j} < x_i \le t_i$, the ith observation has not entered study yet at $t_j$ and it %cannot be considered in the risk set. When $x_i \le t_i < t_j$, it indicates the ith %observation whose failure time before $t_j$, and it cannot be considered in the risk set %at time $t_j$ neither \citep{carrion2010}.
 
 % simulation study.
 
 \subsection{Cox PH regression model}
 %   1. what is cox ph regression model.
-Cox proportional hazards (PH) regression is a widely used method for estimating survival life events, introduced in a seminal paper by \citet{cox1972}. The Cox PH model is usually taken the form of hazard model formula as shown in the equation \ref{eq:cox}:
+The Cox proportional hazards (PH) regression model is the most widely used method for modelling lifetime data. The model was introduced in a seminal paper by \citet{cox1972}, one of the most cited papers in history. The Cox PH model is the canonical example of the semi-parametric family of models, specifying a parametric form for the effect of effect of the covariates on an unspecified baseline hazard rate which is estimated non-parametrically.
+
+The form of hazard model formula as shown in the equation \ref{eq:cox}:
    \begin{equation}
    \label{eq:cox}
    h(t,x)=h_0(t)e^{(\sum_{i=1}^{k}\beta_ix_i)}
    \end{equation}
 
-   where $x=(x_1, x_2, \ldots, x_k)$, $h_0(t)$ is the baseline hazard occurring when $x=0$, $\beta$ is the coefficients of $x$.
+   where $x_i=(x_i1, x_i2, \ldots, x_ik)$ are characteristics of individual $i$, $h_0(t)$ is the baseline hazard, and $\beta$  is a vector of regression coefficients.
 %    why not parametric. baseline cannot fit to any parametric model\\
 %    2. cox regression without/ with time dependent variable\\
 %Stuff
-   The model provides a hazard expression at time t for an individual with a given specification of a set of explanatory variables denoted by the $x$. The Cox PH formula is the product of quantities at hazard time $t$: $h_0 (t)$ as the baseline hazard function and the exponential expression to the linear combination of $\beta_i x_i$, $x$ does not involve time $t$, so it is time-independent variables. $x$ can also be time-dependent variables, which named extended Cox PH regression as discussed in the section \ref{sec:coxt}. The key assumption for Cox PH regression model is proportion hazards. However, Cox regression can handle non proportional hazards using time-dependent variable or stratification.
+   The model provides an estimator of the hazard at time t for an individual with a given set of explanatory variables denoted by $x_i$.  In the standard Cox model, the linear combination $\sum_{i=1}^{k}\beta_i x_i$, is not a function of time $t$, and is called time-independent.  If $x_i(t)$ is a function of time the model is called the extended Cox model and is discussed in Section \ref{sec:coxt}. A key assumption for the model is the proportional hazards assumption. Proportional hazards assumes that explanatory factors have a strictly multiplicative impact on the hazard function so that different groups maintain a constant hazard ratio at all times. However, Cox regression can be extended to handle non proportional hazards using time-dependent variables or stratification; see \cite{kleinMosch2006}.
+
    The Cox PH regression is "robust" and popular, because the baseline hazard function $h_0 (t)$ is an unspecified function and its estimation can closely approximate correct parametric model \citep{kleinbaum1998}. Taking the logarithm of both sides of the equation, the Cox PH model is rewritten in the equation \ref{eq:coxlog}:
    \begin{equation}
    \label{eq:coxlog}
    \log{h(t,x)}=\alpha(t)+\sum_{i=1}^{k}\beta_ix_i
    \end{equation}
-   where $\alpha(t)=\log{h_0(t)}$. If $\alpha(t)=\alpha$, the baseline is exponential distribution. In the Cox PH regression, $\alpha(t)$ do not limited on specific parametric distributions and it can take any form. The partial likelihood method is used to estimated $\beta$ coefficients of the Cox model without having to specify the baseline \citep{allison1995}. The Cox PH model is conducted by SAS.
+   where $\alpha(t)=\log{h_0(t)}$. If $\alpha(t)=\alpha$ i.e. constant, then the model reduces to the exponential distribution. As noted earlier, the general Cox PH model puts no restrictions on $\alpha(t)$.  The partial likelihood method is used to estimate the model parameters. The partial likelihood is estimated b baseline \citep{allison1995}.
 
 
-\subsection{Time dependent variable and counting process}
+\subsection{Time dependent variables and counting process}
 \label{sec:coxt}
-A time dependent variable is that a variable is not constant through the whole study and its value changes over the course of the study. The extended Cox PH regression model incorporates both time-independent and time-dependent variables as shown in the equation \ref{eq:timecovar}:
+ Some explanatory variable values change over the course of the study. The extended Cox PH regression is a modification of the model that incorporates both unchanging time-independent variables as well as variables that change with time or time-dependent variables,
 \begin{equation}
 \label{eq:timecovar}
 h(t,x)=h_0(t)e^{(\sum_{i=1}^{k_1}\beta_ix_i+\sum_{j=1}^{k_2}\gamma_jx_j(t))}
 \end{equation}
-where $x=(x_1, x_2, \ldots, x_{k_1}, x_1(t), x_2(t), \ldots, x_{k_2}(t))$, $h_0(t)$ is the baseline hazard occurring when $x=0$, $\beta$ and $\gamma$ are the coefficients of $x$.
-There are four time dependent variables in this study: {\it policy}, {\it P85}, {\it A65} and economic indicators. Policy is to handle the ERIP issued in January 2008 with three months response time window to accommodate a voluntary reduction in force from the organization.
+where $x=(x_1, x_2, \ldots, x_{k_1}, x_1(t), x_2(t), \ldots, x_{k_2}(t))$, $h_0(t)$ is the baseline hazard occurring when $x=0$, $\beta$ and $\gamma$ are the coefficients of $x$. In order to fit this model, a modification of the partial likelihood is required and we often present the data set in a format called the {\it counting process} format in order to facilitate this calculation.  
 
-{\bf citation about ERIP}
+The current study considers four internal time dependent variables that are functions of the individuals characteristics. {\it Policy} is a a variable that indicates a specific time during the study window, part of the 2008 calendar year, when the organization offered an early retirement incentive program(ERIP); see \citp{Methods of ERIP}.  It is time varying in the sense that it occurs at a different age for each individual in the study population and is set at 0 during the period when no program exists and 1 during the period when the program does exist. The variable {\it P85}, an indicator that an employee has amassed 85 service points, the sum of their years of service and age, and qualifies for full retirement benefits, and {\it A65}, an indicator that an employee qualifies for retirement by exceeding the age 65 threshold, are two additional time varying variables that capture important changes in individuals hazard level throughout the study.
 
-Policy is a dummy variable across years:
-\begin{align*}
-Policy&=
-\begin{cases}
-1   &\text{if employee works in year 2008,}\\
-0   &\text{if  employee does not work in year 2008.}
-\end{cases}
-\end{align*}
+%Policy is a dummy variable across years:
+%\begin{align*}
+%Policy&=
+%\begin{cases}
+%1   &\text{if employee works in year 2008,}\\
+%0   &\text{if  employee does not work in year 2008.}
+%\end{cases}
+%\end{align*}
 
 %What is counting process.   \\
-Counting process method in SAS programming statements is used to handle time dependent variables, which is each employee have multiple records. Each record is related to a time interval and the variables in this record remain constant.
-Therefore, Each employee has up to 3 records: before 2008, in-between 2008, and after 2008 to handle variable policy. Age are used for repenting two time terminals of each interval or record. For age, one time point is age at beginning of the certain period, named "age at start"; and the other one is age at end of the curtain period, named "age at end".
+The counting process format allows software packages to handle time dependent variables, by creating multiple intervals for each employee.  Each interval is defined so that the time varying variables are constant within the interval.
+For example, for an individual that remained active until the end of the study and that achieved 85 points in December 2003, exceeded age 65 in December 2007, and received a retirement incentive in the 2008 calendar year, our study would include 5 records for the individual, November 2000 - November 2003, December 2003 - November 2007, December 2007, Jan 2008-December 2008, and Jan 2009 - December 2012, which is the end of the study. 
 
-$P85$ and $A65$ are two time dependent dummy variables, representing two retirement requirements for achieving full define benefit: points 85 and age at 65. These two variables also split the three time intervals into two parts: age before reaching point 85 and age after reaching point 85 or age younger than 65 and age equal or older than 65.
+Economic indicators represent another form of time dependent variables.  These are referred to as external variables because they depend upon factors external to the employee.  In models considering economic variables, monthly observations of economic indicators are aggregated at the yearly level leading to a larger number of time periods in the counting process format.  The economic variables are included at a one year lag since it is assumed that retirement and quitting decisions are made a significant time in advance of the actual event and therefore depend on older values of these indicators.  Importantly, using lagged quantities allows the model to be used for forecasting for a 12 month period since these numbers will be known at the time of forecast.
 
-Economic indicators is another time dependent variables. Because economic indicators are fluctuated across the year, all the employees have up to 12 years records based on the calender year, which interval starts from hired date or January 1, and ends at terminated date or December 31 of certain year during the study window as shown in equation \ref{eq:interval}. The economic indicators are taken the average value for each year into the optimal model identified from the internal variables to examine their impacts on turnover.
+The start and end points of each interval are given in the definitions below.
 \begin{equation}
 \label{eq:interval}
 \begin{split}
@@ -257,72 +264,81 @@ min(\text{terminated date}, \text{December 31 of a certain year}))
 
 \subsection{Stratification model}
 %I. what is stratification model;\\
-An alternative for handling nonproportional hazards is stratification.  A stratified model allows each subgroup of data as defined by a grouping variable to have its own baseline hazard while sharing parameters for other variables across. If the proportional hazards assumption holds within these subgroups then this model allows us to get valid common estimates of variable effects using all of the observations. Equation \ref{eq:strata} below represents the hazard function for strata {\it z};
+When the proportional hazards assumption fails there are several alternative approaches to capturing observed hazard patterns. One approach for handling nonproportional hazards is stratification.  A stratified model contains a separate baseline hazard for each subgroup defined by the analyst while allowing shared effects of other factors. If the proportional hazards assumption holds within these subgroups then this model allows us to get valid common estimates of variable effects using all of the observations. Equation \ref{eq:strata} below represents the hazard function for strata {\it z};
 \begin{equation}
 	\label{eq:strata}
 	h(t,x,z)=h^z_0(t)e^{(\sum_{i=1}^{k}\beta_ix_i)}
 \end{equation}
-where $z$ represents the grouping variable, and $h^z\sigma_0(t)$ is a baseline hazard based for stratam z and $\beta_i$ are common effects of variables ac. Note that the strata variables cannot be the variables in the Cox PH model.
+where $z$ represents one level of the grouping variable $Z$, $h^z\sigma_0(t)$ is a baseline hazard for this individual subgroup and $\beta_i$ are constant effects of variables across all strata. Note that a variable cannot be used as both a stratification variable and a constant effect in the Cox PH model.
 
 %II. how to select a stratify variable\\
-The proportional hazard assumption can be tested using Schoenfeld residuals which works even if the model includes time-dependent variables; see \citet{allison2010,collett2015}. An alternative is to test the interaction between time-dependent and time-independent variables in the Cox PH model. The assumption is valid if the interaction is not statistically significant ($P>0.05$).  Including a stratified variable, when appropriate, can improve the Cox model's performance.  The C-statistic is used to compare models with and without stratification with a higher C value indicating a better model \citep{lemke2012}.
+\subsection{Testing the PH Assumption}
+ Three common approaches areavailable for testing the validity of the proportional hazard assumption: The first approach is to investigate the Schoenfeld residuals. A second alternative is to test the interaction between time-dependent and time-independent variables in the Cox PH model. The PH assumption is valid if the interaction is not statistically significant ($P>0.05$). Finally, including separate baseline hazards for each strata defined by the analyst can also capture variation in changes of the hazard rate. See \citet{allison2010,collett2015} for more details on these tests.
+ 
+%Including a stratified variable, when appropriate, can improve the Cox model's %performance.  The C-statistic is used to compare models with and without %stratification with a higher C value indicating a better model \citep{lemke2012}.
 
 \subsection{Competing risks}
 %  what is competing risks. competing ricks can help forecasting employee retirement and voluntary quit. \\
 %  why select these two reasons to model.\\
-  A competing risk is an event whose occurrence either precludes the occurrence of the event of interest or fundamentally alters the probability of occurrence of this event of interest \citep{tableman2003}. For example, turnover causes of an employee are exclusive and independent, i.e. an employee can experience only one event such as voluntary quit rather than retirement. This alters the probability of experiencing the event of interest, like retirement. Such events are known as competing risks events where one event of several different types of possible events can occur and hence the survival analysis for each event is calculated separately with the other events set as censored. Two mutually exclusive causes: retirement and voluntary quit are considered as the event of interests for each employees in this study, and the other events are treat as censored.
+  One of the many nuances observed within this data set is the fact that currently employees can leave employment in several mutually exclusive ways.  These include leaving due to quitting voluntarily, being laid off, dismissed for cause, transferred, retired, or being unable to continue due to disability or death. A competing risk is an event whose occurrence either precludes the occurrence of the event of interest or fundamentally alters the probability of occurrence of this event of interest \citep{tableman2003}.  A competing risks model is a common approach when studying a single mode of leaving such as retirement if subjects at risk may also exit through an alternative mode such as quitting.  In the current study, when considering retirement as the event of interest and voluntary quitting as a competing risk, all observations are initially included in the study and outcomes that end in a quitting event are treated as censored which allows their observed work period to be used informatively.
+% \ref{eq:competing}:
+%  \begin{equation}
+%  \label{eq:competing}
+%  h_j(t,x)=h_{j0}(t)e^{(\sum_{i=1}^{k}\beta_{ij}x_i)}
+% \end{equation}
+%  where, $x_{j}$ is the variable for a specific type of turnover. Note that the %coefficient $\beta$ is the effects of the variables may be different from different %turnover types. If $\beta_{ij}$  is the same for all j, the model simplified to Cox %PH model as shown in equation \ref{eq:cox}.
 
-  There are several reasons for selecting retirement. One main reason is because the organization are interested in forecasting the turnover of retirement. There are $1/3$  employees in that organization are over 50 years old who are eligible for retirement. And, some other reasons of turnover, such as layoff, transfer, death, or disability are caused by the factors which occurrence are random and hard to predict. The Cox PH regression for competing risks as shown in equation \ref{eq:competing}:
-  \begin{equation}
-  \label{eq:competing}
-  h_j(t,x)=h_{j0}(t)e^{(\sum_{i=1}^{k}\beta_{ij}x_i)}
-  \end{equation}
-  where, $x_{j}$ is the variable for a specific type of turnover. Note that the coefficient $\beta$ is the effects of the variables may be different from different turnover types. If $\beta_{ij}$  is the same for all j, the model simplified to Cox PH model as shown in equation \ref{eq:cox}.
 
+\subsection{Variable Selection and Model Choice}
+In the current study two equivalent time measurements were considered as response variables for modelling, {\it age} in years and {\it years of service}.  Because of the inclusion of time varying explanatory variables, and the need to estimate the baseline hazard for purposes of forecasting, the data must be formulated as a counting process , see Section \ref{cp}.  After some consideration, age was considered the better option for analysis because the more condensed distribution of values allows more accurate estimates of the baseline. 
 
-\subsection{Variable selection}
-All the variables are putting into Cox PH regression model and selected by manually backwards selection method based on $P<0.05$.  The variable selection procedure is as follow: first, all the variables are used to build the model. Second, remove the non-significant variable ($P>0.05$) with the largest P value, and rerun the model with the other variables. Then, repeat the second step until there is no significant variable remaining in the model.
+The model selection initiated by considering gender, dept, age, and other time independent variables as well as policy, p85, and A65.  We removed non-significant variables using the criteria that p-values should be less than $.05$ and starting with the largest p-value first, i.e. backwards selection.  This continued until only statistically significant variables remained.  We also tested stratifying the baseline using occupational code, which did not improve the model. Finally we tested external time varying covariates, which capture economic factors, one at a time and noted the impact on model performance.[MAY NEED A BETTER SUMMARY OF MODELS COMPARED]
+
+%All the variables were then included in the Cox PH regression model and selected by %manually backwards selection method based on $P<0.05$.  The variable selection procedure is as follow: first, all the variables are used to build the model. Second, remove the non-significant variable ($P>0.05$) with the largest P value, and rerun the model with the other variables. Then, repeat the second step until there is no significant variable remaining in the model.
 \subsection{Model evaluation and comparison}
 %\subsubsection{Measurements}
 %AIC, BIC, MAPE, c statistic.\\
 
-The Cox PH model is evaluated by four statistics criteria:  Akaike’s information (AIC), Schwartz’s Bayesian criterion (SBC), mean absolute percentage value (MAPE) and $G^2$. The optimal model should have low AIC, SBC, MAPE, and $G^2$ value for both training and holdout dataset. In this study, the model performance on holdout dataset is considered more important than that on the training dataset.  AIC and SBC are both information criteria using likelihood value. Usually, the best model comes with lowest AIC or SBC values. AIC, SBC values are automatically generated by the models.
+In order to evaluate the models considered in this study, the data were first split into two sets, a training set containing all of the observations from years 2000-2010 and a testing set containing events on the same individuals that occurred in calendar years 2011 and 2012. The testing (holdout) sample was included to get an accurate measure of how well the model would forecast beyond the observed data.  Because the testing data set is not included in the model fitting process, this out of sample evaluation provides a better estimate of predictive accuracy, see \ref{Applied Predictive Modeling 2013th Edition} for further discussion of this approach;
+
+All of the fitted models considered in this study are first evaluated by four statistical criteria:  Akaike’s Information Criterion (AIC), Schwartz’s Bayesian Criterion (SBC), mean absolute percentage error (MAPE) and likelihood based goodness of fit $G^2$. Ideally, the optimal model should minimize the values of AIC, SBC, MAPE, and $G^2$ when fit to the training data. In this study, the model performance on holdout dataset is considered more important than that on the training dataset.  
+AIC and SBC both assess model fit by balancing a larger likelihood value with a penalty that increases with the number of variables included.  The inclusion of the penalty term diminishes the potential for over-fitting \citep{Allison2010,Hosmer2013}. These measures are generated automatically by the model fitting process.
 
 %C-statistics or the area under the receiver operating characteristic (ROC) curve is to test whether the probability of predicting the outcome is better than chance. It ranges from 0.5 to 1.  Models are considered acceptable when the C-statistic is higher than 0.7 \citep{hosmer2013}. C-statistics are calculated by using the predicted failure probability compared with the actual outcomes by SAS proc logistic.
-The predicted failure (retirement) probability is actually the conditional failure probability for an employee at time $t_j$, given that the employee is active at time $t_{j-1}$. It is calculated based on the baseline and coefficients from Cox PH models for both training and holdout dataset as shown in equation \ref{eq:prob}.
+In order to asses predictive measures such as MAPE and $G^2$ we first predict the probability of the event of interest, e.g. retirement, for each active individual during each calendar year of the training or testing data set.  For each employee, we compute the conditional probability of the event occurring between time $t_j$ and $t_{j-1}$, given that the employee is active at time $t_{j-1}$. It is calculated using the baseline hazard and coefficients from Cox PH models as shown in Equation \ref{eq:prob} below
 \begin{equation}
 \label{eq:prob}
 \begin{split}% to allgin the equation
-P\{t_{j-1}<T<t_j\} &=1-P\{T>t_j|T \ge t_j\}\\
-&=1-\frac{S_{t_j}}{S_{t_{j-1}}}   \\
-&=1-\frac{{S_0(t_j)}^{(\sum_{i=1}^{k}\beta_ix_i)}}{   {S_0(t_{j-1})}^{(\sum_{i=1}^{k}\beta_ix_i)}}
+P\{t_{j-1}<T_k<t_j\\ T_i>t_{j-1}} &=1-P\{T_k>t_j|T_k \ge t_j\}\\
+&=1-\frac{S_k(t_j)}{S_k(t_{j-1})}   \\
+&=1-\frac{{S_0(t_j)}^{(\sum_{i=1}^{p}\beta_ix_i)}}{   {S_0(t_{j-1})}^{(\sum_{i=1}^{p}\beta_ix_i)}}
 \end{split}
 \end{equation}
-where, $T$ is survival time, $t_j$ is a specific value for $T$, $S_0(t)$ is the baseline function generated by Cox PH model, $x$ is the variables, and $\beta$ is the coefficient.
+where, $T_k$ is survival time of the $k_th$ individual , $t_j$ is a specific time value, $S_k(t) = {S_0(t_j)}^{(\sum_{i=1}^{p}\beta_ix_i)}$ is the survival function for the kth individual, $S_0(t)$ is the baseline function generated by Cox PH model, $x_i$ are the individual explanatory variables, and $\beta_i$ are the respective regression coefficients for the variables.
 
-MAPE is another measure for comparing the accuracy of the model fitting between different forecast models since it measures relative performance \citep{chu1998} as shown in the equation \ref{eq:mape}.
+MAPE is common measure for computing the accuracy of predictions from a forecast model and is often used to compare models since it measures relative performance \citep{chu1998}. MAPE is calculated as the average percent deviation of a forecast from the actual observation, 
 \begin{equation}
 	\label{eq:mape}
 	MAPE=\sum_{t=1}^{n}\left | \frac{y_t-\hat{y_t}}{y_t} \right |\frac{1}{n}\%
 \end{equation}
-MAPE is calculated by using the yearly actual and predicted retirement number as $y_t$ and $\hat{y_t}$, respectively.
-The predicted retirement or voluntary quit number is the expected retirement or voluntary number summarized by aggregating all the failure probabilities for the active employees in the risk set at $t_j$ as shown in \ref{eq:expturnover}.
-\begin{equation}
-\label{eq:expturnover}
-E(\text{turnover number at } t_j)=\sum_{i=1}^k{P_i\{t_{j-1}<T<t_j\}}
-\end{equation}
-where, $i$ denotes the ith employee.
+.  Our implementation of MAPE for retirement predictions used the yearly actual and predicted numbers of retirements number as $y_t$ and $\hat{y_t}$. The predicted yearly retirement number, $\hat{y_t}$,  is the expected retirement count for a particular year and is computed as the sum of conditional probabilities given by Equation \ref{eq:prob} over currently active employees.  This follows from the fact that the probability of each employee retiring can be viewed as an independent Bernoulli random variable.
 
-$G^2$ is another criteria to evaluate the model prediction performance. The calculation takes the form as shown in the equation \ref{eq:g2} \citep{simonoff2013},
+%\begin{equation}
+%\label{eq:expturnover}
+%E(\text{turnover number at } t_j)=\sum_{i=1}^k{P_i\{t_{j-1}<T<t_j\}}
+%\end{equation}
+%where, $i$ denotes the ith employee.
+
+Although less common in forecasting, $G^2$ is another useful criteria for evaluating model prediction for dichotomous events \citep{Simonoff2002}. The calculation takes the form,
 \begin{equation}
 \label{eq:g2}
 G^2=2\sum_{t}[y_t\log{(\frac{\bar{p_t}}{\hat{p_t}}})+ (n_t-y_t)\log{(\frac{1-\bar{p_t}}{1-\hat{p_t}}})]
 \end{equation}
-where, $y_t$ is the number of employees retired in year $t$, $n_t$ is the workforce number in year $t$, $\bar{p_t}={y_t}/{n_t}$, and $\hat{p_t}={\hat{y_t}}/{n_t} $.
+where, $y_t$ is the number of employees retired in year $t$, $n_t$ is the workforce number in year $t$, $\bar{p_t}={y_t}/{n_t}$ is the observed proportion of events, and $\hat{p_t}={\hat{y_t}}/{n_t} $ is the model predicted number of events.  Small values of $G^2$ indicate close agreement of observed and predicted numbers of events.
 
 
 %%%%%%% need some explain for traing and holdout mape%%%%%%%%%%%
-The logistic regression and time series moving average methods are also employed to compare with the  performance of Cox PH regression model by MAPE value and $G^2$.
+%The logistic regression and time series moving average methods are also employed to %ompare with the  performance of Cox PH regression model by MAPE value and $G^2$.
 %The evaluation step is to calculate the yearly predicted turnover number for training and holdout dataset, and then compared the predicted number with the actual number.
 
 
