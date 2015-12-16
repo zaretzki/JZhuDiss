@@ -1,0 +1,186 @@
+\begin{thebibliography}{29}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Allison(1995)]{allison1995}
+P.~D. Allison.
+\newblock Survival analysis using the sas system: A practical guide. cary,
+  north carolina: Sas institute, 1995.
+
+\bibitem[Allison(2010)]{allison2010}
+P.~D. Allison.
+\newblock \emph{Survival analysis using SAS: A practical guide}.
+\newblock Sas Institute, 2010.
+
+\bibitem[Berger and Chen(1993)]{berger1993}
+J.~O. Berger and M.-H. Chen.
+\newblock Predicting retirement patterns: Prediction for a multinomial
+  distribution with constrained parameter space.
+\newblock \emph{The Statistician}, pages 427--443, 1993.
+
+\bibitem[Braun and Schweidel(2011)]{braun2011}
+M.~Braun and D.~A. Schweidel.
+\newblock Modeling customer lifetimes with multiple causes of churn.
+\newblock \emph{Marketing Science}, 30\penalty0 (5):\penalty0 881--902, 2011.
+
+\bibitem[Briggs(2014)]{briggs2015}
+T.~Briggs.
+\newblock Survival analysis for predicting employee turnover.
+\newblock
+  \url{http://www.slideshare.net/twbriggs/survival-analysis-for-predicting-employee-turnover},
+  November 2014.
+\newblock Accessed on 10/29/2015.
+
+\bibitem[Brostr{\"o}m(2012)]{brostrom2012}
+G.~Brostr{\"o}m.
+\newblock eha: Event history analysis. r package version 2.0-7, 2012.
+
+\bibitem[Carri{\'o}n et~al.(2010)Carri{\'o}n, Solano, Gamiz, and
+  Deb{\'o}n]{carrion2010}
+A.~Carri{\'o}n, H.~Solano, M.~L. Gamiz, and A.~Deb{\'o}n.
+\newblock Evaluation of the reliability of a water supply network from
+  right-censored and left-truncated break data.
+\newblock \emph{Water resources management}, 24\penalty0 (12):\penalty0
+  2917--2935, 2010.
+
+\bibitem[Chu(1998)]{chu1998}
+F.-L. Chu.
+\newblock Forecasting tourist arrivals: nonlinear sine wave or arima?
+\newblock \emph{Journal of Travel Research}, 36\penalty0 (3):\penalty0 79--84,
+  1998.
+
+\bibitem[Claus et~al.(1991)Claus, Risch, and Thompson]{claus1991}
+E.~Claus, N.~Risch, and W.~Thompson.
+\newblock Genetic analysis of breast cancer in the cancer and steroid hormone
+  study.
+\newblock \emph{American journal of human genetics}, 48\penalty0 (2):\penalty0
+  232, 1991.
+
+\bibitem[Collett(2015)]{collett2015}
+D.~Collett.
+\newblock \emph{Modelling survival data in medical research}.
+\newblock CRC press, 2015.
+
+\bibitem[Cox(1972)]{cox1972}
+P.~R. Cox.
+\newblock \emph{Life Tables}.
+\newblock Wiley Online Library, 1972.
+
+\bibitem[{Federal Housing Finance Agency}(2015)]{HPI}
+{Federal Housing Finance Agency}.
+\newblock Monthly purchase-only indexes.
+\newblock
+  \url{http://www.fhfa.gov/DataTools/Downloads/Pages/House-Price-Index-Datasets.aspx},
+  2015.
+\newblock Accessed: 2015-01-30.
+
+\bibitem[Hosmer et~al.(2013)Hosmer, Lemeshow, and Sturdivant]{hosmer2013}
+D.~W. Hosmer, S.~Lemeshow, and R.~X. Sturdivant.
+\newblock \emph{Applied logistic regression (3rd Edition)}.
+\newblock New York, NY, USA: John Wiley \& Sons, 2013.
+
+\bibitem[IBM(2013)]{IBM}
+IBM.
+\newblock Hr analytics: Invest in your most valuable asset with hr analytics.
+\newblock
+  \url{http://www-01.ibm.com/software/analytics/solutions/operational-analytics/hr-analytics/},
+  December 2013.
+\newblock Accessed on 10/29/2015.
+
+\bibitem[Kacmar et~al.(2006)Kacmar, Andrews, Van~Rooy, Steilberg, and
+  Cerrone]{kacmar2006}
+K.~M. Kacmar, M.~C. Andrews, D.~L. Van~Rooy, R.~C. Steilberg, and S.~Cerrone.
+\newblock Sure everyone can be replaced… but at what cost? turnover as a
+  predictor of unit-level performance.
+\newblock \emph{Academy of Management Journal}, 49\penalty0 (1):\penalty0
+  133--144, 2006.
+
+\bibitem[Kleinbaum(1998)]{kleinbaum1998}
+D.~G. Kleinbaum.
+\newblock Survival analysis, a self-learning text.
+\newblock \emph{Biometrical Journal}, 40\penalty0 (1):\penalty0 107--108, 1998.
+
+\bibitem[Lane et~al.(1986)Lane, Looney, and Wansley]{Lane1986}
+W.~R. Lane, S.~W. Looney, and J.~W. Wansley.
+\newblock An application of the cox proportional hazards model to bank failure.
+\newblock \emph{Journal of Banking \& Finance}, 10\penalty0 (4):\penalty0
+  511--531, 1986.
+
+\bibitem[LeClere(2005)]{leclere2005}
+M.~J. LeClere.
+\newblock Preface modeling time to event: Applications of survival analysis in
+  accounting, economics and finance.
+\newblock \emph{Review of Accounting and Finance}, 4\penalty0 (4):\penalty0
+  5--12, 2005.
+
+\bibitem[Lemke(2012)]{lemke2012}
+K.~Lemke.
+\newblock Building a predictive model for 30-day inpatient readmission using
+  proc phreg.
+\newblock \emph{NESUG.org}, page~13, 2012.
+
+\bibitem[Leonard(2001)]{leonard2001}
+B.~Leonard.
+\newblock Turnover at the top, May 2001.
+
+\bibitem[Lu(2002)]{lu2002}
+J.~Lu.
+\newblock Predicting customer churn in the telecommunications industry: An
+  application of survival analysis modeling using sas.
+\newblock \emph{SAS User Group International (SUGI27) Online Proceedings},
+  pages 114--27, 2002.
+
+\bibitem[Mueller and Price(1989)]{mueller1989}
+C.~W. Mueller and J.~L. Price.
+\newblock Some consequences of turnover: A work unit analysis.
+\newblock \emph{Human Relations}, 42\penalty0 (5):\penalty0 389--402, 1989.
+
+\bibitem[Pan and Chappell(1998)]{pan1998}
+W.~Pan and R.~Chappell.
+\newblock A nonparametric estimator of survival functions for arbitrarily
+  truncated and censored data.
+\newblock \emph{Lifetime data analysis}, 4\penalty0 (2):\penalty0 187--202,
+  1998.
+
+\bibitem[{S\&P Dow Jones Indices}(2015)]{sp500}
+{S\&P Dow Jones Indices}.
+\newblock Standard and poor's (s\&p) 500 index data including dividend,
+  earnings and p/e ratio.
+\newblock \url{http://data.okfn.org/data/core/s-and-p-500}, 2015.
+\newblock Accessed: 2015-01-30.
+
+\bibitem[Staw(1980)]{staw1980}
+B.~M. Staw.
+\newblock The consequences of turnover.
+\newblock \emph{Journal of Occupational Behaviour}, pages 253--273, 1980.
+
+\bibitem[Tableman and Kim(2003)]{tableman2003}
+M.~Tableman and J.~S. Kim.
+\newblock \emph{Survival analysis using S: analysis of time-to-event data}.
+\newblock CRC press, 2003.
+
+\bibitem[{U.S Bureau of Labor Statistics}(2015)]{unemployment}
+{U.S Bureau of Labor Statistics}.
+\newblock (seas) unemployment rate.
+\newblock \url{http://data.bls.gov/timeseries/LNS14000000}, 2015.
+\newblock Accessed: 2015-01-30.
+
+\bibitem[{Wilshire Associates}(2015)]{will5000}
+{Wilshire Associates}.
+\newblock Wilshire 5000 total market index.
+\newblock
+  \url{https://research.stlouisfed.org/fred2/series/WILL5000INDFC/downloaddata},
+  2015.
+\newblock Accessed: 2015-01-30.
+
+\bibitem[Zhu et~al.(2015)Zhu, Seaver, Sawhney, Ji, Holt, Upreti, and
+  Sanil]{zhu2015}
+X.~Zhu, W.~Seaver, R.~Sawhney, S.~Ji, B.~. Holt, G.~Upreti, and G.~B. Sanil.
+\newblock Employee turnover forecasting for human resource management based on
+  time series analysis.
+\newblock \emph{Journal of Applied Statistics}, (under review), 2015.
+
+\end{thebibliography}
