@@ -1,4 +1,4 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{38}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -34,9 +34,14 @@ T.~Briggs.
   November 2014.
 \newblock Accessed on 10/29/2015.
 
-\bibitem[Brostr{\"o}m(2012)]{brostrom2012}
-G.~Brostr{\"o}m.
-\newblock eha: Event history analysis. r package version 2.0-7, 2012.
+\bibitem[Brockett et~al.(2008)Brockett, Golden, Guillen, Nielsen, Parner, and
+  Perez-Marin]{brockett2008}
+P.~L. Brockett, L.~L. Golden, M.~Guillen, J.~P. Nielsen, J.~Parner, and A.~M.
+  Perez-Marin.
+\newblock Survival analysis of a household portfolio of insurance policies: how
+  much time do you have to stop total customer defection?
+\newblock \emph{Journal of Risk and Insurance}, 75\penalty0 (3):\penalty0
+  713--737, 2008.
 
 \bibitem[Carri{\'o}n et~al.(2010)Carri{\'o}n, Solano, Gamiz, and
   Deb{\'o}n]{carrion2010}
@@ -51,6 +56,12 @@ F.-L. Chu.
 \newblock Forecasting tourist arrivals: nonlinear sine wave or arima?
 \newblock \emph{Journal of Travel Research}, 36\penalty0 (3):\penalty0 79--84,
   1998.
+
+\bibitem[Clark(2002)]{ERIP}
+R.~L. Clark.
+\newblock Retirement: Early retirement incentives.
+\newblock \url{http://www.encyclopedia.com}, 2002.
+\newblock Accessed: 2015-12-02.
 
 \bibitem[Claus et~al.(1991)Claus, Risch, and Thompson]{claus1991}
 E.~Claus, N.~Risch, and W.~Thompson.
@@ -98,16 +109,31 @@ K.~M. Kacmar, M.~C. Andrews, D.~L. Van~Rooy, R.~C. Steilberg, and S.~Cerrone.
 \newblock \emph{Academy of Management Journal}, 49\penalty0 (1):\penalty0
   133--144, 2006.
 
+\bibitem[Kalbfleisch and Prentice(2011)]{kalbfleisch2011}
+J.~D. Kalbfleisch and R.~L. Prentice.
+\newblock \emph{The statistical analysis of failure time data}, volume 360.
+\newblock John Wiley \& Sons, 2011.
+
 \bibitem[Kleinbaum(1998)]{kleinbaum1998}
 D.~G. Kleinbaum.
 \newblock Survival analysis, a self-learning text.
 \newblock \emph{Biometrical Journal}, 40\penalty0 (1):\penalty0 107--108, 1998.
+
+\bibitem[Kuhn and Johnson(2013)]{kuhn2013}
+M.~Kuhn and K.~Johnson.
+\newblock \emph{Applied predictive modeling}.
+\newblock Springer, 2013.
 
 \bibitem[Lane et~al.(1986)Lane, Looney, and Wansley]{Lane1986}
 W.~R. Lane, S.~W. Looney, and J.~W. Wansley.
 \newblock An application of the cox proportional hazards model to bank failure.
 \newblock \emph{Journal of Banking \& Finance}, 10\penalty0 (4):\penalty0
   511--531, 1986.
+
+\bibitem[Lawless(2011)]{lawless2011}
+J.~F. Lawless.
+\newblock \emph{Statistical models and methods for lifetime data}, volume 362.
+\newblock John Wiley \& Sons, 2011.
 
 \bibitem[LeClere(2005)]{leclere2005}
 M.~J. LeClere.
@@ -126,12 +152,29 @@ K.~Lemke.
 B.~Leonard.
 \newblock Turnover at the top, May 2001.
 
+\bibitem[Long and Freese(2006)]{long2006}
+J.~S. Long and J.~Freese.
+\newblock \emph{Regression models for categorical dependent variables using
+  Stata}.
+\newblock Stata press, 2006.
+
 \bibitem[Lu(2002)]{lu2002}
 J.~Lu.
 \newblock Predicting customer churn in the telecommunications industry: An
   application of survival analysis modeling using sas.
 \newblock \emph{SAS User Group International (SUGI27) Online Proceedings},
   pages 114--27, 2002.
+
+\bibitem[Meeker and Escobar(2014)]{meeker2014}
+W.~Q. Meeker and L.~A. Escobar.
+\newblock \emph{Statistical methods for reliability data}.
+\newblock John Wiley \& Sons, 2014.
+
+\bibitem[Moeschberger and Klein(2003)]{Kleinmoeschberger2003}
+M.~L. Moeschberger and J.~Klein.
+\newblock \emph{Survival analysis: Techniques for censored and truncated data:
+  Statistics for biology and health}.
+\newblock Springer, 2003.
 
 \bibitem[Mueller and Price(1989)]{mueller1989}
 C.~W. Mueller and J.~L. Price.
@@ -144,6 +187,12 @@ W.~Pan and R.~Chappell.
   truncated and censored data.
 \newblock \emph{Lifetime data analysis}, 4\penalty0 (2):\penalty0 187--202,
   1998.
+
+\bibitem[{PWC}(2015)]{PWC}
+{PWC}.
+\newblock Don’t just collect data. generate insight.
+\newblock \url{http://www.pwc.com/us/en/hr-saratoga.html}, 2015.
+\newblock Accessed: 2015-11-15.
 
 \bibitem[{S\&P Dow Jones Indices}(2015)]{sp500}
 {S\&P Dow Jones Indices}.
@@ -167,6 +216,13 @@ M.~Tableman and J.~S. Kim.
 \newblock (seas) unemployment rate.
 \newblock \url{http://data.bls.gov/timeseries/LNS14000000}, 2015.
 \newblock Accessed: 2015-01-30.
+
+\bibitem[Wang and Shultz(2010)]{Wang2010}
+M.~Wang and K.~S. Shultz.
+\newblock Employee retirement: A review and recommendations for future
+  investigation.
+\newblock \emph{Journal of Management}, 36\penalty0 (1):\penalty0 172--206,
+  2010.
 
 \bibitem[{Wilshire Associates}(2015)]{will5000}
 {Wilshire Associates}.

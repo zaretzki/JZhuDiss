@@ -378,7 +378,7 @@ h(t|Age) & =h_0(t)exp(\beta Age) \\
 &=\alpha(\tilde{\lambda} )^\alpha t^{\alpha-1}
 \end{split}
 \end{equation}
-where, $\tilde{\lambda}=\lambda (exp(\beta \times Age)^{\frac{1}{\alpha}}$.  
+where, $\tilde{\lambda}=\lambda (exp(\beta \times Age)^{\frac{1}{\alpha}}$.
 
 The survival times $T_i$ are randomly generated from the Weibull distribution with shape parameter $\alpha=1.5$ and $\tilde{\lambda}=exp(1.5 +0.025 \times Age)^{\frac{1}{\alpha}}$.  It follows that $\lambda = e^1$.
 
@@ -414,28 +414,33 @@ The simulations are performed using the {\tt coxreg} and {\tt phreg} functions f
 %For right censor and left truncation simulation, the Cox regression models are modeled by "coxreg" and "phreg" function in eha package.
 
 
-\subsection{Simulation 1: Right Censoring}
+\subsection{Simulation 1: Right Censoring} \label{rightcensor.sim1}
 
 The first study focuses on understanding the impact of right censoring, a significant effect in the turnover data analyzed later due to the many employees that remain active for the entire observation window. For each of the sample sizes above, survival times $T_i$ are simulated from the Weibull distribution as described earlier.  Four censoring times $C_j$ are defined as the first, second, third, and fourth(maximum) quartiles of the simulated sample of lifetimes and refer to 75\%, 50\%, 25\% and 0\% censoring proportions respectively. If the survival time $T_i$ of the $i_{th}$ observation is below the censoring time ($C_i$), then the lifetime $T_i$ is observed and the censoring indicator $\delta_i=1$. When the survival time $T_i$ for $i_{th}$ observation is greater than the censoring time ($C_i$), then the censoring time $C_i$ is observed and censoring indicator $\delta_i = 0$.
 
 The results of 100 simulations at each combination of sample size and censoring proportion are shown on the left side of Table \ref{tab:rightcensor}. Column 1 gives the censoring proportion, column 2 the observed number of events before censoring, and columns 3 and 4 are the average $\beta_{Age}$ estimates over 100 simulations for both {\tt coxreg} and {\tt phreg}.  The values in columns 5 \& 6  are the average estimates of $\lambda$ and $\alpha$ from the parametric fit of {\tt phreg}. The simulation results show censoring proportion and the number of events are two influential factors for the coefficient estimation. The model overestimates the coefficients of age, $\lambda, \text{ and } \alpha$, when the dataset has a high proportion of censoring. For example, when 75\% of the data are censored with only 25 events, the estimates for three parameters are 0.028, 4.043, and 1.564, respectively, which are the highest among all the estimates. As the event number increases, the estimates approach the actual value. For example, the estimation of age, $\lambda, \text{ and } \alpha$ are close to 0.025, 2.7, and 1.5, respectively, as the number of events exceeds 500.
 
-The predicted number of events are shown in the sixth column is the total predicted failure number calculated by applying the coefficient estimates and the non-parametric baseline from Cox PH models into the dataset without considering censoring. The predicted events using censoring models are all lower than the actual total failure number, but close to the number of events after censoring.[What does this say about censoring effect on predictions?]
- 
+[Discuss Predictions]The predicted number of events are shown [What does this say about censoring effect on predictions?] in the sixth column is the total predicted failure number calculated by applying the coefficient estimates and the non-parametric baseline from Cox PH models into the dataset without considering censoring. The predicted events using censoring models are all lower than the actual total failure number, but close to the number of events after censoring.
+
  %[NOTE: Important point is that baseline hazard and predictions vary slightly with uncertainty, ??] The baseline does not include hazards or survival probability information for the long life time observation, because the baseline just captures the events before the censor time and the observation with long life time are censored in this simulation. As a result, there is no failure probability for long life time observation.
 
 
-\subsection{Simulation 2: Right Censoring}
+\subsection{Simulation 2: Right Censoring with Staggard Entry Times}
 
-In order to more accurately capture the nuances and complexities of the data sampling scheme and understand the impact of truncation and censoring we modify the above simulation with a truncation or delayed entry factor.  Starting with the Weibull simulated failure times, we add offset factor $S$ that follows a uniform distribution from 0 to 10 and represents variation in the starting times of the employees within the study window. The event time is equal to the summation of start point and survival time: $S+T$. The censoring time is single fixed value that ensures a fixed proportion (25\%, 50\%, and 75\%) of censored observations.  The observation and censoring indicator are then determined as in the first simulation with the survival time for an individual being $min(C,T_i+S_i) - S_i$ Because some observations start after the cutoff point (censor time) the sample sizes would vary for different censor proportions.  To ensure constant sample size, 4000 observations are initially simulated and 400 whose start point occur before the censoring point are randomly selected.
+In order to more accurately capture the nuances and complexities of the data sampling scheme and understand the impact of right censoring we modify the above simulation by staggering the entry times.  Starting with the Weibull simulated failure times, we add offset factor $S$ that follows a uniform distribution from 0 to 10 and represents variation in the starting times of the employees within the study window. The event time is equal to the summation of start point and survival time: $S+T$. The censoring time is a single fixed value that ensures a fixed proportion (25\%, 50\%, and 75\%) of censored observations.  The observation and censoring indicator are then determined as in the first simulation with the survival time for an individual being $min(C,T_i+S_i) - S_i$. Because some observations start after the cutoff point (censor time) the sample sizes would vary for different censoring proportions.  To ensure constant sample size, 4000 observations are initially simulated and 400 whose start point occur before the censoring point are randomly selected.
 
-The results of the simulation are shown in Table \ref{tab:right2}. Both a corectly parametric proportional hazards regression model with a Weibull baseline and a semi-parametric Cox model are fit to the data in order to evaluate differences in efficiency. The estimation of age and $\alpha$ are all close to the true values (0.025 and 1.5). We also estimate $\lambda$ to be around 2.8[Better comparison in table, are these averages]. The results indicate that right censoring has little impact on coefficient estimation and that the semi-parametric estimates show similar efficiency to fully parametric estimates. However, right censoring does impact estimation of the  baseline function for Cox PH model as shown in Figure \ref{fig:rightbase}.  Red lines represent the non-parametric baseline for 100 replications of the simulation while blue dashed lines represent the parametric baseline estimates based on the Weibull distribution for the same 100 samples which represent the actual baseline.
+The results of the simulation are shown in Table \ref{tab:right2}. As discussed above, both a correctly parametric proportional hazards regression model with a Weibull baseline {\tt phreg} and a semi-parametric Cox regression {\tt coxreg} are fit in order to evaluate differences in efficiency. The estimation of age and $\alpha$ are all close to the true values (0.025 and 1.5) when averaged over 100 simulations.  Based on 400 events, the estimates of $\lambda$ increase from 2.694 with no censoring to over 2.8 when censoring is above 50\%.  In general, the results indicate that right censoring has little impact on coefficient estimation and that the semi-parametric estimates show similar efficiency to fully parametric estimates. However, right censoring does impact estimation of the  baseline function for the Cox PH model as shown in the 6th and 7th columns of the Table and Figure \ref{fig:rightbase}.  Panel (a) shows no censoring and the parametric baseline matches the non-parametric although as time increases and the number at risk decreases we see that non-parametric estimate deviates more strongly from the parametric fit.  Panel (b) shows 25\% censoring for 100 replications.  We see that, as the range of the data decreases, the duration of the non-parametric baseline estimate is more restricted, while the parametric fit can be extrapolated with the usual caveats.  In panel (d), the 75\% censoring level, we see increased variability even with the diminished range due to the more restrictive censoring time.  Note that these results are indicative of monotonically increasing hazards and may differ if we consider other baseline distributions
 
-Although both parametric and non-parametric baselines are overlap together by various censoring, which indicates non-parametric baseline can capture the true parametric baseline. However, due to the censoring effects of the sampling window, the duration of the non-parametric baseline decreases as the censoring proportion increases. As a result, the predicted number of events using non-parametric baseline is less than the actual failure number. However, the prediction based on the parametric baseline, which is close to 400 reflecting the fact that the parametric baseline is not limited by the baseline duration if the parameters are correctly estimated. The predictions are plotted across time by box plot and compare to the actual failure values as shown in the figure \ref{fig:rightpred}.  [Fix this: The vertical red line is the average value of censor time. The predicted number of events by "coxreg" are close to actual and the prediction by "phreg" before the censor time line. It is still close to actual after censor time line for the data with no censoring and with 25\% of censoring as shown in Figures \ref{fig:rightno} and \ref{fig:right25}, because of the long baseline duration. However, It drops down gradually after the censor time for the data with 50\% and 75\% of censoring as shown in figure \ref{fig:right50} and \ref{fig:right75}, because the baseline duration ends around censor time. This simulation clearly shows the limitation of Cox PH model with non-parametric baseline: it cannot accurately predict far beyond the duration of the longest events. Therefore, a baseline can be highly variable in the extremes leading to poor predictions. Although this simulates the real problem, the employee hiring time points are followed by uniform distribution in the real world.]
+[Parametric Bootstrap distribution-look at research, also Simonoff paper
 
-\subsection{Left Truncation Simulation}
+Figure \ref{cumdiff}, panels (a-d) illustrate the difference between parametric and non-parametric estimates of the baseline cumulative hazard function, $H_0(t) = -log(\hat{S}(t))$ at different time points over 100 simulated data sets.  Panel (a) indicates that without censoring, overall survival estimates including both baseline and covariates are very similar across parametric and semi-parametric approaches.  As lifetime, $t$ increases, we see increasing deviations between the two estimates.  This due both to the cumulative nature of the estimates and to the increasing variability of hazard estimation of the non-parametric baseline, the Breslow estimator,   \citep{DavHink1997,Burr1994} as the number of observations at risk diminishes over time.  
 
-Finally, we perform a simulation to evaluate the impact of left truncation bias on parameter estimation and prediction. Again, we begin by generating a simulated sample of employment times $T_1, \ldots, T_n$.  For each observation, $i$, a uniform random variable $U_i \sim U(0,max(T))$ is then generated and represents the simulated employee starting time. The turnover time is then $S_i = U_i+T_i$. Figure \ref{fig:trunchist} provides a histogram of the simulated population of $S_i$. Four levels of truncation are introduced by shifting the beginning of the sampling window, $L$ from 0 across the quartiles of $S$ . When the starting for $ith$ observation, $U_i$, is less than truncation time $l_i$, the observation starting point is reset to $l_i$ which is the first point that the employee is observed in the sampling window. If $U_i$, then the employee is first observed at $U_i$, which remains the starting point.  In theory, if $S_i>C$, where $C$ represents the end of the observation window, then the employee is still active at the end of the sampling window and their turnover time is censored.  In order to isolate the impact of truncation bias, no censored values were generated in this study.
+When censoring is introduced in panel (b) we see that the range of the x axis is restricted.  Although this varies slightly across simulations, it is clear that the non-parametric estimator cannot estimate survival probabilities beyond the maximum observed lifetime due to the lack of a parametric model for the baseline.  In the current simulation, this was dictated by the censoring time, which was set to ensure a fixed proportion of censored cases.  In real studies, such as the one introduced in Section \ref{application}, the maximum observed lifetime will be dictated by the population and the sampling window.  Panels (c) and (d) reiterate both of these factors. As the censoring level increases to 50\% and finally 75\%, the range of non parametric baseline estimate is further restricted but the accuracy improves due to the increasing concentration of observations before the censoring time.  Because all simulations had 400 observations, 75\% censoring ensures 100 events before the censoring point, which is close to 1 providing a very accurate estimate of the baseline and less dispersion than the uncensored data.  Parametric models do not suffer from limitations on the baseline estimate, a seeing advantage, but instead require careful model selection steps which introduce other challenges.
+
+
+\subsection{Left Truncation Simulation} 
+
+Finally, we perform a simulation to evaluate the impact of left truncation bias on parameter estimation and prediction. Again, we begin by generating a simulated sample of employment times $T_1, \ldots, T_n$.  For each observation, $i$, a uniform random variable $U_i \sim U(0,max(T))$ is then generated and represents the simulated employee starting time. The turnover time is then $S_i = U_i+T_i$. Figure \ref{fig:trunchist} provides a histogram of the simulated population of $S_i$. Four levels of truncation are introduced by shifting the beginning of the sampling window, $L$ from 0 across the quartiles of $S$ . When the starting for $ith$ observation, $U_i$, is less than truncation time $l_i$, the observation starting point is reset to $l_i$ which is the first point that the employee is observed in the sampling window. If $U_i> l_i$, then the employee is first observed at $U_i$, which remains the starting point.  If $S_i>C$, where $C$ represents the end of the observation window, then the employee is still active at the end of the sampling window and their turnover time is censored.  In order to isolate the impact of truncation bias, no censored values were generated in this study.
 
 \begin{figure}[htbp]
 	\centering
@@ -444,14 +449,7 @@ Finally, we perform a simulation to evaluate the impact of left truncation bias 
  	\label{fig:trunchist}
  \end{figure}
 
-As in the previous simulations, the population size or number of turnover events ranged from $n =100, 200, 500,$ $1000, 2000,$ $\text{and } 4000$.  For each population size, the observation window was varied to ensure 0\%, 25\%, 50\%, and 75\% truncation proportions.  The results of the simulation are shown on the right side of Table \ref{tab:rightcensor}.  Values shown represent average parameter estimates over 100 replications.  The general pattern emerges that as the truncation proportion increases for a fixed sample size or number of events the parameter estimates become slightly biased.  In the Cox PH case when the sample size is 100, the coefficient for age increases from .027 to .029 as the truncation increases from 0\% to 75\%.  As the number of events increases, to 200 and beyond, this bias goes away.
-
-coefficient estimates of age, and baseline parameter estimates of $\lambda$ and $\alpha$ based on a parametric proportional hazards model assuming a Weibull distribution.
-
-%The last column is the total predicted number of events using non-parametric baseline by "coxreg" function.
-Similar to the earlier simulation results, the left truncation proportion and the number of events are two key factors for coefficient estimation. Table \ref{tab:rightcensor} indicates that, when the left truncation proportion is 75\% or the number of events are less than 200, the coefficients tend to be overestimated. However, increasing the number of events in the sample will mitigate the left truncation effects. For example, when the number of events is 1000 with 75\% truncation proportion, the estimate for $\beta_{age}$ is close to exact.
-
-For comparison purposes, Table \ref{tab:rightcensor} also uses a parametric version of the proportional hazards model that correctly specifies the distribution of the data as Weibull. The estimates for $\alpha$ and $\lambda$ in  are all close to the true values.
+Sample size and censoring proportions and results follow the same protocol given in Section \ref{rightcensor.sim1}.  The results of the simulation are shown on the right side of Table \ref{tab:rightcensor}.  As before, values shown represent average parameter estimates over 100 replications for the Cox model and a Weibull PH.  The general pattern suggests that as truncation proportion increases for a fixed number of events, the parameter estimates become slightly biased.  In the Cox PH case when the sample size is 100, the coefficient for age increases from .027 to .029 as the truncation increases from 0\% to 75\%.  The scale parameter for the parametric model, {\tt phreg}, also increases with truncation percentage.  For samples of size 100, with $\lambda = e^1 \approx 2.718$ the average estimate increases from $2.865$ with no censoring to $3.280$ with 75\% truncation.  Estimates for $\alpha = 1.5$ increase from 1.534 to 1.757. Such effects disappear as the number of events increase.
 
 Figure \ref{fig:leftbase} compares the non-parametric estimates of the baseline from the Cox PH model with two parametric proportional hazards fits estimated using the $\tt R-$language package $\tt eha$ \citep{Brostrom2014}.  The first parametric fit is properly specified and assumes a  Weibull distribution.  The second fit assumes that data follow a type-I extreme value distribution[check manual on this]. clearly shows the duration of non-parametric baseline are the same for four left truncation proportion. It also shows the non-parametric baselines (red lines) are overlap with parametric baseline (blue dash lines).
 
@@ -480,17 +478,17 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
 %
 % For left truncation simulation, the start point $U$ is generated as uniform distribution with $a=0$ and $b=max(T)$ which indicates an observation start randomly from time 0 to time $max(T)$. The stop point $S$ is $U+T$. The histogram is generated for $S$. The truncation time $L$ is set as 0, first quarter, median, and third quarter of $S$, respectively, to get 0\%, 25\%, 50\%, and 75\% truncation proportions. When start point $u_i$ for ith observation is less than truncation time $l_i$, the start point is reset as truncation time $l_i$. When start point $u_i$ for ith observation is not less than truncation time $l_i$, the start point does not change ($u_i$). In left truncation, the censor variable $\delta$ for all the observations are equal 1. For right censor and left truncation simulation,  the Cox regression models are modeled by "coxreg" and "phreg" function in eha package. The coxreg function is the regular cox regression modeling procedure to generate coefficient estimates and a non-parametric baseline.  The phreg funcation is using parametric distribution like Weibull, Extrem value (EV) to estimate the baseline. The "phreg" function performs Cox PH model and also provides a parametric baseline hazards estimation \citep{brostrom2012}. The phreg function is used to compare the non-parametric with parametric baseline and to demonstrate the prediction when the parametric baseline is not right.
 % Total predicted failure number is calculated as shown in equation \ref{eq:prob} and \ref {eq:expturnover}. The actual and predicted failure number are compared to show right censor and left truncation's impacts on the coefficient and baseline estimation .
-
- %accelarate model%
- \subsection{Right censor and left truncation simulation results}
- % 1. right censor start 0 results shows in table 1a
- % 2. start different results shows in table 2 and figure 2 with different baseline and prediction number
- %    younger company has shorter baseline hard to predict beyond the baseline max time.
- % 3. left truncation simulation results shows in table 1 and figure 4&5
- % 4. shows the baseline using wrong parametric distribution (wrong) what is going on.
- The right censoring simulation results are shown in the left part of Table \ref{tab:rightcensor} which all the observations start at the same time 0. The events in the second column of the table are the actual total failure events simulated without considering censoring, which is $n=100, 200, 500, 1000, 2000, \text{and } 4000$. The number of events in the dataset applying to the Cox model are reduced due to the right censoring, which is equal to $events=\sum_{i=0}^{n}{\delta_i}$. The values in the other column are the average value of 100 replications for Cox PH model coefficient and baseline parameter estimates based on Weibull distribution using phreg. The simulation results show censoring proportion and the number of events are two influential factors for the coefficient estimation. The model overestimates the coefficients of age, $\lambda, \text{ and } \alpha$, when the dataset has high proportion of censoring. For example, when 75\% of the data are censored with only 25 events, the estimates for three parameters are 0.028, 4.043, and 1.564, respectively, which are the highest among all the estimates. As the event number increasing, the estimation is approaching to the actual value. For example, the estimation of age, $\lambda, \text{ and } \alpha$ are close to 0.025, 2.7, and 1.5, respectively, after the number of event is at least 500.
- The predicted events in the sixth column is the total predicted failure number calculated by applying the coefficient estimates and the non-parametric baseline from Cox PH models into the dataset without considering censoring. The predicted events using censoring models are all lower than the actual total failure number, but close to the number of events after censoring. For example, the number of predicted events is 24.84 when using the estimates of Cox PH model with 75\% censoring to calculate the dataset with 100 events, which is close to 25. The prediction is less than the actual dataset, because the baseline is lack of information for the events after censored time. The baseline does not include hazards or survival probability information for the long life time observation, because the baseline just captures the events before the censor time and the observation with long life time are censored in this simulation. As a result, there is no failure probability for long life time observation.
-
+%
+% %accelarate model%
+% \subsection{Right censor and left truncation simulation results}
+% % 1. right censor start 0 results shows in table 1a
+% % 2. start different results shows in table 2 and figure 2 with different baseline and prediction number
+% %    younger company has shorter baseline hard to predict beyond the baseline max time.
+% % 3. left truncation simulation results shows in table 1 and figure 4&5
+% % 4. shows the baseline using wrong parametric distribution (wrong) what is going on.
+% The right censoring simulation results are shown in the left part of Table \ref{tab:rightcensor} which all the observations start at the same time 0. The events in the second column of the table are the actual total failure events simulated without considering censoring, which is $n=100, 200, 500, 1000, 2000, \text{and } 4000$. The number of events in the dataset applying to the Cox model are reduced due to the right censoring, which is equal to $events=\sum_{i=0}^{n}{\delta_i}$. The values in the other column are the average value of 100 replications for Cox PH model coefficient and baseline parameter estimates based on Weibull distribution using phreg. The simulation results show censoring proportion and the number of events are two influential factors for the coefficient estimation. The model overestimates the coefficients of age, $\lambda, \text{ and } \alpha$, when the dataset has high proportion of censoring. For example, when 75\% of the data are censored with only 25 events, the estimates for three parameters are 0.028, 4.043, and 1.564, respectively, which are the highest among all the estimates. As the event number increasing, the estimation is approaching to the actual value. For example, the estimation of age, $\lambda, \text{ and } \alpha$ are close to 0.025, 2.7, and 1.5, respectively, after the number of event is at least 500.
+% The predicted events in the sixth column is the total predicted failure number calculated by applying the coefficient estimates and the non-parametric baseline from Cox PH models into the dataset without considering censoring. The predicted events using censoring models are all lower than the actual total failure number, but close to the number of events after censoring. For example, the number of predicted events is 24.84 when using the estimates of Cox PH model with 75\% censoring to calculate the dataset with 100 events, which is close to 25. The prediction is less than the actual dataset, because the baseline is lack of information for the events after censored time. The baseline does not include hazards or survival probability information for the long life time observation, because the baseline just captures the events before the censor time and the observation with long life time are censored in this simulation. As a result, there is no failure probability for long life time observation.
+%
 
 
  \begin{table}[!htbp]
@@ -567,18 +565,25 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
  	\label{fig:rightbase}
  \end{figure}
 
- \begin{figure}[h!]
+\begin{figure}[h!]
  	\centering
- 	\subfloat[No right censor ]{\label{fig:rightno}\includegraphics[width=3in]{right0.png}}
- 	\quad
- 	\subfloat[25\% right censor]{\label{fig:right25}\includegraphics[width=3in]{right25.png}}
- 	\quad
- 	\subfloat[50\% right censor ]{\label{fig:right50}\includegraphics[width=3in]{right50.png}}
- 	\quad
- 	\subfloat[75\% right censor]{\label{fig:right75}\includegraphics[width=3in]{right75.png}}
- 	\caption{Right censor simulation results: actual vs. predicted failure number}
- 	\label{fig:rightpred}
- \end{figure}
+\label{fig:rightno}\includegraphics[width=3in]{Baseline_rightcensor}
+\caption{Differences in baseline estimates: parametric - non-parametic for 4 levels of censoring}
+% 	\label{fig:rightpred}
+\end{figure}
+
+ %\begin{figure}[h!]
+% 	\centering
+% 	\subfloat[No right censor ]{\label{fig:rightno}\includegraphics[width=3in]{right0.png}}
+% 	\quad
+% 	\subfloat[25\% right censor]{\label{fig:right25}\includegraphics[width=3in]{right25.png}}
+% 	\quad
+% 	\subfloat[50\% right censor ]{\label{fig:right50}\includegraphics[width=3in]{right50.png}}
+% 	\quad
+% 	\subfloat[75\% right censor]{\label{fig:right75}\includegraphics[width=3in]{right75.png}}
+% 	\caption{Right censor simulation results: actual vs. predicted failure number}
+% 	\label{fig:rightpred}
+% \end{figure}
 
  % % % % % % % % % % % % % % % % % % % % % % % % %
  % % % %Left truncation result % % % % % % % % % %
@@ -619,7 +624,6 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
  %
 
  % Table generated by Excel2LaTeX from sheet 'Sheet6' %accelarate model%
-\section{Results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Commentted on 12/14/2015%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -771,11 +775,12 @@ Therefore, accurate estimation of coefficients and the baseline are two key fact
 %
 %% Table generated by Excel2LaTeX from sheet 'Sheet6'
 
-
-
-\subsection{Data pattern/Descriptive Analysis}
+\section{Results} \label{application}
 
 The construction of a predictive model for retirement involves consideration of several factors. Among the variables available for analysis we must choose the set that offers the maximum predictive power, i.e. a model that includes variables that provide the best possible predictions on out of sample testing data sets and not simply on data used to train the model.  We must also evaluate potential strengths and weaknesses of the baseline hazard estimate and its impact on prediction accuracy.  Finally, it is useful to also understand the impact of various predictors on retirement age.
+
+
+\subsection{Descriptive Analysis}
 
 As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: payroll(hourly, weekly, or monthly payroll), gender(M,F), division(ten divisions), occupational codes(crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), age at hire, and years of service at hire. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  From that we see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed similarly to occupational codes with four larger groups and a number of smaller groups.
 

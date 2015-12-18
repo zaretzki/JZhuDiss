@@ -1,38 +1,31 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Main_v5_drz_1214_simulation and add vq.aux
 The style file: abbrvnat.bst
 Database file #1: Bib.bib
-I was expecting a `,' or a `}'---line 483 of file Bib.bib
+I was expecting a `,' or a `}'---line 496 of file Bib.bib
  :   
  :   page={178}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 537 of file Bib.bib
+I was expecting a `,' or a `}'---line 565 of file Bib.bib
  :  
  :  type = {Magazine Article}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 927 of file Bib.bib
+I was expecting a `,' or a `}'---line 986 of file Bib.bib
  :    
  :    note={under review}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-You're missing a field name---line 964 of file Bib.bib
+You're missing a field name---line 1034 of file Bib.bib
  : 
  : %  author =       {William R. Lane, Stephen W. Looney, James W. Wansley},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "Wang2010"
-Warning--I didn't find a database entry for "lawless2011"
-Warning--I didn't find a database entry for "long2006"
-Warning--I didn't find a database entry for "kalbfleisch2011"
-Warning--I didn't find a database entry for "Kleinmoeschberger2003"
-Warning--I didn't find a database entry for "brockett2008"
-Warning--I didn't find a database entry for "PWC"
-Warning--I didn't find a database entry for "meeker2014"
 Warning--I didn't find a database entry for "kleinMosch2006"
-Warning--I didn't find a database entry for "ERIP"
-Warning--I didn't find a database entry for "kuhn2013"
 Warning--I didn't find a database entry for "Simonoff2002"
 Warning--I didn't find a database entry for "Harrell2002"
+Warning--I didn't find a database entry for "eha"
+Warning--I didn't find a database entry for "DavHink1997"
+Warning--I didn't find a database entry for "Burr1994"
 Warning--I didn't find a database entry for "Brostrom2014"
 (There were 4 error messages)

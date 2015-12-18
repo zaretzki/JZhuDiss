@@ -458,7 +458,11 @@ Figure \ref{fig:lefttruncation} focuses on the number of events predicted by the
 %Therefore, accurate estimation of coefficients and the baseline are two key factors impacts the perdition of the events of the Cox PH model. The simulation test shows that the Cox PH model can accurately estimates the coefficients when events number is at least 1000 even with high proportion of censor and left truncation. The baseline is another key factor to predict the number of events. The prediction will be accurate if the parametric distribution of the baseline is known or identify the correctly. Otherwise, a wrong baseline can also deteriorate the prediction. Compared to parametric baselines, a non-parametric baseline is more robust. However, it still needs enough number of events with curtain long period to get a smoothed and long baseline to predict accurately. 
 
 [Summarize results of simulation now.]
+The goal of the simulation was to determine the potential impact of sampling bias
+
 As a result, it is hard to accurately predict the employee turnover for a company just formed recently, or when the employee population characteristic changed, due to high proportion of censor and lack of events. Although this study has more than 50\% right censor, it still has more than 3000 events with long duration (around 50 years length).
+
+
 
 
 
