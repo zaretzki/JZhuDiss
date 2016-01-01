@@ -124,8 +124,8 @@ The dataset analyzed was provided by a large multipurpose research organization 
 
 A number of static employee attributes are provided including payroll type(hourly, weekly, monthly), date of hire, start date, termination date, age at time of hiring , years of service at time of hiring (YCSH), gender, occupation code, and division (organization level). The company credit service date is the date that the organization starts to credit the employee retirement plan. Years of service (YCS) is the total years credit for employees' pension plan. In this study, all of the employees analyzed were hired before January 2012 are eligible for a defined benefit retirement plan. Beginning in January of 2012 the organization began to offer new employees defined contributions plans but such plans were not available during the period of the current study.
 
- An employee is eligible for full pension benefits after achieving either 65 years of age, 85 points of retirement credit. An employee's points are the sum of their age and YCS.  YCS can be nonzero at hire if an employee has credit from earlier employment in the same organization. %Some employees do not have pension plan when they were hired but they got pension later, so their company credit service date was later than hired date.
- The occupational code is a standardized code used to describe the job category in the organization for reporting purposes. In this study, occupational codes are highly correlated with payroll category: managers, engineers, administrative, and scientists are monthly payroll, general administrative employees and technicians have weekly payroll, and other categories are paid on an hourly basis. The organization or division level code is used to distinguish the departments.  In this study, the definition of each division may not static over the entire period of observation.  Over the course of time, divisions can be renamed, reduced, or dismissed in reorganizations. Furthermore, no transfer of employees between divisions is recorded.  Therefore, for purposes of prediction, the division variable indicates the organization level that an employee is associated with at the time of the final observation.
+ An employee is eligible for full pension benefits after exceeding either 65 years of age or 85 points of retirement credit. An employee's points are the sum of their age and YCS.  YCS can be larger than 0 at hire if an employee has credit from earlier employment in the same organization. %Some employees do not have pension plan when they were hired but they got pension later, so their company credit service date was later than hired date.
+The occupational code is a standardized code used to describe the job category in the organization for reporting purposes. In this study, occupational codes are highly correlated with payroll category: managers, engineers, administrative, and scientists are monthly payroll, general administrative employees and technicians have weekly payroll, and other categories are paid on an hourly basis. The organization or division level code is used to distinguish the departments.  In this study, the definition of each division may not static over the entire period of observation.  Over the course of time, divisions can be renamed, reduced, or dismissed in reorganizations. Furthermore, no transfer of employees between divisions is recorded.  Therefore, for purposes of prediction, the division variable indicates the organization level that an employee is associated with at the time of the final observation.
 
 
 
@@ -173,7 +173,7 @@ This study aims to develop accurate predictive models of retirement and quitting
  \subsection{Missing data biases: right censoring and left truncation}
  % what is right censor, how to deal with right censor\\
  % what is left truncation how to deal with left truncation\\
- Right censoring and left truncation are both commonly observed forms of missing data in survival analysis data sets. In the current, the study window is from November 2000 to December 2012 as shown in the figure \ref{fig:1}.  Anyone that was an active employee during this period has their complete record included in the dataset whether or not their tenure began or ended outside of the study window.  Conversely, those employees whose tenure ended before the study window or for whom the start date occurred after the study window ended are not included in the study.
+ Right censoring and left truncation are both commonly observed forms of missing data in survival analysis data sets. In the current, the study window is from November 2000 to December 2012 as shown in the Figure \ref{fig:1}.  Anyone that was an active employee during this period has their complete record included in the dataset whether or not their tenure began or ended outside of the study window.  Conversely, those employees whose tenure ended before the study window or for whom the start date occurred after the study window ended are not included in the study.
 
  \begin{figure}[htbp]
  	\centering
@@ -192,7 +192,7 @@ This study aims to develop accurate predictive models of retirement and quitting
  \end{align*}
  where, $i$ denotes the ith observation, and the failure time of event for ith observation is minimum time between $t_i$ and $c_i$, i.e., $min(t_i, c_i)$, that is when $ c_i <t_i $, $c_i$ is taken as end time of the ith observation in order to do next  analysis.
 
- Left truncation is another interesting artifact of the window sampling scheme. Let $T$ again denote the time that the event of interest occurs and let $X$ denotes the time an individual enters the study. Only the individuals with $T \geq X$ are observed in the study window.  Those individuals with $T \leq X$ are referred to as left truncated because they cannot be included in this study based on the sampling window as shown in the figure \ref{fig:1}. Left truncation exaggerates the number of longer life individuals leading to a biased sample. To see this consider Figure \ref{fig:1}. The longest arrow represents a life span for an employee hired in 1950 and retiring in 2006. While this employee and any in his cohort that are still active are in the sample, others that began in 1950 but retired in 1998, for example, are not. Hence, because of the sampling window approach the longer someone continues working, the more likely they are to appear in our dataset.  We therefore see an overabundance of longer lived individuals in our data.  The presence of left truncation and the associated bias in the data must be taken into account to achieve accurate estimation of survival analysis \citep{carrion2010}.
+ Left truncation is another interesting artifact of the window sampling scheme. Let $T$ again denote the time that the event of interest occurs and let $X$ denotes the time an individual enters the study. Only the individuals with $T \geq X$ are observed in the study window.  Those individuals with $T \leq X$ are referred to as left truncated because they cannot be included in this study based on the sampling window as shown in the Figure \ref{fig:1}. Left truncation exaggerates the number of longer life individuals leading to a biased sample. To see this consider Figure \ref{fig:1}. The longest arrow represents a life span for an employee hired in 1950 and retiring in 2006. While this employee and any in his cohort that are still active are in the sample, others that began in 1950 but retired in 1998, for example, are not. Hence, because of the sampling window approach the longer someone continues working, the more likely they are to appear in our dataset.  We therefore see an overabundance of longer lived individuals in our data.  The presence of left truncation and the associated bias in the data must be taken into account to achieve accurate estimation of survival analysis \citep{carrion2010}.
 
  %Let $t_{i0}$ denotes the start time of the ith observation, i.e., hired time or age at %hired of ith employee, $x_{i}$ denotes the entry time of the ith observation, i.e., the %start time of study (November 1st, 2000) or age at November 1st, 2000. The start time of %the observation is maximum value between $t_{i0}$ and $x_i$, that is when $t_{i0} < x_i %$, $x_i$ is taken as start time of the ith observation in order to eliminate the left %truncation bias \citep{allison1995}. The number of failures in the $t_j$ is redefined for %left truncation. When $x_i < t_j \le t_i$, the observation is in the risk set. When %$t_{j} < x_i \le t_i$, the ith observation has not entered study yet at $t_j$ and it %cannot be considered in the risk set. When $x_i \le t_i < t_j$, it indicates the ith %observation whose failure time before $t_j$, and it cannot be considered in the risk set %at time $t_j$ neither \citep{carrion2010}.
 
@@ -262,7 +262,7 @@ The start and end points of each interval are given in the definitions below.
 
 
 
-\subsection{Stratification model}
+\subsection{Stratification and Mulitple Baselines}
 %I. what is stratification model;\\
 An alternative for handling nonproportional hazards is stratification.  A stratified model allows each subgroup of data as defined by a grouping variable to have its own baseline hazard while sharing parameters for other variables across. If the proportional hazards assumption holds within these subgroups then this model allows us to get valid common estimates of variable effects using all of the observations. Equation \ref{eq:strata} below represents the hazard function for strata {\it z};
 \begin{equation}
@@ -299,7 +299,7 @@ One of the many nuances observed within this data set is the fact that currently
 %  where, $x_{j}$ is the variable for a specific type of turnover. Note that the %coefficient $\beta$ is the effects of the variables may be different from different %turnover types. If $\beta_{ij}$  is the same for all j, the model simplified to Cox %PH model as shown in equation \ref{eq:cox}.
 
 
-\subsection{Variable Selection and Model Choice}
+\subsection{Variable Selection and Model Choice} \label{sec:modelchoice}
 In the current study two equivalent time measurements were considered as response variables for modelling, {\it age} in years and {\it years of service}.  Because of the inclusion of time varying explanatory variables, and the need to estimate the baseline hazard for purposes of forecasting, the data must be formulated as a counting process , see Section \ref{sec:coxt}.  After some consideration, age was considered the better option for analysis because the more condensed distribution of values allows more accurate estimates of the baseline.
 
 The model selection initiated by considering gender, dept, age, and other time independent variables as well as policy, p85, and A65.  We removed non-significant variables using the criteria that p-values should be less than $.05$ and starting with the largest p-value first, i.e. backwards selection.  This continued until only statistically significant variables remained.  We also tested stratifying the baseline using occupational code, which did not improve the model. Finally we tested external time varying covariates, which capture economic factors, one at a time and noted the impact on model performance.[MAY NEED A BETTER SUMMARY OF MODELS COMPARED]
@@ -460,17 +460,17 @@ events predicted by the models.  Here 2000 events are generated using the protoc
 
 [Summarize results of simulation now.]
 
-Simulations were performed to better understand the effects of truncation and censoring bias on predictions. 
+Simulations were performed to better understand the effects of truncation and censoring bias on predictions.
 
 In the situations considered, we found that, if sample size are large enough, in particular if they exceeded 250 events, all parameter estimates showed very little bias under both parametric and semi-parametric models.  If samples were small, regression coefficients were slightly overestimated in both types of models.  For data sets with small numbers of events due to heavy right censoring, parametric models tend to overestimate both shape and scale both leading to an underestimate of the baseline.  Although the impact of right censoring on the non-parametric baseline is not directly quantified, Figure \ref{fig:rightdiff} suggests that baseline estimates are often smaller than the parametric versions and become more variable near the maximum lifetime.  Simulations show similar impacts of left truncation on covariate and baseline effects.  A major difference is that the length of the non-parametric baseline is potentially less limited due to the lack of censoring time.  This may not be relevant in real world data, which has both effects.
 
-Consequences of simulation study on Retirement.  Although this study has more than 50\% right censoring and an unknown proportion of left truncated cases, it still has more than 1000 retirement events, many with long duration (around 50 years length). Based on the simulation, we expect the Cox model to provide very accurate estimates of covariate effects in this case and highly accurate baseline estimates for most employees, particularly those with age less than 70.  
+Consequences of simulation study on Retirement.  Although this study has more than 50\% right censoring and an unknown proportion of left truncated cases, it still has more than 1000 retirement events, many with long duration (around 50 years length). Based on the simulation, we expect the Cox model to provide very accurate estimates of covariate effects in this case and highly accurate baseline estimates for most employees, particularly those with age less than 70.
 
 
-%
+\cite{}%
 %With respect to prediction of retirement, because the s
 %
-%As a consequence, it is hard to accurately predict the employee turnover for a company just formed recently, or when the employee population characteristic changed, due to high proportion of censor and lack of events. 
+%As a consequence, it is hard to accurately predict the employee turnover for a company just formed recently, or when the employee population characteristic changed, due to high proportion of censor and lack of events.
 
 
 
@@ -636,6 +636,94 @@ Consequences of simulation study on Retirement.  Although this study has more th
  % 6) Problems with PH in predictive modelling.  Truncation needs PH (is there another method)
  %
 
+
+\begin{table}[htbp]
+	\centering
+	\scriptsize
+	\renewcommand{\arraystretch}{1.5}
+	\caption{Descriptive Statistics}
+	\begin{tabular}{lrrlrr}
+		\toprule
+	\textbf{Variable}	& \multicolumn{1}{c}{\textbf{Count}} & \multicolumn{1}{c}{\textbf{N \%}}  &   \textbf{Variable}    & \multicolumn{1}{c}{\textbf{Count}} & \multicolumn{1}{c}{\textbf{N \%}} \\
+		\midrule
+		\textbf{Cocscode} &       &       & \textbf{Gender} &       &  \\
+		C     & 1295  & 16.0\% & F     & 2296  & 28.4\% \\
+		E     & 1361  & 16.8\% & M     & 5802  & 71.6\% \\
+		G     & 574   & 7.1\% & \textbf{Division} &       &  \\
+		L     & 613   & 7.6\% & divison1 & 1542  & 19.0\% \\
+		M     & 1178  & 14.5\% & divison2 & 751   & 9.3\% \\
+		P     & 1621  & 20.0\% & divison3 & 1042  & 12.9\% \\
+		R     & 595   & 7.3\% & divison4 & 369   & 4.6\% \\
+		S     & 208   & 2.6\% & divison5 & 398   & 4.9\% \\
+		T     & 652   & 8.1\% & divison6 & 1199  & 14.8\% \\
+		Missing & 1     & 0.0\% & divison7 & 302   & 3.8\% \\
+		\textbf{Payroll} &       &       & divison8 & 823   & 10.2\% \\
+		Hourly & 2503  & 30.9\% & divison9 & 404   & 5.0\% \\
+		Monthly & 4369  & 54.0\% & divison10 & 1268  & 15.7\% \\
+		Weekly & 1226  & 15.1\% &       &       &  \\
+		\bottomrule
+	\end{tabular}%
+	\label{tab:descriptive}%
+\end{table}%
+
+\begin{table}[htbp]
+	\centering
+	\scriptsize
+	\caption{Discriptive Statistics 2}
+	\begin{tabular}{lrrrrrrr}
+		\toprule
+		& Count & Mean  & Median & Mode  & Minimum & Maximum & Std. Deviation \\
+		\midrule
+		\multicolumn{1}{l}{Age at Retire} & 1757  & 59.72 & 60.00 & 62.00 & 49.00 & 84.00 & 4.56 \\
+		\multicolumn{1}{l}{Years of Service at Retire} & 1757  & 29.72 & 30.90 & 30.06 & 0.05  & 55.68 & 7.74 \\
+		\multicolumn{1}{l}{Point at Retire} & 1757  & 89.44 & 88.67 & 85.47 & 51.05 & 136.66 & 9.15 \\
+		\bottomrule
+	\end{tabular}%
+	\label{tab:descrip2}%
+\end{table}%
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[]{\label{fig:age}\includegraphics[width=0.5\textwidth]{Agetdhist.png}}
+	\subfloat[]{\label{fig:point}\includegraphics[width=0.5\textwidth]{pointdhist.png}}
+	%\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{loghazard.png}}
+	\caption{Histogram of Age and point at retire}
+	\label{fig:hist}
+\end{figure}
+
+%put this graphic in policy discussion part
+
+
+% Table generated by Excel2LaTeX from sheet 'summary'
+%\begin{landscape}
+\begin{table}[htbp]
+	\centering
+	\scriptsize
+	\caption{Models statistics}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{L{3.5cm}lllllrrrr}
+		\toprule
+	\multicolumn{1}{c}{	\textbf{Model}} & \multicolumn{1}{c}{\textbf{LR}}    & \multicolumn{1}{c}{\textbf{AIC0}}  &\multicolumn{1}{c}{\textbf{AIC}}   &\multicolumn{1}{c}{\textbf{SBC0}} & \multicolumn{1}{c}{\textbf{SBC}}   & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ MAPE\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ MAPE\end{tabular}}} &\multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ $G^2$\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ $G^2$\end{tabular}}}  \\
+		\midrule
+		 Division Gender Payroll Cocs YCSH Ageh & 1194.3 & 20425.6 & 19271.3 & 20425.6 & 19377.3 &  39.44 & 56.78 & 381.77 & 85.19 \\
+		Division Cocs YCSH Ageh & 1193.77 & 20425.6 & 19269.8 & 20425.6 & 19370.5 &  39.45 & 56.84 & 381.92 & 85.29 \\
+		Division Policy YCSH Ageh & 1451.62 & 20425.6 & 18998 & 20425.6 & 19061.6 &  25.91 & 15.51 & 128.75 & 2.64 \\
+		Division Policy YCSH Ageh Cocs & 1469.92 & 20425.6 & 18995.7 & 20425.6 & 19101.7 &   25.91 & 15.24 & 129.47 & 2.56 \\
+		Division Policy YCSH Ageh and Strata on Cocscode  & 1426.34 & 14602.1 & 13199.8 & 14602.1 & 13263.4 &  43.45 & 87.92 & 186.89 & 50.00 \\
+		%9 models by Cocscode & N/A   & N/A   & N/A   & N/A   & N/A   &    24.62 & 3.40  & 117.9 & 0.26 \\
+		Division Policy YCSH Ageh  P85 & 1826.95 & 20425.6 & 18624.6 & 20425.6 & 18693.6 &  25.59 & 19.04 & 109.17 & 3.40 \\
+		Division Policy YCSH Ageh  P85 P85*A65 & 1873.69 & 20425.6 & 18579.9 & 20425.6 & 18654.1 &  25.38 & 7.97  & 111.55 & 0.79 \\
+		Division Policy YCSH Ageh P85 P85*A65 P85*POLICY & 1881.02 & 20425.6 & 18574.6 & 20425.6 & 18654.1 & 25.42 & 4.20  & 112.27 & 0.81 \\
+		Logistic regression  & 4103.91 & 13618.4 & 9556.53 & 13627.3 & 9752.1 &  28.20 & 31.73 & 232.84 & 117.38 \\
+    	Time series  & N/A   & N/A   & N/A   & N/A   & N/A   &   11.17 & 34.38 & 32.10 & 8.54 \\
+		\bottomrule
+	\end{tabular}%
+	\label{tab:modelstats}%
+\end{table}%
+
+% Please add the following required packages to your document preamble:
+
+%\end{landscape}
  % Table generated by Excel2LaTeX from sheet 'Sheet6' %accelarate model%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Commentted on 12/14/2015%%%%%%%%%%%%
@@ -788,19 +876,6 @@ Consequences of simulation study on Retirement.  Although this study has more th
 %
 %% Table generated by Excel2LaTeX from sheet 'Sheet6'
 
-\section{Results} \label{application}
-
-The construction of a predictive model for retirement involves consideration of several factors. Among the variables available for analysis we must choose the set that offers the maximum predictive power, i.e. a model that includes variables that provide the best possible predictions on out of sample testing data sets and not simply on data used to train the model.  We must also evaluate potential strengths and weaknesses of the baseline hazard estimate and its impact on prediction accuracy.  Finally, it is useful to also understand the impact of various predictors on retirement age.
-
-
-\subsection{Descriptive Analysis}
-
-As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: payroll(hourly, weekly, or monthly payroll), gender(M,F), division(ten divisions), occupational codes(crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), age at hire, and years of service at hire. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  From that we see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed similarly to occupational codes with four larger groups and a number of smaller groups.
-
-Beyond these demographic and career factors, our models also include behavioral variables derived from policy requirements for retirement and early retirement incentives that occur throughout the observation period. Histograms of retirement age and accumulated pension points are shown in Figure \ref{fig:hist}. The histogram of for age at retirement is right skewed and shows an anomalous spike at age equals 62 which is the mode, because age 62 is the earliest age for a person to receive social security retirement benefit.
-% 79\% of the employees retired at 62 also reach or exceed 85 points. (Why is this such a popular age?  Medicare, Social Security?)
-The average age is 59.72 demonstrating that many individuals retire before 62 and most before age 70. In terms of points accrued at time of retirement, recall that points are the sum of years of service plus current age, we see an irregular distribution with the vast majority retiring with point totals in the range of 85 to 100 and relatively few taking a reduced pension are retiring with diminished benefits with points below 85. Again we see that 85 points is the mode indicating that retiring immediately after become fully vested in the pension is a popular choice.
-
 
 \begin{table}[htbp]
 	\centering
@@ -858,8 +933,6 @@ The average age is 59.72 demonstrating that many individuals retire before 62 an
 
 %put this graphic in policy discussion part
 
-\subsection{Retirement model without external variables}
-Extensive model selection using a variety of metrics including Log likelihood, AIC, BIC,and out of sample predictive scoring (MAPE and $G^2$) was used to identify key predictive factors in the model as shown in table \ref{tab:modelstats}.
 
 % Table generated by Excel2LaTeX from sheet 'summary'
 %\begin{landscape}
@@ -888,13 +961,124 @@ Extensive model selection using a variety of metrics including Log likelihood, A
 	\label{tab:modelstats}%
 \end{table}%
 
-% Please add the following required packages to your document preamble:
 
-%\end{landscape}
 
-Based on this analysis the optimal modelling variables, excluding aggregate economic factors, chosen for the prediction of age at retirement include {\it division}, {\it years of service at hire}, and {\it age at hire}.  In addition, based on our understanding of the covenants and parameters of the retirement program we tested a number of additional variables and found several that increase the predictive power of the model. These include {\it policy}(an indicator for the 2008 ERI program), {\it P85}(An indicator that the individual has accrued 85 points and can retire with full benefits), {\it A65*P85} (An interaction term that moderates the impact of the {\it P85} effect after the individual has exceeded 65 years of age), and  {\it Policy*P85} (An interaction term that moderates the impact of the {\it P85} effect while the ERI is in place).
 
-Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As noted above, we did not find that gender, occupational code and payroll category were not significant predictors in the presence of the other variables. This indicates that employees' gender, job types, and payroll status are not associated with choice of retirement age conditional on the other variables in the model.
+\section{Results \& Analysis} \label{application}
+
+The construction of predictive models for turnover involves consideration of several factors. Among the variables available for analysis, we must choose the set that offers the maximum predictive power, i.e. a model that includes variables that provide the best possible predictions on out of sample testing data sets and not simply on data used to train the model. We must also evaluate potential strengths and weaknesses of the baseline hazard estimate and its impact on prediction accuracy.  The bootstrap will be a useful tool in assessing uncertainty in model predictions. From the perspective of administration it will also be useful to contemplate the policy implications of the predictors found to have an impact on prediction.
+
+\subsection{Descriptive Analysis}
+
+As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: {\it payroll}(hourly, weekly, or monthly payroll), {\it gender}(M,F), {\it division} (ten levels of division), {\it occupational code} (crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), {\it age at hire}, and {\it years of service at hire}. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  We see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed in a similar fashion to occupational codes with four larger groups and a number of smaller groups.
+
+Beyond these demographic and career factors, our models also include behavioral variables derived from policy requirements for retirement and early retirement incentives that occur throughout the observation period. Histograms of retirement age and accumulated pension points are shown in Figure \ref{fig:hist}. The histogram of retirement age is right skewed and shows an anomalous spike at age equals 62 which is the mode.  We find that 79\% of the employees that retired at 62 also reached or exceeded 85 points. (Why is this such a popular age?  Medicare, Social Security?)  The average retirement age is 59.72 demonstrating that many individuals retire before 62 and most before age 70. In terms of points accrued at time of retirement, recall that points are the sum of years of service plus current age, we see an irregular distribution with the vast majority retiring with point totals in the range of 85 to 100. Relatively few elect to take a reduced pension and retire with diminished benefits with points below 85. Again we see that 85 points is the mode indicating that retiring immediately after become fully vested in the pension is a popular choice.
+
+
+
+\subsection{Forecasting retirement without external economic variables}
+Section \ref{sec:modelchoice} discussed two potential response variables that are suitable for time until turnover models, age and years of service from hire.  Because of the existence of time varying covariates and the need for a baseline estimate to facilitate predictions, we chose to model age at retirement arranging the data in a counting process format (SAS will only estimate the baseline if the counting process formulation is used). 
+
+%1) Need counting process form for time varying covariates.
+%2) Need counting process form to estimate the baseline from CoxPh Model.
+%3) Need 
+
+Extensive model selection using a variety of metrics including log-likelihood, AIC, BIC, and out of sample predictive scoring (MAPE and $G^2$) was then applied to identify key predictive factors in the model as shown in Table \ref{tab:modelstats}. %This is likely due to the fact that age 62 is the earliest age for a person to receive social security retirement benefit.
+
+Excluding aggregate economic factors, the optimal modelling variables for the prediction of age at retirement include {\it division}, {\it years of service at hire}, and {\it age at hire}.  In addition, based on our understanding of the covenants and parameters of the retirement program we found several additional variables that increase the predictive power of the model. These include {\it policy}, {\it p85}, {\it a65*p85}, an interaction term that moderates the impact of the {\it p85} effect after the individual has exceeded 65 years of age, and  {\it policy*p85}, an interaction term that moderates the impact of the {\it p85} effect while the ERI is in place.  These variables were introduced in Section \ref{data.desc}
+
+Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As noted above, we did not find that gender, occupational code and payroll category were statisitcally significant predictors indicating that employees' gender, job types, and payroll status are not associated with choice of retirement age conditional on the other variables in the model.
+
+{\it p85} is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:hist}.  The survival function after 85 points is achieved can be seen to steepen [FINISH THIS THOUGHT] 
+
+
+An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard, which should increase after this point; see Figure \ref{fig:basepred}[EXPLAIN THE FIGURE].  However, by including an interaction between the indicators of Age greater than 65 and points greater than 85, {\it A65*P85}, we can estimate how the impact of reaching 85 points diminishes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the {\it P85} criteria to $e^{1.44-1.61} =0.84$.  This suggests that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  It seems that the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact [OR THAT THEY ARE INTENDING TO WORK LONGER?].  [DISCUSS THAT THE BASELINE MAY INCREASE SO THAT THE OVERALL PROBABILITY IS ACTUALLY HIGHER.]
+
+
+According to our model, retirement can also be influenced by an employee's age at hire and their years of service at the time of hiring, {\it YCSH}.  The coefficient estimate for age is -0.17. As the reference age is 45.49, this means that the hazard ratio for retirement of an employee that started working at age 46.49 is $exp(-.017)=.84$ indicating a 16\% drop in hazard for each additional year later that an employee started. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.19} = (S(t)^{e^{0.17}})$ when age at hire is one year below 45.49,  where $S(t)$ is the baseline survival probability for a reference employee of average age at the time of hiring. Moving in the other direction, an employee's survival probability is $S(t)^{0.84}=(S(t)^{e^{-0.17}})$ for a one year increase beyond 45.49 in the employee's starting age. Together, this implies that at any given retirement age, the employee who starts earlier than 45.49 years old is more likely to retire because they have more years of service and are closer to vesting full benefits (85 points) than an equivalent employee who starts working at an older age. Similarly, the employee's years of service at hire show a positive estimate (0.019) with a hazard ratio (1.019) indicating that each year of service at hire beyond the population average of 2.75 is associated with an approximately 2\% increase in the hazard of retirement.  This leads to a survival probability $S(t)^{0.98}$ for a one year decrease in the reference years of service at time of hiring.  On the other hand, the survival probability is $S(t)^{1.019}$ for an employee with one year of service above average at the time of hire. Together, both age at hire and YCSH effects reflect the intuitive fact that, all else being equal, an employee who has more years of service and therefore is closer to full vesting is more likely to retire.  What is non-intuitive about this finding is that while one might suspect that the effects should be of similar magnitude, we actually see that the effect of one year difference in age seems to have about 8 times the impact that one year of previous service does on the hazard of retirement.
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[Retirement rate]{\label{fig:ratio}\includegraphics[width=0.5\textwidth]{reratio.png}}
+	\subfloat[Prediction w/o variable policy]{\label{fig:nopolicy}\includegraphics[width=0.5\textwidth]{nopolicy.png}}
+	\caption{Retirement rate and Prediction Plot}
+	\label{fig:rerate}
+\end{figure}
+
+In the fiscal year 2008, the employer in this study created a temporary early retirement incentive(ERI). The response window for this option was 3 months although the specific details beyond this are unknown. In order to deal with the increased level of retirement during this period we include a time dependent indicator variable for each employee that indicates their age when this policy was in effect.  The coefficient for this indicator was 0.86 leading to a hazard ratio of $e^{.86} = 2.21$ which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate may be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors [WORK ON THIS LAST PART - WHY DO WE NEED TO INCLUDE].
+
+As a further step, we further test the policy effect on the employees who are eligible for getting a pension, i.e. points greater than 85.  After adding a interaction term between {\it policy} and the indicator that a person exceeds 85 points, the hazard ratio for the policy effect on these employees increases substantially to 15.85 from 2.21, more than seven times the basic {\it policy} effect.  In contrast, employees that were eligible only for partial retirement, an interaction between {\it policy} and indicator variables that employees achieve only 65 or 75 points, were not statistically significant.
+
+The {\it division} variable was a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 1 so that it's hazard rate is determined by the baseline.  Relative to this baseline, divisions 6 and 7 have very high hazard ratios, 8.363 and 11.405 respectively, which indicates, other factors being equal, that the employees in division 6 and division 7 are much more likely to retire at any age than those from division 1.  Conversely, division 9 has a hazard ratio of exp(-3.023) = .049 indicating that individuals within this group have 1/20 the hazard of group 1.  This may indicate that the division is new and contains younger employees.  In general, differences in retirement rates could be caused by differences in age demographics,departmental and job functions, or departmental leadership.
+
+The baseline survival function and log hazard function are shown in Figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in Figure \ref{fig:Surv}, which indicates that no employees retire before this age. The survival probability starts to slowly decease from age 50 to age 62. By age 62 the survival probability has decreased by nearly 25\%, which indicates that 75\% of employees retire at an age greater than 62 years assuming that they are at average or baseline levels for other factors included in the model.  The slope of the survival function decreases sharply at this point indicating the increased retirement rates for workers between age 62 and 65.  After age 65 the probability drops off even further as most of the remaining population retires by age 68 or 69. Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between age 62 and 65 indicates the increased retirement activity during this period.  Afterward this the cumulative hazard levels off, indicating a drop in the hazard rate at these future points.
+
+Summarize external
+
+Summarize the predictive capabilities at the individual level.  Strengths and weaknesses.
+
+Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
+
+{\bf Julia: We need to describe the prediction process results.}
+
+ Aggregate predictions for employee retirement are shown in Figure \ref{fig:predict} and Tables \ref{tab:cocscode} - \ref{tab:division}. The model predictions capture the fluctuations in actual retirement, and also capture the peak year of 2008 when the ERI was introduced. The out-of-sample predictions for holdout years (2011 and 2012) are very close to the actual number indicating that the model performs well on both the training and holdout samples. Besides predicting the overall retirement, the model can also provide predictions by category. Table \ref{tab:cocscode} and \ref{tab:division} shows the yearly predictions by occupation code and division, which are computed by summing the retirement probabilities of individuals by job classification and division.  The predicted values match the actual values in these two categories well.  [NOW USE BOOTSTRAP TO UNDERSTAND UNCERTAINTY.]
+
+\subsection{Forecasting retirement with external economic variables}
+   The impact of the external economy on retirement decision making is a topic of considerable interest.  To explore these effects we include lagged versions of a number economic factors using the counting process data formulation with calendar year based intervals to set up and test the on impact on retirement. Parameter estimates for common effects across models with and without economic variables remain constant as can be observed in Table \ref{tab:paraest.}.  As shown in Table \ref{tab:EI}, among economic indices tested, {\it S\&P500}, {\it Real Earnings}, and {\it Wilshire 5000} were statistically significant and also improved the model forecast leading to lower MAPE and $G^2$.  Although {\it Real Prices}[PRICE OF WHAT?] is also statistically significant, its coefficient estimate of 0.0004 leads to a hazard ratio of 1 indicating little if any practical impact. As shown in Table \ref{tab:EI}, {\it Real Earnings} is the most important factor among all the indicators leading to the lowest $G^2$ value and showing the strongest impact on retirement behavior.  Figure \ref{fig:real} plots the fluctuation of retirement against a 1 year lag of {\it Real Earnings}. Two highly correlated equity market indices, {\it S\&P500} and {\it Wilshire 5000}, were also statistically significantly with hazard ratios $>1$ indicating that employees of this organization are more likely to retire when the stock market is strong.
+
+   Unadjusted Monthly Housing Price (MHP) is another influential index and inclusion in the model resulted in the lowest MAPE value. Fluctuations in the lag also correlate strongly with the retirement number as shown in Figure \ref{fig:MHP}. However, the retirement number does not decrease coinciding with the decreasing of MHP after the 2008 financial crisis.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Models for Voluntary Quitting without external economic variables}
+
+I. dependent variable are YCSH, because age is not able to predict well. Why plot YCSH by vq and age by vq to describe why.
+one employee quit with 67 years old and less than 85 points. all quit before 65 years.
+II. shorten the length of risk set. how to shorten the risk set.
+iii. model comparison. (survival model, time series model, and logistic regression model)
+
+A second area of interest in analyzing turnover is voluntary quitting.  Using the same methodology and set of variables applied to retirement modelling, we constructed a predictive model for quitting. The challenge of modelling quitting in the current context is that the current data has approximately 600 out of 8000 employees quitting during the 10-year study window resulting in a very high proportion of censored data.  With this data density, the model cannot generate a smooth baseline to achieve a good forecasting model using age as the dependent variable because employees quit across such wide range of ages (20 to 64); see Figure \ref{fig:agevq} and Table \ref{tab:vqmodelstats}.  Modelling years of service (YCS) as dependent variable compresses the reference frame leading to better estimates with employees usually quitting within the first 10 years of service as shown in Figure \ref{fig:ycsvq}. Since an employee will not quit if their are eligible for pension we remove those employees from the risk set when they meet either one of requirements.  With those cases now censored the indicators {\it p85} and {\it a65} are no longer useful for modelling.
+
+Among all the models shown in Table \ref{tab:vqmodelstats}, model XX with {\it division}, {\it COCS}, {\it Age at credited}, and {\it policy} as explanatory variables fit best.  A discrete version of the Cox model based on logistic regression also performs well with both models showing similar MAPE and $G_2$ values; see \citet{allison2010} for more detail on discrete models. 
+
+Our results suggest that voluntary quitting is influenced by an employee's age at the start of their service. The coefficient estimate for age is -0.025. As the reference age is 35.44, this means that the hazard of quitting for an employee that started working at age 36.44 is $exp(-.025)=.975$ that of an employee starting at age 35.44. For each additional year of age at beginning of service we estimate 2.5\% drop in hazard of quitting. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.025} = (S(t)^{e^{0.025}})$ if age is one year below average, where $S(t)$ is the baseline survival probability for a reference employee of average age at initial employment. Moving in the other direction, the employee's survival probability increases to $S(t)^{0.975}=(S(t)^{e^{-0.025}})$ for a one year increase in the employee's starting age. Together, this implies that at any given voluntary quitting age, the employee who starts earlier is more likely to quit than an equivalent employee who starts working later.
+
+The early retirement incentive option {\it policy} also shows a significant impact on an employee's quitting behavior.  The coefficient for this indicator was 1.111 leading to a hazard ratio of $e^{.1.111} = 3.04$.  This indicates that, on average, an individual's hazard of quitting increased by almost 3 times during this period.  It is unclear why an optional early retirement program would influence quitting but it is possible that the program led to leadership or organizational disruptions [NEED CITATION HERE] or simply that it took place during 2008[When did it take place], a time of significant economic upheaval. This indicates that employees are more likely to quit during this specific period.
+
+The {\it division} variable was also a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 6 so that it's hazard rate is determined by the baseline.  Relative to this baseline, division 7 has a similar hazard of quitting according to the model estimates. Conversely, the other divisions all have negative coefficients with hazard ratios less than 1 indicating that individuals within these groups have lower hazard of quitting than group 6.
+
+The {\it COCS} variable was another significant predictor.  For analysis, the baseline level was engineer for this variable so that it's hazard rate is determined by the baseline. Relative to this group, all the other divisions have negative coefficients with hazard ratios less than 1. In particular, the crafts group with coefficient of -1.165 and a hazard ratio of 0.312 shows a much lower hazard of quitting than the engineering group.  This may reflect that differences in sociological or demographic factors among workers in these job categories, differences in compensation relative to other opportunities, or other differences in local or national economic mobility.
+
+In general, differences in quitting rates could be caused by differences in age demographics, leadership, departmental and job function, or departmental leadership.
+
+The baseline survival function and log hazard function for quitting are shown in Figure \ref{fig:vqbasepred}. The survival probability decreases steeply between 0 and 10 years of service. By 10 years of service at 10 the survival probability has decreased to close to 0.25, which indicates that 75\% of employees quit within the first 10 years of service.  The slope of survival function flattens to 0 from 10 to 30 years of service.  Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between years of service at 0 to 10 indicates the increased quitting activity during this period.  After this the cumulative hazard levels off indicating a drop in the hazard rate at these future points.
+
+
+\subsubsection{A Model for Voluntary Quitting including external economic variables}
+i. tested which variable does significantly impact on employee voluntary quit.
+
+
+
+
+%Another alternative eligibility criteria occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see Figure \ref{fig:basepred} (explain).  However, by including an interaction between the Age 65 and points 85 indicator, we can estimate how the impact of reaching 85 points diminishes beyond regular retirement age.  In this case, the interaction term is estimated at -1.61 leading to a decreasing effect of the 85 points criteria to $e^{1.44-1.61} = 0.84$ indicating that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer).
+
+
+
+%According to our model, retirement can also be influenced by employee's age and their years of service at the time of hiring (YCSH).  The estimates for age are -0.17. As the reference age is 45.49, it means the employee's survival probability is $S(t)^{1.19}(S(t)^{e^{0.17}})$ when the employee started age is one year younger than 45.49,  where $S(t)$ is the baseline survival probability at time t for a reference employee of average age, in the case 45.49 years old at the start of the current interval. The employee's survival probability is $S(t)^{0.84}(S(t)^{e^{-0.17}})$ for every one year increase beyond 45.49 in the employee's starting age. This indicates that at any given age, the employee who starts earlier than 45.49 years old is more likely to retire , because they have more years of service and are much likely to reach retirement requirement (85 points) earlier than the employee who starts at older age. Similar as the years of service, the employee's years of service are hiring time has positive estimates (0.019) with the hazard ratio (1.019). It leads to $S(t)^{0.98}$ of the survival probability for every one year decreasing of the employee in the reference years of service at time of hiring. On the other hand, the survival probability is $S(t)^{1.019}$ for every one year increase of the employee in the reference years of service at hiring time. This indicates that the employee who has more years of service are more likely to retire than the employee who has less years of service.
+
+%In the fiscal year 2008, the employer in the study created a temporary early retirement buyout option. The response window for this option was 3 months although the specific details of this are unknown. In order to deal with the increased level of retirement during this period we including a time dependent indicator variable.  The coefficient for this indicator was 0.86 leading to a hazard ratio of 2.21 which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate would be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors(work on this last part - why do we need to include). We further test the policy effect on the employee who are eligible for getting pension. The test results shows the policy had a significant effect for the employee who are eligible for getting the full pension benefit rather than the employee who are eligible for getting partial retirement plan as the interaction term of between policy and points 75 or points 65 are not statistically significant. The hazard ratio for the policy effect on those employee substantially increase to 15.85 from 2.21, which is more than seven times of the basic policy effect, after the model adding a interaction term of policy and points 85.
+
+%Another significant factor is division as shown in the table \ref{tab:paraest.}. As the results shows the employees in some division has positive parameter estimates which is division 6, 7 and 8. Two divisions (division 6 and 7) have very high hazard ratio: 8.46 and 11.42, which indicates that the employee in division 6 and division 7 are much more likely to retire than the employee in reference division (1). Three divisions (2, 3, and 9) have negative estimates (-0.97, -0.24, and -3.02) and the hazard ratios lower than 1 (0.38, 0.79, and 0.05), which indicates the employee in those divisions are much less likely to retire than the employee in reference division (1). Two divisions (4 and 5) are not statistically significant, which indicates that the employee in division 4 and 5 has the similar chance to retire with the employee in the reference division (1). The diversity retirement behavior among divisions might be caused by the diversity of the demographic structure, leadership, departmental function, and departmental culture,
+
+%The baseline survival function and log hazard function are shown in Figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in Figure \ref{fig:Surv}, which indicates that no employee retire before age at 49. Survival probability starts to slowly decease from age 50 to age 62. The survival probability is around 0.75 for the employee who less than 62 years old, which indicates the employee who is less than 62 years has a probability of 25\% to retire.  The slope of survival function decrease sharply and causes the survival probability steeply decreasing from 0.75 to almost 0 from age 62 to age 70, which indicates the employee are much more likely to retire from age 62 to 70. Accompany with the survival function, the log hazard ratio starts to rise up from age 62 and it steps up at age 65 as shown in Figure \ref{fig:Hazard}. The trend for hazard function tend to increase by age increasing. The hazard ratio causes the employee retire probability increasing sharply.
+
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[Survival function]{\label{fig:Surv}\includegraphics[width=0.5\textwidth]{Surv.png}}
+	\subfloat[Cumulative hazard]{\label{fig:Cumh}\includegraphics[width=0.5\textwidth]{logcum.png}}
+	%\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{loghazard.png}}
+	\caption{Baselines with 95\% confident intervals}
+	\label{fig:basepred}
+\end{figure}
 
 
 % Table generated by Excel2LaTeX from sheet 'Sheet2'
@@ -935,63 +1119,6 @@ Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As not
 	\label{tab:paraest.}%
 \end{table}%
 
-{\it P85} is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view the hazard ratio is $e^{1.44} = 4.22$.  So the hazard of retirement becomes 4.22 times more likely after the person exceeds 85 points.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:hist}.  The survival function after 85 points is achieved can be su
-(Julia, why is the hazard ratio not published in the data??? because it has interaction term)
-
-An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see figure \ref{fig:basepred} (explain).  However, by including an interaction between the indicators of Age greater than 65 and points greater than 85, {\it A65*P85}, we can estimate how the impact of reaching 85 points diminishes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the {\it P85} criteria to $e^{1.44-1.61} =0.84$.  This suggests that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer?).  (Discuss that the baseline may increase so that the overall probability is actually higher.)
-
-
-According to our model, retirement can also be influenced by an employee's age at hire and their years of service at the time of hiring, {\it YCSH}.  The coefficient estimate for age is -0.17. As the reference age is 45.49, this means that the hazard ratio for retirement of an employee that started working at age 46.49 is $exp(-.017)=.84$ indicating a 16\% drop in hazard for each additional year later that an employee started. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.19} = (S(t)^{e^{0.17}})$ when age at hire is one year below 45.49,  where $S(t)$ is the baseline survival probability for a reference employee of average age at the time of hiring. Moving in the other direction, employee's survival probability is $S(t)^{0.84}=(S(t)^{e^{-0.17}})$ for a one year increase beyond 45.49 in the employee's starting age. Together, this implies that at any given retirement age, the employee who starts earlier than 45.49 years old is more likely to retire because they have more years of service and closer to vesting full benefits (85 points) than an equivalent employee who starts working at an older age. Similarly, the employee's years of service at hire show a positive estimate (0.019) with a hazard ratio (1.019) indicating that each year of service at hire beyond the baseline of 2.75 is associated with an approximately 2\% increase in the hazard of retirement.  This leads to a survival probability $S(t)^{0.98}$ for a one year decrease in the reference years of service at time of hiring.  On the other hand, the survival probability is $S(t)^{1.019}$ for an employee with one year of service above average at the time of hire. Together, both age at hire and YCSH effects reflect the intuitive fact that, all else being equal, an employee who has more years of service and therefore is closer to full vesting is more likely to retire.  What is non-intuitive about this finding is that while one might suspect that the effects should be of similar magnitude, we actually see that the effect of one year difference in age seems to have about 8 times the impact that one year of previous service does on the hazard of retirement.
-
-\begin{figure}[h!]
-	\centering
-	\subfloat[Retirement rate]{\label{fig:ratio}\includegraphics[width=0.5\textwidth]{reratio.png}}
-	\subfloat[Prediction w/o variable policy]{\label{fig:nopolicy}\includegraphics[width=0.5\textwidth]{nopolicy.png}}
-	\caption{Retirement rate and Prediction Plot}
-	\label{fig:rerate}
-\end{figure}
-
-In the fiscal year 2008, the employer in this study created a temporary early retirement buyout option. The response window for this option was 3 months although the specific details beyond this are unknown. In order to deal with the increased level of retirement during this period we including a time dependent indicator variable.  The coefficient for this indicator was 0.86 leading to a hazard ratio of $e^{.86} = 2.21$ which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate may be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors(work on this last part - why do we need to include).
-
-As a second step, we further test the policy effect on the employees who are eligible for getting a pension. The test results show that the policy had a significant effect for an employee who is eligible for getting the full pension benefit rather than the employee who is only eligible for getting partial retirement as the interaction term of between policy and indicator variables that employees achieve points 75 or points 65 are not statistically significant. The hazard ratio for the policy effect on those employees increases substantially to 15.85 from 2.21, which is more than seven times of the basic policy effect, after the model adding a interaction term of policy and the indicator that a person  exceeds 85 points.
-
-
-The {\it division} variable was a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 1 so that it's hazard rate is determined by the baseline.  Relative to this baseline, divisions 6 and 7 have very high hazard ratios, 8.363 and 11.405 respectively, which indicates, other factors being equal, that the employees in division 6 and division 7 are much more likely to retire at any age than those from division 1.  Conversely, division 9 has a hazard ratio of exp(-3.023) = .049 indicating that individuals within this group have 1/20 the hazard of group 1.  This may indicate that the division is new and contains younger employees(how to deal with this??  Time varying variable?).  In general, differences in retirement rates could be caused by differences in age demographics, leadership, departmental and job function, or departmental leadership.
-
-The baseline survival function and log hazard function are shown in figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in figure \ref{fig:Surv}, which indicates that no employees retire before this age. The survival probability starts to slowly decease from age 50 to age 62. By age 62 the survival probability has decreased to close to 0.75, which indicates that 75\% of employees retire at an age greater than 62 years.  The slope of survival function decreases sharply at this point indicating the increased retirement rates for workers between age 62 and 65.  After 65 the probability drops off even further as most of the remaining population retires by age 68 or 69. Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between age 62 and 65 indicates the increased retirement activity during this period.  After this the cumulative hazard levels off indicating a drop in the hazard rate at these future points.
-
-
-
-%Another alternative eligibility criteria occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see figure \ref{fig:basepred} (explain).  However, by including an interaction between the Age 65 and points 85 indicator, we can estimate how the impact of reaching 85 points diminishes beyond regular retirement age.  In this case, the interaction term is estimated at -1.61 leading to a decreasing effect of the 85 points criteria to $e^{1.44-1.61} = 0.84$ indicating that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer).
-
-
-
-%According to our model, retirement can also be influenced by employee's age and their years of service at the time of hiring (YCSH).  The estimates for age are -0.17. As the reference age is 45.49, it means the employee's survival probability is $S(t)^{1.19}(S(t)^{e^{0.17}})$ when the employee started age is one year younger than 45.49,  where $S(t)$ is the baseline survival probability at time t for a reference employee of average age, in the case 45.49 years old at the start of the current interval. The employee's survival probability is $S(t)^{0.84}(S(t)^{e^{-0.17}})$ for every one year increase beyond 45.49 in the employee's starting age. This indicates that at any given age, the employee who starts earlier than 45.49 years old is more likely to retire , because they have more years of service and are much likely to reach retirement requirement (85 points) earlier than the employee who starts at older age. Similar as the years of service, the employee's years of service are hiring time has positive estimates (0.019) with the hazard ratio (1.019). It leads to $S(t)^{0.98}$ of the survival probability for every one year decreasing of the employee in the reference years of service at time of hiring. On the other hand, the survival probability is $S(t)^{1.019}$ for every one year increase of the employee in the reference years of service at hiring time. This indicates that the employee who has more years of service are more likely to retire than the employee who has less years of service.
-
-%In the fiscal year 2008, the employer in the study created a temporary early retirement buyout option. The response window for this option was 3 months although the specific details of this are unknown. In order to deal with the increased level of retirement during this period we including a time dependent indicator variable.  The coefficient for this indicator was 0.86 leading to a hazard ratio of 2.21 which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this policy, a more case specific estimate would be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors(work on this last part - why do we need to include). We further test the policy effect on the employee who are eligible for getting pension. The test results shows the policy had a significant effect for the employee who are eligible for getting the full pension benefit rather than the employee who are eligible for getting partial retirement plan as the interaction term of between policy and points 75 or points 65 are not statistically significant. The hazard ratio for the policy effect on those employee substantially increase to 15.85 from 2.21, which is more than seven times of the basic policy effect, after the model adding a interaction term of policy and points 85.
-
-%Another significant factor is division as shown in the table \ref{tab:paraest.}. As the results shows the employees in some division has positive parameter estimates which is division 6, 7 and 8. Two divisions (division 6 and 7) have very high hazard ratio: 8.46 and 11.42, which indicates that the employee in division 6 and division 7 are much more likely to retire than the employee in reference division (1). Three divisions (2, 3, and 9) have negative estimates (-0.97, -0.24, and -3.02) and the hazard ratios lower than 1 (0.38, 0.79, and 0.05), which indicates the employee in those divisions are much less likely to retire than the employee in reference division (1). Two divisions (4 and 5) are not statistically significant, which indicates that the employee in division 4 and 5 has the similar chance to retire with the employee in the reference division (1). The diversity retirement behavior among divisions might be caused by the diversity of the demographic structure, leadership, departmental function, and departmental culture,
-
-%The baseline survival function and log hazard function are shown in figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in figure \ref{fig:Surv}, which indicates that no employee retire before age at 49. Survival probability starts to slowly decease from age 50 to age 62. The survival probability is around 0.75 for the employee who less than 62 years old, which indicates the employee who is less than 62 years has a probability of 25\% to retire.  The slope of survival function decrease sharply and causes the survival probability steeply decreasing from 0.75 to almost 0 from age 62 to age 70, which indicates the employee are much more likely to retire from age 62 to 70. Accompany with the survival function, the log hazard ratio starts to rise up from age 62 and it steps up at age 65 as shown in figure \ref{fig:Hazard}. The trend for hazard function tend to increase by age increasing. The hazard ratio causes the employee retire probability increasing sharply.
-
-
-Summarize external
-
-Summarize the predictive capabilities at the individual level.  Strengths and weaknesses.
-
-Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
-\begin{figure}[h!]
-	\centering
-	\subfloat[Survival function]{\label{fig:Surv}\includegraphics[width=0.5\textwidth]{Surv.png}}
-	\subfloat[Cumulative hazard]{\label{fig:Cumh}\includegraphics[width=0.5\textwidth]{logcum.png}}
-	%\subfloat[Hazard function]{\label{fig:Hazard}\includegraphics[width=0.35\textwidth]{loghazard.png}}
-	\caption{Baselines with 95\% confident intervals}
-	\label{fig:basepred}
-\end{figure}
-
-{\bf Julia: We need to describe the prediction process results.}
-
-The prediction for the employee retirement is shown in the figure \ref{fig:predict}, table \ref{tab:cocscode} and \ref{tab:division}. The model predictions capture the fluctuations in actual retirement, and also capture the peak of the special year 2008 when an early retirement incentive(policy) was introduced as shown in Figure \ref{fig:predict}. The out of sample predictions for holdout years (2011 and 2012) are very close to the actual number, indicating that the model performs well on both the training and holdout samples. Besides predicting the overall retirement, the model can also provide predictions by category. The table \ref{tab:cocscode} and \ref{tab:division} shows the prediction by occupation code and division by year, which is the summation of the retirement probabilities of individuals by job classification and division, separately. As the tables shown, the predicted values are also close to the actual values in these two categories.
 
 \begin{figure}[h!]
 	\centering
@@ -1104,8 +1231,6 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 
 
 
-\subsection{Retirement model with external variables}
-  Because the previous model cannot account for the time varying features of the economic indicators, we use a new counting process model with yearly interval based on calendar year to test their effects on retirement. This model has the similar parameter estimation as the selected model as shown in the right part of the table \ref{tab:paraest.}. We found three indicators are statistically significant and also improve the model forecasting due to lower MAPE and $G^2$ than the values of selected model without economic indicator, which are S\&P500, Real Earnings and Wilshire 5000 as shown in table \ref{tab:EI}. Although Real price is also statistically significant, its coefficient estimates is 0.0004 leading hazard ratio is 1, which indicate it does not impact the employee's retirement behaviors. As shown in table \ref{tab:EI}, Real earnings is the most important factor among all the indicators as it has lowest $G^2$. The test results show that it has strong impact on the retire behaviors. As shown in figure \ref{fig:real}, the fluctuation of retirement plot is corresponding with 1 year lag of the trend of Real earnings. Unadjusted Monthly Housing Price (MHP) is another influential index with the lowest MAPE value. It has significantly impacts on the retire number as it increases as shown in figure \ref{fig:MHP}. However, the retire number does not decrease coinciding with the decreasing of MHP. Two market indicators(S\&P500 and Wilshire 5000) are both significantly impact the employee retirement behavior with $>1$ hazard ratio, which indicating the employee are more likely to retire when the economics is under good condition.
 \begin{table}[htbp]
 	\scriptsize
 	\centering
@@ -1148,15 +1273,6 @@ The prediction for the employee retirement is shown in the figure \ref{fig:predi
 	\label{fig:EIndex}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Voluntary quit model without external variables}
-
-I. dependent variable are YCSH, because age is not able to predict well. Why plot YCSH by vq and age by vq to discribe why.
-one employee quit with 67 years old and less than 85 points. all quit before 65 years.
-II. shorten the length of risk set. how to shorten the risk set.
-iii. model comparison. (survival model, time seris model, and logsitic regression model)
-
-Voluntary quitting model is built based on the same variables in the retirement model except {\it P85} and {\it A65}. The difficulty for building the quitting model is that we only have around 600 out of 8000 employees quitting during the 10-year study window. This causes the high proportion of censor data. Also, the model cannot generate a smooth baseline to achieve a good forecasting model (\ref{tab:vqmodelstats}) when age is the dependent variable, because employees quit at a wide range of ages (20 to 64) as shown in figure \ref{fig:agevq}. To better forecast quitting, we use years of service (YCS) as dependent variable, because usually an employee quits at first 10 years of service as shown in figure \ref{fig:ycsvq}. Since an employee will not quit if their are eligible for pension, which are 65 years of service and 85 points. We remove those employees from the risk set when they meet either one of requirements.
 
 
 \begin{figure}[h!]
@@ -1248,26 +1364,6 @@ Voluntary quitting model is built based on the same variables in the retirement 
 	\label{fig:predictvq}	
 	
 \end{figure}
-
-Among all the models shown in table \ref{tab:vqmodelstats}, a survival model is selected with {\it YCS} as dependent variable and reduced risk set, and with {\it division}, {\it COCS}, {\it Age at credited}, and {\it policy} as explanatory variables. Logistic regression model also performs well as the survival model, as two models have similar MAPE and $G_2$ values. One reason for the close performance is that the logistic regression is the discrete model of Cox PH model.
-
-
-According to our model, voluntary quitting is influenced by an employee's age at their years of service started. The coefficient estimate for age is -0.025. As the reference age is 35.44, this means that the hazard ratio for quitting of an employee that started working at age 35.44 is $exp(-.025)=.975$ indicating a 2.5\% drop in hazard for each additional year later that an employee started. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.025} = (S(t)^{e^{0.025}})$ when age is one year below 35.44,  where $S(t)$ is the baseline survival probability for a reference employee of average age at the time of starting their pension. Moving in the other direction, employee's survival probability is $S(t)^{0.975}=(S(t)^{e^{-0.025}})$ for a one year increase beyond 35.44 in the employee's starting age. Together, this implies that at any given voluntary quitting age, the employee who starts earlier than 35.44 years old is more likely to quit than an equivalent employee who starts working at an older age.
-
-The temporary early retirement buyout option also impact on employee's quitting behavior, as {\it policy} also significant in the model.  The coefficient for this indicator was 1.111 leading to a hazard ratio of $e^{.1.111} = 3.04$ which indicates that, on average, an individuals hazard of quitting increased by almost 3 times during this period. This indicates that employees are more likely to quit during this specific period.
-
-The {\it division} variable was a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 6 so that it's hazard rate is determined by the baseline.  Relative to this baseline, division 7 has a similar hazard ratio of quitting with division 6, indicating the employees have the similar quitting behavior with division 6. Conversely, the other divisions all have negative coefficients with hazard ratios less than 1 indicating that individuals within these groups have lower the hazard of group 6.
-
-The {\it COCS} variable was another significant predictor.  For analysis, the baseline level was engineer for this variable so that it's hazard rate is determined by the baseline. Relative to this baseline, all the other divisions have negative coefficients with hazard ratios less than 1, especially for Crafts group with -1.165 of coefficient estimation and 0.312 ($exp(-0.165)$) of hazard ratio, indicating that individuals within these groups have lower the hazard of engineer group. In other words, engineers are more likely to quit than the other job categories, because it may be easier for engineer to find a better job in the job market.
-
-In general, differences in quitting rates could be caused by differences in age demographics, leadership, departmental and job function, or departmental leadership.
-
-The baseline survival function and log hazard function are shown in figure \ref{fig:vqbasepred}. The survival probability starts to steeply decease from 0  to 10 years of service. By years of service at 10 the survival probability has decreased to close to 0.25, which indicates that 75\% of employees quitting at first 10 years of service.  The slope of survival function decreases flatly to 0 from 10 t0 30 years of service.  Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between years of service at 0 to 10 indicates the increased quitting activity during this period.  After this the cumulative hazard levels off indicating a drop in the hazard rate at these future points.
-
-
-\subsubsection{Voluntary quit model with external variables}
-i. tested which variable does significantly impact on employee voluntary quit.
-
 
 
 \begin{table}[]
