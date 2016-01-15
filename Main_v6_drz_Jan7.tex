@@ -120,7 +120,7 @@ Also, \citet{braun2011} used a hierarchical competing risks analysis to model wh
 The dataset analyzed was provided by a large multipurpose research organization in the U.S. and consists 4316 active and 3782 former full-time employees.  This population of employees is followed across a 12 year window from November 2000 to December 2012.  Records of employees that retired or left before November 2000 or that began employment after December 2012 truncated from the dataset. In addition, for 4316 current employees there is no termination date. The sampling approach taken, capturing only employees active in a fixed window creates two forms of bias in the sample that must be accounted for, right censoring and left truncation. A subject is right censored if their endpoint, retirement in this case, is unknown at the time of the study since they are still actively employed.  Right censored observations do provide information and should not be dropped but must be analyzed differently than complete observations.   Left truncation results from a failure to include cases that fail before the beginning of the study window.  This results in a biased sample since only those cases that survive long enough will be represented in a sample.  Both of these potential biases will be considered during the discussion of models below.
 
 
-A number of static employee attributes are provided in the list below: 
+A number of static employee attributes are provided in the list below:
 \begin{itemize}
 	\item Payroll (PR): hourly, weekly, or monthly payroll,
 	\item GENDER (GENDER): male, female
@@ -157,7 +157,7 @@ List of financial variables.
 	\item Seasonal Adjusted Monthly Housing Price (SAMHP), seasonal adjusted monthly housing price.
 	\item Southeastern Monthly Housing Price (SEMHP), unadjusted southeastern monthly purchase-only index
 	\item Seasonal Adjusted Southeastern Monthly Housing Price (SESAMHP), seasonal adjusted southeastern monthly purchase-only index,
-	\item S\&P 500 stock index and Dow Jones Indices: S\&P 500, dividend, earnings, consumer index, long interest rate, real price, real dividend, real earnings, P/E 10 \citep{sp500}  
+	\item S\&P 500 stock index and Dow Jones Indices: S\&P 500, dividend, earnings, consumer index, long interest rate, real price, real dividend, real earnings, P/E 10 \citep{sp500}
    \item Wilshire 5000 total market full cap index published by Wilshire Associates (Wilshire5000) \citep{will5000}.
 \end{itemize}
 All twelve of these indices were operationalized for testing using their using a twelve month lag of their one year averages.  This approach ensures that the variable can be useful in forecasting since the one year lag will be known at the time of forecasting.  The economic indices are originally reported at the daily or monthly level. The yearly average is computed as the average value of the index over the previous twelve months.
@@ -207,7 +207,7 @@ This study aims to develop accurate predictive models of retirement and quitting
  \begin{figure}[htbp]
  	\centering
  	\includegraphics[width=3.5in]{fig1.png}
- 	\caption{Right Censor and Left Truncation}
+ 	\caption{Right Censoring and Left Truncation}
  	\label{fig:1}
  \end{figure}
   Let $T_i$ be the time at which the $i^{th}$ individual experiences the event of interest and let $C_i$ denote the final time at which the individual is observed. An observation is called {\it right censored} if $T_i> C_i$, indicating that actual event time for the individual  is not recorded but is only known to be greater than $C_i$. Thus, employees that are currently active at the end of the observation window are right censored. These right censored observations do contain information, although incomplete, about a subjects lifetime and require special treatment in order to draw proper inference.
@@ -265,8 +265,8 @@ where $x=(x_1, x_2, \ldots, x_{k_1}, x_1(t), x_2(t), \ldots, x_{k_2}(t))$, $h_0(
 The current study considers three internal time dependent variables that are functions of the individuals characteristics.
 
 \begin{itemize}
-\item Early Retirement Incentive Program(ERIP): a specific time during the study window, part of the 2008 calendar year, when the organization offered an early retirement incentive program; see \citep{ERIP}.It is time varying in the sense that it occurs at a different age for each individual in the study population and is set at 0 during the period when no program exists and 1 during the period when the program does exist. 
-\item Points 85 (P85), an indicator that an employee has amassed 85 service points, the sum of their years of service and age, and qualifies for full retirement benefits, 
+\item Early Retirement Incentive Program(ERIP): a specific time during the study window, part of the 2008 calendar year, when the organization offered an early retirement incentive program; see \citep{ERIP}.It is time varying in the sense that it occurs at a different age for each individual in the study population and is set at 0 during the period when no program exists and 1 during the period when the program does exist.
+\item Points 85 (P85), an indicator that an employee has amassed 85 service points, the sum of their years of service and age, and qualifies for full retirement benefits,
 \item Age at 65 (A65), an indicator that an employee qualifies for retirement by exceeding the age 65 threshold
 \end{itemize}
 P85 and A65 are two additional time varying variables that capture important changes in individuals hazard level throughout the study.
@@ -497,8 +497,8 @@ The results of 100 simulations at each combination of sample size and censoring 
  	\end{tabular}
  	\label{tab:rightcensor}%
  \end{table}
- 
- 
+
+
 
 \subsection{Simulation 2: Right Censoring with Staggared Entry Times} \label{rightcensor:sim2}
 
@@ -512,8 +512,8 @@ The results of the simulation are shown in Table \ref{tab:right2}. As discussed 
  	\caption{Right Censor Simulation Results by Various Start Time}
  	\begin{tabular}{ccccccc}
  		\toprule
- 		\multicolumn{1}{c}{\multirow{2}{1.5cm}{Censor proportion}}  & \multirow{2}[4]{*}{Events} & \multicolumn{3}{c}{Variable Estimates} & \multicolumn{2}{c}{Predicted Events} \\ \cline{3-7}
- 		&       & age   & $\lambda$ & $\alpha$ & "coxreg" & "phreg" \\
+ 		\multicolumn{1}{c}{\multirow{2}{1.5cm}{Censoring Pct.}}  & \multirow{2}[4]{*}{Events} & \multicolumn{3}{c}{Variable Estimates} & \multicolumn{2}{c}{Predicted Events} \\ \cline{3-7}
+ 		&       & AGE   & $\lambda$ & $\alpha$ & "coxreg" & "phreg" \\
  		\midrule
  		0\%   & 400   & 0.025 & 2.694 & 1.508 & 398.52 & 400.44 \\
  		25\%  & 400   & 0.026 & 2.802 & 1.518 & 394.24 & 401.72 \\
@@ -526,31 +526,31 @@ The results of the simulation are shown in Table \ref{tab:right2}. As discussed 
 
 \begin{figure}[h!]
 	\centering
-	\subfloat[No Right Censor ]{\label{fig:baseno}\includegraphics[width=3in]{base0.png}}
+	\subfloat[0\% Right Censoring ]{\label{fig:baseno}\includegraphics[width=3in]{base0.png}}
 	\quad
-	\subfloat[25\% Right Censored]{\label{fig:base25}\includegraphics[width=3in]{base25.png}}
+	\subfloat[25\% Right Censoring]{\label{fig:base25}\includegraphics[width=3in]{base25.png}}
 	\quad
-	\subfloat[50\% Right Censored ]{\label{fig:base50}\includegraphics[width=3in]{base50.png}}
+	\subfloat[50\% Right Censoring ]{\label{fig:base50}\includegraphics[width=3in]{base50.png}}
 	\quad
-	\subfloat[75\% Right Censored]{\label{fig:base75}\includegraphics[width=3in]{base75.png}}
+	\subfloat[75\% Right Censoring]{\label{fig:base75}\includegraphics[width=3in]{base75.png}}
 	\caption{Baseline Comparison by Various Censoring}
 	\label{fig:rightbase}
 \end{figure}
 
 
-[Parametric Bootstrap distribution-look at research, also Simonoff paper
+[PARAMETRIC BOOTSTRAP DISTRIBUTION-LOOK AT RESEARCH, ALSO SIMONOFF PAPER]
 
 Figure \ref{fig:rightdiff}, panels (a-d) illustrate the difference between parametric and non-parametric estimates of the baseline cumulative hazard function, $H_0(t) = -log(\hat{S}(t))$ at different time points over 100 simulated data sets.  Panel (a) indicates that without censoring, overall survival estimates including both baseline and covariates are very similar across parametric and semi-parametric approaches.  As lifetime, $t$ increases, we see increasing deviations between the two estimates.  This due both to the cumulative nature of the estimates and to the increasing variability of hazard estimation of the non-parametric baseline, the Breslow estimator,   \citep{DavHink1997,Burr1994} as the number of observations at risk diminishes over time.
 
 \begin{figure}[h!]
 	\centering
-	\subfloat[No Right Censor ]{\label{fig:diffno}\includegraphics[width=3in]{diff0.png}}
+	\subfloat[No Right Censoring]{\label{fig:diffno}\includegraphics[width=3in]{diff0.png}}
 	\quad
-	\subfloat[25\% Right Censored]{\label{fig:diff25}\includegraphics[width=3in]{diff25.png}}
+	\subfloat[25\% Right Censoring]{\label{fig:diff25}\includegraphics[width=3in]{diff25.png}}
 	\quad
 	\subfloat[50\% Right Censored ]{\label{fig:diff50}\includegraphics[width=3in]{diff50.png}}
 	\quad
-	\subfloat[75\% Right Censored]{\label{fig:diff75}\includegraphics[width=3in]{diff75.png}}
+	\subfloat[75\% Right Censoring]{\label{fig:diff75}\includegraphics[width=3in]{diff75.png}}
 	\caption{Differences in Estimates of Baseline Cumulative Hazard Functions, Parametric - Non-parametric, for 4 Levels of Censoring}
 	\label{fig:rightdiff}
 \end{figure}
@@ -565,7 +565,7 @@ Finally, we perform a simulation to evaluate the impact of left truncation bias 
 \begin{figure}[h!]
 	\centering
     \includegraphics[width=3.5in]{truncationhist.png}
-	\caption{Histogram of Simulated Turnover Time}
+	\caption{Histogram of Simulated Lifetimes}
  	\label{fig:trunchist}
  \end{figure}
 
@@ -582,7 +582,7 @@ Sample size and censoring proportions and results follow the same protocol given
  	\caption{Left Truncation Simulation Predictions: Comparison of Actual vs. Cox PH and Parametric PH with EV baseline.}
  	\label{fig:leftbase}
  \end{figure}
- 
+
  \begin{figure}[h!]
  	\centering
  	\subfloat[No Left Truncation]{\label{fig:leftno}\includegraphics[width=3in]{Predev0.png}}
@@ -912,7 +912,7 @@ Section \ref{sec:modelchoice} discussed two potential response variables that ar
 
 %1) Need counting process form for time varying covariates.
 %2) Need counting process form to estimate the baseline from CoxPh Model.
-%3) Need 
+%3) Need
 
 
 %put this graphic in policy discussion part
@@ -946,7 +946,7 @@ Section \ref{sec:modelchoice} discussed two potential response variables that ar
 \end{table}%
 
 Extensive model selection using a variety of metrics including log-likelihood, AIC, BIC, and out of sample predictive scoring (MAPE and $G^2$) was then applied to identify key predictive factors in the model as shown in Table \ref{tab:modelstats}. %This is likely due to the fact that age 62 is the earliest age for a person to receive social security retirement benefit.
-The first four models listed are all standard Cox PH models with various sets of explanatory variables.  Among these four, the third model offers the lowest BIC value, 19061, while the fourth has the lowest AIC, 18,996 indicating these two models are the best of this subset.  Overall, both models perform almost identically on MAPE and holdout MAPE which is error when the model is used on data from years 2011 and 2012 which was not used to train the model. $G^2$ and holdout $G^2$ were also nearly identical.  From this perspective, the variable COCS seems to provide very little predictive impact.   Model 5 uses the same variables as 1 - 4 but uses COCS as a stratification variable meaning that we create a separate baseline for each job classication variable.  Creating multiple baselines for subgroups makes the model significantly more complex leading to a huge reduction in log likelihood and traditional model fit but providing very poor predictive and holdout fits due to the significant overfitting of the data. [This doesn't make sense due to the previous finding-COCS is not a good target].  
+The first four models listed are all standard Cox PH models with various sets of explanatory variables.  Among these four, the third model offers the lowest BIC value, 19061, while the fourth has the lowest AIC, 18,996 indicating these two models are the best of this subset.  Overall, both models perform almost identically on MAPE and holdout MAPE which is error when the model is used on data from years 2011 and 2012 which was not used to train the model. $G^2$ and holdout $G^2$ were also nearly identical.  From this perspective, the variable COCS seems to provide very little predictive impact.   Model 5 uses the same variables as 1 - 4 but uses COCS as a stratification variable meaning that we create a separate baseline for each job classication variable.  Creating multiple baselines for subgroups makes the model significantly more complex leading to a huge reduction in log likelihood and traditional model fit but providing very poor predictive and holdout fits due to the significant overfitting of the data. [This doesn't make sense due to the previous finding-COCS is not a good target].
 
 Models 6-8 build on model 3 and add various interaction terms.  Here again we find models 7 and 8 being roughly equivalent with the more complex model having a smaller AIC and holdout MAPE, and very slightly higher predicted $G^2$ and predicted MAPE.  In the end, we chose to explore the more complex model 8 due to interest in interpreting the interacting model coefficients.[MAYBE NOT A GOOD REASON, CHECK IF SBC IS RIGHT]
 
@@ -962,7 +962,7 @@ Excluding aggregate economic factors, the optimal modelling variables for the pr
 
 Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As noted above, we did not find that gender, occupational code and payroll category were statisitcally significant predictors indicating that employees' gender, job types, and payroll status are not associated with choice of retirement age conditional on the other variables in the model.
 
-P85 is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:point}.  The survival function after 85 points is achieved can be seen to steepen [FINISH THIS THOUGHT] 
+P85 is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:point}.  The survival function after 85 points is achieved can be seen to steepen [FINISH THIS THOUGHT]
 
 
 An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard, which should increase after this point; see Figure \ref{fig:basepred}[EXPLAIN THE FIGURE].  However, by including an interaction between the indicators of age greater than 65 and points greater than 85, A65*P85, we can estimate how the impact of reaching 85 points changes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the P85 criteria to $e^{1.44-1.61} =0.84$.  This suggests that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the age 65 criteria.  It seems that the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact [OR THAT THEY ARE INTENDING TO WORK LONGER?].  [DISCUSS THAT THE BASELINE MAY INCREASE SO THAT THE OVERALL PROBABILITY IS ACTUALLY HIGHER.]
@@ -1193,14 +1193,14 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
 
 {\bf Julia: We need to describe the prediction process results.}
 
- Aggregate predictions for employee retirement are shown in Figure \ref{fig:predict} and Tables \ref{tab:cocscode} %- \ref{tab:division}. 
+ Aggregate predictions for employee retirement are shown in Figure \ref{fig:predict} and Tables \ref{tab:cocscode} %- \ref{tab:division}.
  The model predictions capture the fluctuations in actual retirement, and also capture the peak year of 2008 when the ERI was introduced. The out-of-sample predictions for holdout years (2011 and 2012) are very close to the actual number indicating that the model performs well on both the training and holdout samples. Besides predicting the overall retirement, the model can also provide predictions by category. Table \ref{tab:cocscode} shows the yearly predictions by occupation code and \ref{tab:division} division, which are computed by summing the retirement probabilities of individuals by job classification and division.  The predicted values match the actual values in these two categories well.  [NOW USE BOOTSTRAP TO UNDERSTAND UNCERTAINTY.]
 
 \subsection{Models for Retirement with External Economic Variables}
    The impact of the external economy on retirement decision making is a topic of considerable interest.  To explore these effects we include lagged versions of a number economic factors using the counting process data formulation with calendar year based intervals to set up and test the impact on retirement. Parameter estimates for common effects across models with and without economic variables remain constant as can be observed in Table \ref{tab:paraest.}.  As shown in Table \ref{tab:EI}, among economic indices tested, {\it S\&P500}, {\it Real Earnings}, and {\it Wilshire 5000} were statistically significant and also improved the model forecast leading to lower MAPE and $G^2$.  Although {\it Real Prices}[PRICE OF WHAT?] is also statistically significant, its coefficient estimate of 0.0004 leads to a hazard ratio of 1 indicating little if any practical impact. As shown in Table \ref{tab:EI}, {\it Real Earnings} is the most important factor among all the indicators leading to the lowest $G^2$ value and showing the strongest impact on retirement behavior.  Figure \ref{fig:real} plots the fluctuation of retirement against a 1 year lag of {\it Real Earnings}. Two highly correlated equity market indices, {\it S\&P500} and {\it Wilshire 5000}, were also statistically significantly with hazard ratios $>1$ indicating that employees of this organization are more likely to retire when the stock market is strong.
 
    Unadjusted Monthly Housing Price (MHP) is another influential index and inclusion in the model resulted in the lowest MAPE value. Fluctuations in the lag also correlate strongly with the retirement number as shown in Figure \ref{fig:MHP}. However, the retirement number does not decrease coinciding with the decreasing of MHP after the 2008 financial crisis.
-   
+
    \begin{table}[htbp]
    	\scriptsize
    	\centering
@@ -1242,7 +1242,7 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    	\caption{Economic Indicators and Retirement Predicting Plot}
    	\label{fig:EIndex}
    \end{figure}
-   
+
    % Table generated by Excel2LaTeX from sheet 'Sheet4'
    \begin{table}[h!]
    		\centering
@@ -1275,7 +1275,7 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    	\end{threeparttable}
    	\label{tab:EIcocs}%
    \end{table}%
-   
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Models for Voluntary Quitting without External Economic Variables}
 
@@ -1286,7 +1286,7 @@ iii. model comparison. (survival model, time series model, and logistic regressi
 
 A second area of interest in analyzing turnover is voluntary quitting.  Using the same methodology and set of variables applied to retirement modelling, we constructed a predictive model for quitting. The challenge of modelling quitting in the current context is that the current data has approximately 600 out of 8000 employees quitting during the 10-year study window resulting in a very high proportion of censored data.  With this data density, the model cannot generate a smooth baseline to achieve a good forecasting model using age as the dependent variable because employees quit across such wide range of ages (20 to 64); see Figure \ref{fig:agevq} and Table \ref{tab:vqmodelstats}.  Modelling years of service (YCS) as dependent variable compresses the reference frame leading to better estimates with employees usually quitting within the first 10 years of service as shown in Figure \ref{fig:ycsvq}. Since an employee will not quit if their are eligible for pension we remove those employees from the risk set when they meet either one of requirements.  With those cases now censored the indicators P85 and A65 are no longer useful for modelling.
 
-Among all the models shown in Table \ref{tab:vqmodelstats}, model XX with DIR, COCS, AGEC, and ERIP as explanatory variables fit best.  A discrete version of the Cox model based on logistic regression also performs well with both models showing similar MAPE and $G_2$ values; see \citet{allison2010} for more detail on discrete models. 
+Among all the models shown in Table \ref{tab:vqmodelstats}, model XX with DIR, COCS, AGEC, and ERIP as explanatory variables fit best.  A discrete version of the Cox model based on logistic regression also performs well with both models showing similar MAPE and $G_2$ values; see \citet{allison2010} for more detail on discrete models.
 
 Our results suggest that voluntary quitting is influenced by an employee's age at the start of their service. The coefficient estimate for age is -0.025. As the reference age is 35.44, this means that the hazard of quitting for an employee that started working at age 36.44 is $exp(-.025)=.975$ that of an employee starting at age 35.44. For each additional year of age at beginning of service we estimate 2.5\% drop in hazard of quitting. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.025} = (S(t)^{e^{0.025}})$ if age is one year below average, where $S(t)$ is the baseline survival probability for a reference employee of average age at initial employment. Moving in the other direction, the employee's survival probability increases to $S(t)^{0.975}=(S(t)^{e^{-0.025}})$ for a one year increase in the employee's starting age. Together, this implies that at any given voluntary quitting age, the employee who starts earlier is more likely to quit than an equivalent employee who starts working later.
 
@@ -1513,7 +1513,7 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 		     2010  & 1 (1) & 10 (13) & 3 (7) & 1 (4) & 5 (4) & 11 (2) & 1 (2) & 1 (1) & 2 (4) & 35 (38) \\
 		     2011  & 1 (0) & 7 (9) & 2 (4) & 1 (2) & 3 (3) & 8 (3) & 1 (0) & 1 (2) & 1 (1) & 25 (24) \\
 		     2012  & 1 (1) & 8 (6) & 3 (7) & 1 (0) & 3 (4) & 11 (14) & 1 (0) & 1 (2) & 2 (2) & 30 (36) \\
-		     
+		
 			\bottomrule
 		\end{tabular}%
 		\begin{tablenotes}
