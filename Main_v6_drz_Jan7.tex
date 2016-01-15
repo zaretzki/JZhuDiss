@@ -120,33 +120,64 @@ Also, \citet{braun2011} used a hierarchical competing risks analysis to model wh
 The dataset analyzed was provided by a large multipurpose research organization in the U.S. and consists 4316 active and 3782 former full-time employees.  This population of employees is followed across a 12 year window from November 2000 to December 2012.  Records of employees that retired or left before November 2000 or that began employment after December 2012 truncated from the dataset. In addition, for 4316 current employees there is no termination date. The sampling approach taken, capturing only employees active in a fixed window creates two forms of bias in the sample that must be accounted for, right censoring and left truncation. A subject is right censored if their endpoint, retirement in this case, is unknown at the time of the study since they are still actively employed.  Right censored observations do provide information and should not be dropped but must be analyzed differently than complete observations.   Left truncation results from a failure to include cases that fail before the beginning of the study window.  This results in a biased sample since only those cases that survive long enough will be represented in a sample.  Both of these potential biases will be considered during the discussion of models below.
 
 
-A number of static employee attributes are provided including payroll type(hourly, weekly, monthly), date of hire, company credit service date, termination date, age at time of hiring , years of service at time of hiring (YCSH), gender, occupational code (COCS), and division (organization level). The company credit service date is the date that the organization starts to credit the employee retirement plan. Years of service (YCS) is the total years credit for employees' pension plan. In this study, all of the employees are eligible for a defined benefit retirement plan. Beginning in January of 2012 the organization began to offer new employees defined contributions plans but such plans were not available during the period of the current study.
+A number of static employee attributes are provided in the list below: 
+\begin{itemize}
+	\item Payroll (PR): hourly, weekly, or monthly payroll,
+	\item GENDER (GENDER): male, female
+	\item DIR (DIR): ten divisions in the organization.
+	\item Occupational Code (COCS): Crafts(C), Engineers (E), General Administrative (G), Laborers (L), General Managers (M),  Administrative (P),  Operators (O), Scientists (S), Technicians (T))
+	\item Age at hire (AGEH): age at most recent time that an employee is hired or their age in November, 2000.
+	\item Age at credit (AGEC): age at most recent time that an employee is credited for their pension.
+	\item Years of Current Service (YCS): the years of service which accounts for pension credit
+	\item Years of service at hire (YCSH): the years of service which accounts for pension credit at the most recent hiring of the employee.
+	\item Termination date(TD): the date when an employee left the organization.
+	\item Termination type: the reasons for employees leaving the organization, such as retirement(RE),  volunteer quit (VQ), and other reasons.
+	\item Age at end (AGET): the age of an employee at termination date, if employee left the organization before October 31th, 2010, or the age of an employee at October 31th, 2010.
+\end{itemize}
 
- An employee is eligible for full pension benefits after exceeding either 65 years of age or 85 points of retirement credit. An employee's points are the sum of their age and YCS.  YCS can be larger than 0 at hire if an employee has credit from earlier employment in the same organization. %Some employees do not have pension plan when they were hired but they got pension later, so their company credit service date was later than hired date.
-The occupational code is a standardized code used to describe the job category in the organization for reporting purposes. In this study, occupational codes are highly correlated with payroll category: managers, engineers, administrative, and scientists are monthly payroll, general administrative employees and technicians have weekly payroll, and other categories are paid on an hourly basis. The organization or division level code is used to distinguish the departments.  In this study, the definition of each division may not static over the entire period of observation.  Over the course of time, divisions can be renamed, reduced, or dismissed in reorganizations. Furthermore, no transfer of employees between divisions is recorded.  Therefore, for purposes of prediction, the division variable indicates the organization level that an employee is associated with at the time of the final observation.
 
+The company credit service date is the date that the organization starts to credit the employee retirement plan. Years of service is the total years credit for employees' pension plan. In this study, all of the employees are eligible for a defined benefit retirement plan. Beginning in January of 2012 the organization began to offer new employees defined contributions plans but such plans were not available during the period of the current study.
+
+An employee is eligible for full pension benefits after exceeding either 65 years of age or 85 points of retirement credit. An employee's points are the sum of their age and YCS.  YCS can be larger than 0 at hire if an employee has credit from earlier employment in the same organization. %Some employees do not have pension plan when they were hired but they got pension later, so their company credit service date was later than hired date.
+The occupational code is a standardized code used to describe the job category in the organization for reporting purposes. In this study, occupational codes are highly correlated with payroll category: managers, engineers, administrative, and scientists are monthly payroll, general administrative employees and technicians have weekly payroll, and other categories are paid on an hourly basis. The organization or division level code is used to distinguish the departments.  In this study, the definition of each division may not be static over the entire period of observation.  Over the course of time, divisions can be renamed, reduced, or dismissed in reorganizations. Furthermore, no transfer of employees between divisions is recorded.  Therefore, for purposes of prediction, the division variable indicates the organization level that an employee is associated with at the time of the final observation.
 
 
 %The turnover dataset is split into two datasets: training and holdout dataset. The training part is used to build the model  and the holdout part is to validate the model performance. Two methods are used to slipt the dataset in order to validate the model performance: One is split data by a time point November 1 2010: training (November 1, 2000 - October 31, 2010) and holdout (November 1st, 2010 - December 31, 2012). The other on is to random split the turnover dataset into 2/3 of the dataset as training and 1/3 of the dataset as holdout. %Age of employees is used to build the model as dependent variable rather than the length of service time in the organization. The age is calculated based on two time points: start age and leaving age. Start age is the age of an employee at hired in the organization, or the age at November 1st 2000, when the employee was hired before November 1st, 2000; leaving age is the age at the date who left the organization or the age at October 31st 2010, if the employee was still working in the organization at that time which are treated as censored data.
-The variables identified from the turnover dataset and used to build the models are payroll, gender, division, COCS, age at hired (ageh),  and year of service at hired:
-\begin{itemize}
-	\item Payroll (PR): hourly, weekly, or monthly payroll,
-	\item Gender: male, female
-	\item Division (ORG): ten divisions in the organization.
-	\item Occupational Code (COCS): Crafts(C), Engineers (E), General Administrative (G), Laborers (L), General Managers (M),  Administrative (P),  Operators (O), Scientists (S), Technicians (T))
-	\item Age at hire: age at most recent time that an employee is hired or their age in November, 2000.
-	\item Age at credit: age at most recent time that an employee is credited for their pension.
-	\item Years of service at hire (YCSH): the years of service which accounts for pension credit at the most recent hiring of the employee.
-	%\item Termination date: the date when an employee left the organization.
-	%\item Termination type: the reasons for employees leaving the organization, such as retirement(RE),  volunteer quit (VQ), and other reasons.
-	%\item Age at end: the age of an employee at termination date, if employee left the organization before October 31th, 2010, or the age of an employee at October 31th, 2010.
-	
-\end{itemize}
+
+
+
 
 %b. data series plot and describe 2008 event.\\
 %2. economic indicator variables, sources and what they are, why you select these economic index\\
-Beyond employee level information, we also investigate the potential impact of external exogenous economic factors on retirement decision making and employee turnover.  A number of financial indices were selected to capture the various economic factors that may play a role in decisions to retire or leave a position.  Because factors such as job market, housing market, and financial markets potentially influence high impact financial decisions such as these, indices such as the seasonally adjusted unemployment rate published by the U.S. Bureau of Labor Statistics \citep{unemployment}, the U.S housing price index, the U.S. and southeastern monthly purchase-only index \citep{HPI}, the S\&P 500 stock index and Dow Jones Indices were considered. More specific investment indices including {\it S\&P 500}, {\it dividend}, {\it earnings}, {\it consumer index}, {\it long interest rate}, {\it real price}, {\it real dividend}, {\it real earnings}, {\it P/E 10 ratio} were also explored \citep{sp500}. The Wilshire 5000 total market full cap index published by Wilshire Associates was also considered as market index in the forecasting model \citep{will5000}. All twelve of these indices were operationalized for testing using their using a twelve month lag of their one year averages.  This approach ensures that the variable can be useful in forecasting since the one year lag will be known at the time of forecasting.  The economic indices are originally reported at the daily or monthly level. The yearly average is computed as the average value of the index over the previous twelve months.
+Beyond employee level information, we also investigate the potential impact of external exogenous economic factors on retirement decision making and employee turnover.  A number of financial indices were selected to capture the various economic factors that may play a role in decisions to retire or leave a position.  Because factors such as job market, housing market, and financial markets potentially influence high impact financial decisions.
+List of financial variables.
+\begin{itemize}
+	\item Unemployement Rate (Unemployement),  seasonally adjusted unemployment rate published by the U.S. Bureau of Labor Statistics \citep{unemployment}
+	\item Monthly Housing Price(MHP), unadjusted monthly U.S housing price index \citep{HPI},
+	\item Seasonal Adjusted Monthly Housing Price (SAMHP), seasonal adjusted monthly housing price.
+	\item Southeastern Monthly Housing Price (SEMHP), unadjusted southeastern monthly purchase-only index
+	\item Seasonal Adjusted Southeastern Monthly Housing Price (SESAMHP), seasonal adjusted southeastern monthly purchase-only index,
+	\item S\&P 500 stock index and Dow Jones Indices: S\&P 500, dividend, earnings, consumer index, long interest rate, real price, real dividend, real earnings, P/E 10 \citep{sp500}  
+   \item Wilshire 5000 total market full cap index published by Wilshire Associates (Wilshire5000) \citep{will5000}.
+\end{itemize}
+All twelve of these indices were operationalized for testing using their using a twelve month lag of their one year averages.  This approach ensures that the variable can be useful in forecasting since the one year lag will be known at the time of forecasting.  The economic indices are originally reported at the daily or monthly level. The yearly average is computed as the average value of the index over the previous twelve months.
 
+%1. umployement indexm
+%2. housing price indicator: s\&p case shiller  index   (us.s\&p.com)  monthly-only purchase index, monthly house price indexes for census division and US.
+%3. investment index, s\&p500  finance.google
+%4. marketing index:  wilshire5000  total marketing  index
+%5. NYSE code.
+
+\section{Model Development and Evaluation}
+This study aims to develop accurate predictive models of retirement and quitting behavior. The model will be used to address several key questions:
+\begin{enumerate}
+	\item How accurately can retirement(quitting) be predicted?
+	\item What factors indicate an individual is more likely to retire(quit)?
+	\item Which external economic factors are most predictive of retirement or quitting?
+	\item What is the magnitude  of impact of an Early Retirement Incentive Programs (ERIP)?
+	\item How do the tenure and age impact retirement?
+	\item How many employees will retire(quit) next year by occupational category and division?
+\end{enumerate}
 %1. umployement indexm
 %2. housing price indicator: s\&p case shiller  index   (us.s\&p.com)  monthly-only purchase index, monthly house price indexes for census division and US.
 %3. investment index, s\&p500  finance.google
@@ -231,8 +262,14 @@ Some explanatory variable values change over the course of the study. The extend
 \end{equation}
 where $x=(x_1, x_2, \ldots, x_{k_1}, x_1(t), x_2(t), \ldots, x_{k_2}(t))$, $h_0(t)$ is the baseline hazard occurring when $x=0$, $\beta$ and $\gamma$ are the coefficients of $x$. In order to fit this model, a modification of the partial likelihood is required and we often present the data set in a format called the {\it counting process} format in order to facilitate this calculation.
 
-The current study considers four internal time dependent variables that are functions of the individuals characteristics. {\it ERIP} is a variable that indicates a specific time during the study window, part of the 2008 calendar year, when the organization offered an early retirement incentive program(ERIP); see \citep{ERIP}.
- It is time varying in the sense that it occurs at a different age for each individual in the study population and is set at 0 during the period when no program exists and 1 during the period when the program does exist. The variable {\it P85}, an indicator that an employee has amassed 85 service points, the sum of their years of service and age, and qualifies for full retirement benefits, and {\it A65}, an indicator that an employee qualifies for retirement by exceeding the age 65 threshold, are two additional time varying variables that capture important changes in individuals hazard level throughout the study.
+The current study considers three internal time dependent variables that are functions of the individuals characteristics.
+
+\begin{itemize}
+\item Early Retirement Incentive Program(ERIP): a specific time during the study window, part of the 2008 calendar year, when the organization offered an early retirement incentive program; see \citep{ERIP}.It is time varying in the sense that it occurs at a different age for each individual in the study population and is set at 0 during the period when no program exists and 1 during the period when the program does exist. 
+\item Points 85 (P85), an indicator that an employee has amassed 85 service points, the sum of their years of service and age, and qualifies for full retirement benefits, 
+\item Age at 65 (A65), an indicator that an employee qualifies for retirement by exceeding the age 65 threshold
+\end{itemize}
+P85 and A65 are two additional time varying variables that capture important changes in individuals hazard level throughout the study.
 
 %ERIP is a dummy variable across years:
 %\begin{align*}
@@ -298,9 +335,9 @@ One of the many nuances observed within this data set is the fact that currently
 
 
 \subsection{Variable Selection and Model Choice} \label{sec:modelchoice}
-In the current study two equivalent time measurements were considered as response variables for modelling, {\it age} in years and {\it years of service}.  Because of the inclusion of time varying explanatory variables, and the need to estimate the baseline hazard for purposes of forecasting, the data must be formulated as a counting process , see Section \ref{sec:coxt}.  After some consideration, age was considered the better option for analysis because the more condensed distribution of values allows more accurate estimates of the baseline.
+In the current study two equivalent time measurements were considered as response variables for modelling, AGE in years and YCS.  Because of the inclusion of time varying explanatory variables, and the need to estimate the baseline hazard for purposes of forecasting, the data must be formulated as a counting process , see Section \ref{sec:coxt}.  After some consideration, age was considered the better option for analysis because the more condensed distribution of values allows more accurate estimates of the baseline.
 
-The model selection initiated by considering gender, division, age, and other time independent variables as well as {\it ERIP}, {\it P85}, and {\it A65}.  We removed non-significant variables using the criteria that p-values should be less than $.05$ and starting with the largest p-value first, i.e. backwards selection.  This continued until only statistically significant variables remained.  We also tested stratifying the baseline using occupational code, which did not improve the model. Finally we tested external time varying covariates, which capture economic factors, one at a time and noted the impact on model performance.[MAY NEED A BETTER SUMMARY OF MODELS COMPARED]
+The model selection initiated by considering gender, division, age, and other time independent variables as well as ERIP, P85, and A65. We removed non-significant variables using the criteria that p-values should be less than $.05$ and starting with the largest p-value first, i.e. backwards selection.  This continued until only statistically significant variables remained.  We also tested stratifying the baseline using occupational code, which did not improve the model. Finally we tested external time varying covariates, which capture economic factors, one at a time and noted the impact on model performance.[MAY NEED A BETTER SUMMARY OF MODELS COMPARED]
 
 %All the variables were then included in the Cox PH regression model and selected by %manually backwards selection method based on $P<0.05$.  The variable selection procedure is as follow: first, all the variables are used to build the model. Second, remove the non-significant variable ($P>0.05$) with the largest P value, and rerun the model with the other variables. Then, repeat the second step until there is no significant variable remaining in the model.
 
@@ -811,7 +848,7 @@ The construction of predictive models for turnover involves consideration of sev
 
 \subsection{Descriptive Analysis}
 
-As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: {\it payroll} (hourly, weekly, or monthly payroll), {\it gender} (M,F), {\it division} (ten levels of division), {\it occupational code} (crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), {\it age at hire}, and {\it years of service at hire}. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  We see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed in a similar fashion to occupational codes with four larger groups and a number of smaller groups.
+As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: {\it payroll} (hourly, weekly, or monthly payroll), {\it gender} (M,F), DIR (ten levels of division), {\it occupational code} (crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), {\it age at hire}, and {\it years of service at hire}. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  We see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed in a similar fashion to occupational codes with four larger groups and a number of smaller groups.
 
 Beyond these demographic and career factors, our models also include behavioral variables derived from policy requirements for retirement and early retirement incentives that occur throughout the observation period. Histograms of retirement age and accumulated pension points are shown in Figure \ref{fig:hist}. The histogram of retirement age is right skewed and shows an anomalous spike at age equals 62 which is the mode.  We find that 79\% of the employees that retired at 62 also reached or exceeded 85 points. (Why is this such a popular age?  Medicare, Social Security?)  The average retirement age is 59.72 demonstrating that many individuals retire before 62 and most before age 70. In terms of points accrued at time of retirement, recall that points are the sum of years of service plus current age, we see an irregular distribution with the vast majority retiring with point totals in the range of 85 to 100. Relatively few elect to take a reduced pension and retire with diminished benefits with points below 85. Again we see that 85 points is the mode indicating that retiring immediately after become fully vested in the pension is a popular choice.
 \begin{table}[htbp]
@@ -823,20 +860,20 @@ Beyond these demographic and career factors, our models also include behavioral 
 		\toprule
 		\textbf{Variable}	& \multicolumn{1}{c}{\textbf{Count}} & \multicolumn{1}{c}{\textbf{N \%}}  &   \textbf{Variable}    & \multicolumn{1}{c}{\textbf{Count}} & \multicolumn{1}{c}{\textbf{N \%}} \\
 		\midrule
-		\textbf{COCS} &       &       & \textbf{Gender} &       &  \\
+		\textbf{COCS} &       &       & \textbf{GENDER} &       &  \\
 		C     & 1295  & 16.0\% & F     & 2296  & 28.4\% \\
 		E     & 1361  & 16.8\% & M     & 5802  & 71.6\% \\
-		G     & 574   & 7.1\% & \textbf{Division} &       &  \\
-		L     & 613   & 7.6\% & divison1 & 1542  & 19.0\% \\
-		M     & 1178  & 14.5\% & divison2 & 751   & 9.3\% \\
-		P     & 1621  & 20.0\% & divison3 & 1042  & 12.9\% \\
-		R     & 595   & 7.3\% & divison4 & 369   & 4.6\% \\
-		S     & 208   & 2.6\% & divison5 & 398   & 4.9\% \\
-		T     & 652   & 8.1\% & divison6 & 1199  & 14.8\% \\
-		Missing & 1     & 0.0\% & divison7 & 302   & 3.8\% \\
-		\textbf{Payroll} &       &       & divison8 & 823   & 10.2\% \\
-		Hourly & 2503  & 30.9\% & divison9 & 404   & 5.0\% \\
-		Monthly & 4369  & 54.0\% & divison10 & 1268  & 15.7\% \\
+		G     & 574   & 7.1\% & \textbf{DIR} &       &  \\
+		L     & 613   & 7.6\% & Dir1 & 1542  & 19.0\% \\
+		M     & 1178  & 14.5\% & Dir2 & 751   & 9.3\% \\
+		P     & 1621  & 20.0\% & Dir3 & 1042  & 12.9\% \\
+		R     & 595   & 7.3\% & Dir4 & 369   & 4.6\% \\
+		S     & 208   & 2.6\% & Dir5 & 398   & 4.9\% \\
+		T     & 652   & 8.1\% & Dir6 & 1199  & 14.8\% \\
+		Missing & 1     & 0.0\% & Dir7 & 302   & 3.8\% \\
+		\textbf{PR} &  &   & Dir8 & 823   & 10.2\% \\
+		Hourly & 2503  & 30.9\% & Dir9 & 404   & 5.0\% \\
+		Monthly & 4369  & 54.0\% & Dir10 & 1268  & 15.7\% \\
 		Weekly & 1226  & 15.1\% &       &       &  \\
 		\bottomrule
 	\end{tabular}%
@@ -853,7 +890,7 @@ Beyond these demographic and career factors, our models also include behavioral 
 		\midrule
 		\multicolumn{1}{l}{Age at Retire} & 1757  & 59.72 & 60.00 & 62.00 & 49.00 & 84.00 & 4.56 \\
 		\multicolumn{1}{l}{Years of Service at Retire} & 1757  & 29.72 & 30.90 & 30.06 & 0.05  & 55.68 & 7.74 \\
-		\multicolumn{1}{l}{Point at Retire} & 1757  & 89.44 & 88.67 & 85.47 & 51.05 & 136.66 & 9.15 \\
+		\multicolumn{1}{l}{Points at Retire} & 1757  & 89.44 & 88.67 & 85.47 & 51.05 & 136.66 & 9.15 \\
 		\bottomrule
 	\end{tabular}%
 	\label{tab:descrip2}%
@@ -892,16 +929,16 @@ Section \ref{sec:modelchoice} discussed two potential response variables that ar
 		\toprule
 		\multicolumn{1}{c}{	\textbf{Model}} & \multicolumn{1}{c}{\textbf{LR}}    & \multicolumn{1}{c}{\textbf{AIC0}}  &\multicolumn{1}{c}{\textbf{AIC}}   &\multicolumn{1}{c}{\textbf{SBC0}} & \multicolumn{1}{c}{\textbf{SBC}}   & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ MAPE\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ MAPE\end{tabular}}} &\multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ $G^2$\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ $G^2$\end{tabular}}}  \\
 		\midrule
-		Division Gender Payroll COCS YCSH ageh & 1194.3 & 20425.6 & 19271.3 & 20425.6 & 19377.3 &  39.44 & 56.78 & 381.77 & 85.19 \\
-		Division COCS YCSH ageh & 1193.77 & 20425.6 & 19269.8 & 20425.6 & 19370.5 &  39.45 & 56.84 & 381.92 & 85.29 \\
-		Division ERIP YCSH ageh & 1451.62 & 20425.6 & 18998 & 20425.6 & 19061.6 &  25.91 & 15.51 & 128.75 & 2.64 \\
-		Division ERIP YCSH ageh COCS & 1469.92 & 20425.6 & 18995.7 & 20425.6 & 19101.7 &   25.91 & 15.24 & 129.47 & 2.56 \\
-		Division ERIP YCSH ageh and Strata on COCS  & 1426.34 & 14602.1 & 13199.8 & 14602.1 & 13263.4 &  43.45 & 87.92 & 186.89 & 50.00 \\
+		DIR GENDER PR COCS YCSH AGEH & 1194.3 & 20425.6 & 19271.3 & 20425.6 & 19377.3 &  39.44 & 56.78 & 381.77 & 85.19 \\
+		DIR COCS YCSH AGEH & 1193.77 & 20425.6 & 19269.8 & 20425.6 & 19370.5 &  39.45 & 56.84 & 381.92 & 85.29 \\
+		DIR ERIP YCSH AGEH & 1451.62 & 20425.6 & 18998 & 20425.6 & 19061.6 &  25.91 & 15.51 & 128.75 & 2.64 \\
+		DIR ERIP YCSH AGEH COCS & 1469.92 & 20425.6 & 18995.7 & 20425.6 & 19101.7 &   25.91 & 15.24 & 129.47 & 2.56 \\
+		DIR ERIP YCSH AGEH and Strata on COCS  & 1426.34 & 14602.1 & 13199.8 & 14602.1 & 13263.4 &  43.45 & 87.92 & 186.89 & 50.00 \\
 		%9 models by COCS & N/A   & N/A   & N/A   & N/A   & N/A   &    24.62 & 3.40  & 117.9 & 0.26 \\
-		Division ERIP YCSH ageh  P85 & 1826.95 & 20425.6 & 18624.6 & 20425.6 & 18693.6 &  25.59 & 19.04 & 109.17 & 3.40 \\
-		Division ERIP YCSH ageh  P85 P85*A65 & 1873.69 & 20425.6 & 18579.9 & 20425.6 & 18654.1 &  25.38 & 7.97  & 111.55 & 0.79 \\
-		Division ERIP YCSH ageh P85 P85*A65 P85*POLICY & 1881.02 & 20425.6 & 18574.6 & 20425.6 & 18654.1 & 25.42 & 4.20  & 112.27 & 0.81 \\
-		Logistic regression  & 4103.91 & 13618.4 & 9556.53 & 13627.3 & 9752.1 &  28.20 & 31.73 & 232.84 & 117.38 \\
+		DIR ERIP YCSH AGEH  P85 & 1826.95 & 20425.6 & 18624.6 & 20425.6 & 18693.6 &  25.59 & 19.04 & 109.17 & 3.40 \\
+		DIR ERIP YCSH AGEH  P85 P85*A65 & 1873.69 & 20425.6 & 18579.9 & 20425.6 & 18654.1 &  25.38 & 7.97  & 111.55 & 0.79 \\
+		DIR ERIP YCSH AGEH P85 P85*A65 P85*ERIP & 1881.02 & 20425.6 & 18574.6 & 20425.6 & 18654.1 & 25.42 & 4.20  & 112.27 & 0.81 \\
+	%	Logistic regression  & 4103.91 & 13618.4 & 9556.53 & 13627.3 & 9752.1 &  28.20 & 31.73 & 232.84 & 117.38 \\
 		Time series  & N/A   & N/A   & N/A   & N/A   & N/A   &   11.17 & 34.38 & 32.10 & 8.54 \\
 		\bottomrule
 	\end{tabular}%
@@ -909,7 +946,7 @@ Section \ref{sec:modelchoice} discussed two potential response variables that ar
 \end{table}%
 
 Extensive model selection using a variety of metrics including log-likelihood, AIC, BIC, and out of sample predictive scoring (MAPE and $G^2$) was then applied to identify key predictive factors in the model as shown in Table \ref{tab:modelstats}. %This is likely due to the fact that age 62 is the earliest age for a person to receive social security retirement benefit.
-The first four models listed are all standard Cox PH models with various sets of explanatory variables.  Among these four, the third model offers the lowest BIC value, 19061, while the fourth has the lowest AIC, 18,996 indicating these two models are the best of this subset.  Overall, both models perform almost identically on MAPE and holdout MAPE which is error when the model is used on data from years 2011 and 2012 which was not used to train the model. $G^2$ and holdout $G^2$ were also nearly identical.  From this perspective, the variable {\it cocscode} seems to provide very little predictive impact.   Model 5 uses the same variables as 1 - 4 but uses {\it cocscode} as a stratification variable meaning that we create a separate baseline for each job classication variable.  Creating multiple baselines for subgroups makes the model significantly more complex leading to a huge reduction in log likelihood and traditional model fit but providing very poor predictive and holdout fits due to the significant overfitting of the data. [This doesn't make sense due to the previous finding-COCS is not a good target].  
+The first four models listed are all standard Cox PH models with various sets of explanatory variables.  Among these four, the third model offers the lowest BIC value, 19061, while the fourth has the lowest AIC, 18,996 indicating these two models are the best of this subset.  Overall, both models perform almost identically on MAPE and holdout MAPE which is error when the model is used on data from years 2011 and 2012 which was not used to train the model. $G^2$ and holdout $G^2$ were also nearly identical.  From this perspective, the variable COCS seems to provide very little predictive impact.   Model 5 uses the same variables as 1 - 4 but uses COCS as a stratification variable meaning that we create a separate baseline for each job classication variable.  Creating multiple baselines for subgroups makes the model significantly more complex leading to a huge reduction in log likelihood and traditional model fit but providing very poor predictive and holdout fits due to the significant overfitting of the data. [This doesn't make sense due to the previous finding-COCS is not a good target].  
 
 Models 6-8 build on model 3 and add various interaction terms.  Here again we find models 7 and 8 being roughly equivalent with the more complex model having a smaller AIC and holdout MAPE, and very slightly higher predicted $G^2$ and predicted MAPE.  In the end, we chose to explore the more complex model 8 due to interest in interpreting the interacting model coefficients.[MAYBE NOT A GOOD REASON, CHECK IF SBC IS RIGHT]
 
@@ -921,14 +958,14 @@ The time series model is really good, is it a fair comparison
 
 Any other discrepancies?
 
-Excluding aggregate economic factors, the optimal modelling variables for the prediction of age at retirement include {\it division}, {\it years of service at hire}, and {\it age at hire}.  In addition, based on our understanding of the covenants and parameters of the retirement program we found several additional variables that increase the predictive power of the model. These include {\it ERIP}, {\it P85}, {\it A65*P85}, an interaction term that moderates the impact of the {\it P85} effect after the individual has exceeded 65 years of age, and  {\it ERIP*P85}, an interaction term that moderates the impact of the {\it P85} effect while the ERI is in place.  These variables were introduced in Section \ref{data.desc}
+Excluding aggregate economic factors, the optimal modelling variables for the prediction of age at retirement include DIR, YCSH, and AGEH.  In addition, based on our understanding of the covenants and parameters of the retirement program we found several additional variables that increase the predictive power of the model. These include ERIP, P85, A65*P85, an interaction term that moderates the impact of the P85 effect after the individual has exceeded 65 years of age, and  ERIP*P85, an interaction term that moderates the impact of the P85 effect while the ERIP is in place.  These variables were introduced in Section \ref{data.desc}
 
 Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As noted above, we did not find that gender, occupational code and payroll category were statisitcally significant predictors indicating that employees' gender, job types, and payroll status are not associated with choice of retirement age conditional on the other variables in the model.
 
-{\it P85} is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:point}.  The survival function after 85 points is achieved can be seen to steepen [FINISH THIS THOUGHT] 
+P85 is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement time and reflects the modal spike observed in the histogram in Figure \ref{fig:point}.  The survival function after 85 points is achieved can be seen to steepen [FINISH THIS THOUGHT] 
 
 
-An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard, which should increase after this point; see Figure \ref{fig:basepred}[EXPLAIN THE FIGURE].  However, by including an interaction between the indicators of age greater than 65 and points greater than 85, {\it A65*P85}, we can estimate how the impact of reaching 85 points changes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the {\it P85} criteria to $e^{1.44-1.61} =0.84$.  This suggests that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the age 65 criteria.  It seems that the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact [OR THAT THEY ARE INTENDING TO WORK LONGER?].  [DISCUSS THAT THE BASELINE MAY INCREASE SO THAT THE OVERALL PROBABILITY IS ACTUALLY HIGHER.]
+An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard, which should increase after this point; see Figure \ref{fig:basepred}[EXPLAIN THE FIGURE].  However, by including an interaction between the indicators of age greater than 65 and points greater than 85, A65*P85, we can estimate how the impact of reaching 85 points changes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the P85 criteria to $e^{1.44-1.61} =0.84$.  This suggests that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the age 65 criteria.  It seems that the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact [OR THAT THEY ARE INTENDING TO WORK LONGER?].  [DISCUSS THAT THE BASELINE MAY INCREASE SO THAT THE OVERALL PROBABILITY IS ACTUALLY HIGHER.]
 
 
 According to our model, retirement can also be influenced by an employee's age at time of hire and their years of service at the time of hiring.  The coefficient estimate for age is -0.17. As the reference age is 45.49, this means that the hazard ratio for retirement of an employee that started working at age 46.49 is $e^{-.017}=.84$ indicating a 16\% drop in hazard for each additional year later that an employee started. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.19} = (S(t)^{e^{0.17}})$ when age at hire is one year below 45.49,  where $S(t)$ is the baseline survival probability for a reference employee of average age at the time of hiring. Moving in the other direction, an employee's survival probability is $S(t)^{0.84}=(S(t)^{e^{-0.17}})$ for a one year increase beyond 45.49 in the employee's starting age. Together, this implies that at any given retirement age, the employee who starts earlier is more likely to retire because they have more years of service and are closer to vesting full benefits (85 points) than an equivalent employee who starts working at an older age. Similarly, the employee's years of service at hire show a positive estimate (0.019) with a hazard ratio (1.019) indicating that each year of service at hire beyond the population average of 2.75 is associated with an approximately 2\% increase in the hazard of retirement.  This leads to a survival probability $S(t)^{0.98}$ for a one year decrease in the reference years of service at time of hiring.  On the other hand, the survival probability is $S(t)^{1.019}$ for an employee with one year of service above average at the time of hire. Together, both age at hire and YCSH effects reflect the intuitive fact that, all else being equal, an employee who has more years of service and therefore is closer to full vesting is more likely to retire.  What is non-intuitive about this finding is that while one might suspect that the effects should be of similar magnitude, we actually see that the effect of one year difference in age seems to have about 8 times the impact that one year of previous service does on the hazard of retirement.
@@ -943,9 +980,9 @@ According to our model, retirement can also be influenced by an employee's age a
 
 In the fiscal year 2008, the employer in this study created a temporary early retirement incentive program (ERIP). The response window for this option was 3 months although the specific details beyond this are unknown. In order to deal with the increased level of retirement during this period we include a time dependent indicator variable for each employee that indicates their age when this program was in effect.  The coefficient for this indicator was 0.86 leading to a hazard ratio of $e^{.86} = 2.21$ which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this ERIP, a more case specific estimate may be possible.  However, this would not effect the overall aggregate retirement estimates.  It is important to include this one-time effect in order to improve the estimates of other factors [WORK ON THIS LAST PART - WHY DO WE NEED TO INCLUDE].
 
-As a further step, we test the ERIP effect on the employees who are eligible for getting a pension, i.e. points greater than 85.  After adding an interaction term between {\it ERIP} and the indicator that a person exceeds 85 points, the hazard ratio for the ERIP increases substantially to 15.85 from 2.21, more than seven times the basic {\it ERIP} effect.  In contrast, employees that were eligible only for partial retirement, an interaction between {\it ERIP} and indicator variables that employees achieve only 65 or 75 points, were not statistically significant.
+As a further step, we test the ERIP effect on the employees who are eligible for getting a pension, i.e. points greater than 85.  After adding an interaction term between ERIP and the indicator that a person exceeds 85 points, the hazard ratio for the ERIP increases substantially to 15.85 from 2.21, more than seven times the basic ERIP effect. In contrast, employees that were eligible only for partial retirement, an interaction between ERIP and indicator variables that employees achieve only 65 or 75 points, were not statistically significant.
 
-The {\it division} variable was a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 1 so that its hazard rate is determined by the baseline.  Relative to this baseline, divisions 6 and 7 have very high hazard ratios, 8.363 and 11.405 respectively, which indicates, other factors being equal, that the employees in division 6 and 7 are much more likely to retire at any age than those from division 1.  Conversely, division 9 has a hazard ratio of $e^{-3.023} = .049$ indicating that individuals within this group have 1/20 the hazard of group 1.  This may indicate that the division is new and contains younger employees.  In general, differences in retirement rates could be caused by differences in age demographics, departmental and job functions, or departmental leadership.
+The DIR variable was a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 1 so that its hazard rate is determined by the baseline.  Relative to this baseline, divisions 6 and 7 have very high hazard ratios, 8.363 and 11.405 respectively, which indicates, other factors being equal, that the employees in division 6 and 7 are much more likely to retire at any age than those from division 1.  Conversely, division 9 has a hazard ratio of $e^{-3.023} = .049$ indicating that individuals within this group have 1/20 the hazard of group 1.  This may indicate that the division is new and contains younger employees.  In general, differences in retirement rates could be caused by differences in age demographics, departmental and job functions, or departmental leadership.
 
 The baseline survival function and log hazard function are shown in Figure \ref{fig:basepred}. The survival probability is 1 before age 49 as shown in Figure \ref{fig:Surv}, which indicates that no employees retire before this age. The survival probability starts to slowly decease from age 50 to age 62. By age 62 the survival probability has decreased by nearly 25\%, which indicates that 75\% of employees retire at an age greater than 62 years assuming that they are at average or baseline levels for other factors included in the model.  The slope of the survival function decreases sharply at this point indicating the increased retirement rates for workers between age 62 and 65.  After age 65 the probability drops off even further as most of the remaining population retires by age 68 or 69. Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between age 62 and 65 indicates the increased retirement activity during this period.  Afterward the cumulative hazard levels off, indicating a drop in the instantaneous hazard rate at these future points.
 \begin{figure}[h!]
@@ -958,7 +995,44 @@ The baseline survival function and log hazard function are shown in Figure \ref{
 \end{figure}
 
 
-% Table generated by Excel2LaTeX from sheet 'Sheet2'
+%% Table generated by Excel2LaTeX from sheet 'Sheet2'
+%\begin{table}[htbp]
+%	\centering
+%	\scriptsize
+%	\renewcommand{\arraystretch}{1.5}
+%	\caption{Parameter Estimates for Models}
+%	\begin{threeparttable}
+%		\begin{tabular}{llL{2.5cm}L{1.5cm}L{2.5cm}L{1.5cm}}
+%			\toprule
+%			&       & \multicolumn{2}{c}{\textbf{Period Model}} & \multicolumn{2}{c}{\textbf{Yearly model}} \\
+%			\hline
+%			Parameter &   Label & Parameter (Standard Error) & Hazard Ratio & Parameter (Standard Error) & Hazard Ratio \\
+%			\midrule
+%			division & dir2  & -0.965(0.179)***\tnote{1} & 0.381 &-1.025(0.177)*** & 0.359 \\
+%			division & dir3  & -0.241(0.112)* & 0.786 & -0.246(0.111)* & 0.782 \\
+%			division & dir4  & 0.078(0.195) & 1.081 & -0.039(0.195) & 0.962 \\
+%			division & dir5  & -0.131(0.190) & 0.877 & -0.246(0.190) & 0.782 \\
+%			division & dir6  & 2.136(0.095)*** & 8.463 & 2.252(0.095)*** & 9.511 \\
+%			division & dir7  & 2.435(0.129)*** & 11.418 & 2.437(0.129)*** & 11.437 \\
+%			division & dir8  & 0.864(0.106)*** & 2.373 & 0.816(0.106)*** & 2.261 \\
+%			division & dir9  & -3.023(0.581)*** & 0.049 & -2.774(0.504)*** & 0.062 \\
+%			division & dir10 & 0.793(0.093)*** & 2.211 & 0.709(0.093)*** & 2.031 \\
+%			YCSH  &       & 0.019(0.004)*** & 1.019 & 0.043(0.004)*** & 1.044 \\
+%			ERIP & 1     & 0.859(0.169)*** & .     & 0.942(0.109)*** & . \\
+%			AGEH &       & -0.172(0.013)*** & 0.842 & -0.187(0.013)*** & 0.829 \\
+%			P85   & 1     & 1.435(0.091)*** & .     & 0.682(0.072)*** & . \\
+%			A65*P85 & 1     & -1.610(0.206)*** & .     & -0.662(0.177)*** & . \\
+%			ERIP*P85 & 1     & 0.469(0.179)** & .     & 0.600(0.130)*** & . \\
+%			\bottomrule
+%		\end{tabular}%
+%		\begin{tablenotes}
+%			\item[1] * denotes $P<0.05$, ** denotes $P<0.01$, and *** denotes $P<0.001$.
+%		\end{tablenotes}
+%		
+%	\end{threeparttable}
+%	\label{tab:paraest.}%
+%\end{table}%
+
 \begin{table}[htbp]
 	\centering
 	\scriptsize
@@ -967,36 +1041,49 @@ The baseline survival function and log hazard function are shown in Figure \ref{
 	\begin{threeparttable}
 		\begin{tabular}{llL{2.5cm}L{1.5cm}L{2.5cm}L{1.5cm}}
 			\toprule
-			&       & \multicolumn{2}{c}{\textbf{Period Model}} & \multicolumn{2}{c}{\textbf{Yearly model}} \\
+			&       & \multicolumn{2}{c}{\textbf{Model W/O External Variable}} & \multicolumn{2}{c}{\textbf{Model with Real Earnings}} \\
 			\hline
 			Parameter &   Label & Parameter (Standard Error) & Hazard Ratio & Parameter (Standard Error) & Hazard Ratio \\
 			\midrule
-			division & dir2  & -0.965(0.179)***\tnote{1} & 0.381 &-1.025(0.177)*** & 0.359 \\
-			division & dir3  & -0.241(0.112)* & 0.786 & -0.246(0.111)* & 0.782 \\
-			division & dir4  & 0.078(0.195) & 1.081 & -0.039(0.195) & 0.962 \\
-			division & dir5  & -0.131(0.190) & 0.877 & -0.246(0.190) & 0.782 \\
-			division & dir6  & 2.136(0.095)*** & 8.463 & 2.252(0.095)*** & 9.511 \\
-			division & dir7  & 2.435(0.129)*** & 11.418 & 2.437(0.129)*** & 11.437 \\
-			division & dir8  & 0.864(0.106)*** & 2.373 & 0.816(0.106)*** & 2.261 \\
-			division & dir9  & -3.023(0.581)*** & 0.049 & -2.774(0.504)*** & 0.062 \\
-			division & dir10 & 0.793(0.093)*** & 2.211 & 0.709(0.093)*** & 2.031 \\
-			YCSH  &       & 0.019(0.004)*** & 1.019 & 0.043(0.004)*** & 1.044 \\
-			ERIP & 1     & 0.859(0.169)*** & .     & 0.942(0.109)*** & . \\
-			ageh &       & -0.172(0.013)*** & 0.842 & -0.187(0.013)*** & 0.829 \\
-			P85   & 1     & 1.435(0.091)*** & .     & 0.682(0.072)*** & . \\
-			A65*P85 & 1     & -1.610(0.206)*** & .     & -0.662(0.177)*** & . \\
-			ERIP*P85 & 1     & 0.469(0.179)** & .     & 0.600(0.130)*** & . \\
-			\bottomrule
+%			division & dir2  & -0.965(0.179)***\tnote{1} & 0.381 &-1.025(0.177)*** & 0.359 \\
+%			division & dir3  & -0.241(0.112)* & 0.786 & -0.246(0.111)* & 0.782 \\
+%			division & dir4  & 0.078(0.195) & 1.081 & -0.039(0.195) & 0.962 \\
+%			division & dir5  & -0.131(0.190) & 0.877 & -0.246(0.190) & 0.782 \\
+%			division & dir6  & 2.136(0.095)*** & 8.463 & 2.252(0.095)*** & 9.511 \\
+%			division & dir7  & 2.435(0.129)*** & 11.418 & 2.437(0.129)*** & 11.437 \\
+%			division & dir8  & 0.864(0.106)*** & 2.373 & 0.816(0.106)*** & 2.261 \\
+%			division & dir9  & -3.023(0.581)*** & 0.049 & -2.774(0.504)*** & 0.062 \\
+%			division & dir10 & 0.793(0.093)*** & 2.211 & 0.709(0.093)*** & 2.031 \\
+%			YCSH  &       & 0.019(0.004)*** & 1.019 & 0.043(0.004)*** & 1.044 \\
+%			ERIP & 1     & 0.859(0.169)*** & .     & 0.942(0.109)*** & . \\
+%			AGEH &       & -0.172(0.013)*** & 0.842 & -0.187(0.013)*** & 0.829 \\
+%			P85   & 1     & 1.435(0.091)*** & .     & 0.682(0.072)*** & . \\
+%			A65*P85 & 1     & -1.610(0.206)*** & .     & -0.662(0.177)*** & . \\
+%			ERIP*P85 & 1     & 0.469(0.179)** & .     & 0.600(0.130)*** & . \\
+               DIR & Dir2  & -0.965 (0.179)*** & 0.381 & -0.969 (0.177)*** & 0.38 \\
+               DIR & Dir3  & -0.241 (0.112)* & 0.786 & -0.242 (0.111)* & 0.785 \\
+               DIR & Dir4  & 0.078 (0.195) & 1.081 & 0.013 (0.195) & 1.013 \\
+               DIR & Dir5  & -0.131 (0.19) & 0.877 & -0.216 (0.19) & 0.806 \\
+               DIR & Dir6  & 2.136 (0.095)*** & 8.463 & 2.261 (0.093)*** & 9.594 \\
+               DIR & Dir7  & 2.435 (0.129)*** & 11.418 & 2.515 (0.128) & 12.363 \\
+               DIR & Dir8  & 0.864 (0.106)*** & 2.373 & 0.855 (0.106)*** & 2.352 \\
+               DIR & Dir9  & -3.023 (0.581)*** & 0.049 & -2.731 (0.504)*** & 0.065 \\
+               DIR & Dir10 & 0.793 (0.093)*** & 2.211 & 0.726 (0.093)*** & 2.068 \\
+               YCSH  & 1     & 0.019 (0.004)*** & 1.019 & 0.023 (0.004)*** & 1.023 \\
+               EIRP  &       & 0.859 (0.169)*** & .     & 0.489 (0.133)*** & . \\
+               AGEH  &       & -0.172 (0.013)*** & 0.842 & -0.193 (0.014)*** & 0.825 \\
+               P85   & 1     & 1.435 (0.091)*** & .     & 0.756 (0.073)*** & . \\
+               P85*A65 & 1     & -1.61 (0.206)*** & .     & -1.019 (0.197)*** & . \\
+               EIRP*P85 & 1     & 0.469 (0.179)** & .     & 0.506 (0.141)*** & . \\
+               Real Earnings &       &       &       & 0.013 (0.001)*** & 1.013 \\
+               \bottomrule
 		\end{tabular}%
 		\begin{tablenotes}
 			\item[1] * denotes $P<0.05$, ** denotes $P<0.01$, and *** denotes $P<0.001$.
 		\end{tablenotes}
-		
 	\end{threeparttable}
 	\label{tab:paraest.}%
-\end{table}%
-
-
+ \end{table}%		
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=5in]{retire2.png}
@@ -1052,51 +1139,51 @@ The baseline survival function and log hazard function are shown in Figure \ref{
 \end{table}
 
 
-% Table generated by Excel2LaTeX from sheet 'Sheet4'
-\begin{table}[h!]
-	\centering
-	\scriptsize
-	\caption{Prediction by Division}
-	\begin{threeparttable}
-		\begin{tabular}{clllllllllll}
-			\toprule
-			Year  & \multicolumn{1}{c}{Division1} & \multicolumn{1}{c}{Division2} & \multicolumn{1}{c}{Division3} & \multicolumn{1}{c}{Division4} & \multicolumn{1}{c}{Division5} & \multicolumn{1}{c}{Division6} & \multicolumn{1}{c}{Division7} & \multicolumn{1}{c}{Division8} & \multicolumn{1}{c}{Division9} & \multicolumn{1}{c}{Division10} \\
-			\midrule
-			%			2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 56 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
-			%			2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 8 (32) \\
-			%			2003  & 6 (0) & 1 (0) & 2 (0) & 0 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
-			%			2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
-			%			2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 88 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
-			%			2006  & 19 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
-			%			2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
-			%			2008  & 85 (97) & 14 (23) & 51 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 86 (82) \\
-			%			2009  & 27 (17) & 5 (4) & 15 (21) & 4 (3) & 4 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
-			%			2010  & 32 (25) & 7 (10) & 19 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
-			%			2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 34 (23) \\
-			%			2012  & 42 (36) & 13 (15) & 30 (15) & 9 (3) & 10 (3) & 0 (0) & 0 (0) & 32 (14) & 1 (8) & 41 (15) \\
-			2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 57 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
-			2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 9 (32) \\
-			2003  & 6 (0) & 1 (0) & 2 (0) & 1 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
-			2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
-			2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 87 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
-			2006  & 18 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
-			2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
-			2008  & 87 (97) & 14 (23) & 52 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 85 (82) \\
-			2009  & 26 (17) & 5 (4) & 15 (21) & 4 (3) & 5 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
-			2010  & 32 (25) & 7 (10) & 18 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
-			2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 35 (23) \\
-			2012  & 42 (44) & 13 (16) & 30 (33) & 9 (3) & 10 (7) & 0 (0) & 0 (0) & 32 (21) & 1 (15) & 42 (38) \\
-			
-			
-			\bottomrule
-		\end{tabular}%
-		\begin{tablenotes}
-			\item[1] the number before the parentheses is predicted retirement number.
-			\item[2] the number inside the parentheses is actual retirement number.
-		\end{tablenotes}
-	\end{threeparttable}
-	\label{tab:division}%
-\end{table}%
+%% Table generated by Excel2LaTeX from sheet 'Sheet4'
+%\begin{table}[h!]
+%	\centering
+%	\scriptsize
+%	\caption{Prediction by division}
+%	\begin{threeparttable}
+%		\begin{tabular}{clllllllllll}
+%			\toprule
+%			Year  & \multicolumn{1}{c}{DIR1} & \multicolumn{1}{c}{DIR2} & \multicolumn{1}{c}{DIR3} & \multicolumn{1}{c}{DIR4} & \multicolumn{1}{c}{DIR5} & \multicolumn{1}{c}{DIR6} & \multicolumn{1}{c}{DIR7} & \multicolumn{1}{c}{DIR8} & \multicolumn{1}{c}{DIR9} & \multicolumn{1}{c}{DIR10} \\
+%			\midrule
+%			%			2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 56 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
+%			%			2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 8 (32) \\
+%			%			2003  & 6 (0) & 1 (0) & 2 (0) & 0 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
+%			%			2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
+%			%			2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 88 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
+%			%			2006  & 19 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
+%			%			2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
+%			%			2008  & 85 (97) & 14 (23) & 51 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 86 (82) \\
+%			%			2009  & 27 (17) & 5 (4) & 15 (21) & 4 (3) & 4 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
+%			%			2010  & 32 (25) & 7 (10) & 19 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
+%			%			2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 34 (23) \\
+%			%			2012  & 42 (36) & 13 (15) & 30 (15) & 9 (3) & 10 (3) & 0 (0) & 0 (0) & 32 (14) & 1 (8) & 41 (15) \\
+%			2001  & 3\tnote{1} (0)\tnote{2} & 0 (0) & 1 (0) & 0 (0) & 0 (0) & 57 (43) & 11 (2) & 5 (10) & 0 (0) & 5 (7) \\
+%			2002  & 4 (0) & 0 (0) & 2 (0) & 0 (0) & 0 (0) & 72 (54) & 14 (2) & 6 (38) & 0 (0) & 9 (32) \\
+%			2003  & 6 (0) & 1 (0) & 2 (0) & 1 (0) & 0 (0) & 89 (44) & 19 (7) & 6 (18) & 0 (0) & 9 (34) \\
+%			2004  & 9 (0) & 1 (0) & 4 (0) & 1 (0) & 1 (0) & 101 (96) & 26 (29) & 7 (13) & 0 (0) & 10 (12) \\
+%			2005  & 13 (0) & 1 (0) & 5 (0) & 1 (0) & 1 (0) & 87 (114) & 20 (26) & 8 (18) & 0 (0) & 14 (7) \\
+%			2006  & 18 (34) & 2 (0) & 8 (0) & 2 (5) & 2 (3) & 58 (105) & 12 (32) & 9 (12) & 0 (0) & 17 (16) \\
+%			2007  & 23 (59) & 3 (0) & 12 (5) & 3 (7) & 3 (9) & 26 (53) & 3 (10) & 12 (6) & 0 (0) & 24 (20) \\
+%			2008  & 87 (97) & 14 (23) & 52 (79) & 11 (11) & 12 (13) & 16 (16) & 0 (0) & 45 (24) & 1 (0) & 85 (82) \\
+%			2009  & 26 (17) & 5 (4) & 15 (21) & 4 (3) & 5 (3) & 0 (0) & 0 (0) & 16 (4) & 0 (0) & 27 (13) \\
+%			2010  & 32 (25) & 7 (10) & 18 (20) & 6 (4) & 6 (4) & 0 (0) & 0 (0) & 23 (6) & 1 (4) & 32 (21) \\
+%			2011  & 38 (51) & 9 (15) & 23 (25) & 7 (8) & 7 (9) & 0 (0) & 0 (0) & 28 (12) & 1 (15) & 35 (23) \\
+%			2012  & 42 (44) & 13 (16) & 30 (33) & 9 (3) & 10 (7) & 0 (0) & 0 (0) & 32 (21) & 1 (15) & 42 (38) \\
+%			
+%			
+%			\bottomrule
+%		\end{tabular}%
+%		\begin{tablenotes}
+%			\item[1] the number before the parentheses is predicted retirement number.
+%			\item[2] the number inside the parentheses is actual retirement number.
+%		\end{tablenotes}
+%	\end{threeparttable}
+%	\label{tab:division}%
+%\end{table}%
 
 Summarize external
 
@@ -1124,10 +1211,10 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    			\textbf{Economic Inidcator} &\multicolumn{1}{c}{\textbf{$\chi^2$}} &  \multicolumn{1}{c}{\textbf{P-value}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Hazard \\ ratio\end{tabular}}}   &  \multicolumn{1}{c}{\textbf{MAPE}} &\multicolumn{1}{c}{\textbf{$G^2$}} \\
    			\midrule
    			Without Econmic indicator\tnote{1} &       &       &       & 21.31 & 147.43 \\
-   			MHP NSA & 129.614 & $<.001$ & 1.020  & 17.84 & 220.65 \\
-   			MHP SA & 129.516 & $<.001$ & 1.020  & 17.86 & 221.66 \\
-   			Southeast MHP NSA & 68.055 & $<.001$ & 1.030  & 23.37 & 178.38 \\
-   			Southeast MHP SA & 67.871 & $<.001$& 1.030  & 23.40 & 179.87 \\
+   			MHP & 129.614 & $<.001$ & 1.020  & 17.84 & 220.65 \\
+   			SAMHP & 129.516 & $<.001$ & 1.020  & 17.86 & 221.66 \\
+   			SEMHP & 68.055 & $<.001$ & 1.030  & 23.37 & 178.38 \\
+   			SESAMHP & 67.871 & $<.001$& 1.030  & 23.40 & 179.87 \\
    			S\&P500 & 13.319 & $<.001$ & 1.001 & 20.79 & 129.83 \\
    			Dividend & 1.045 & 0.307 & 1.015 & 22.63 & 150.03 \\
    			Earnings & 84.895 & $<.001$ & 1.016 & 21.40 & 105.06 \\
@@ -1137,7 +1224,7 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    			Real Earnings & 80.358 & $<.001$ & 1.013 & 20.33 & 95.02 \\
    			Long Interest Rate & 1.539 & 0.215 & 1.082 & 22.03 & 149.01 \\
    			Unemployment Rate & 32.212 & $<.001$ & 0.849 & 25.08 & 179.49 \\
-   			P E10 & 0.041 & 0.839 & 0.998 & 21.31 & 147.97 \\
+   			P/E 10 & 0.041 & 0.839 & 0.998 & 21.31 & 147.97 \\
    			Wilshire5000 & 22.392 & $<.001$ & 1.028 & 20.83 & 121.58 \\
    			\bottomrule
    		\end{tabular}%
@@ -1155,6 +1242,40 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    	\caption{Economic Indicators and Retirement Predicting Plot}
    	\label{fig:EIndex}
    \end{figure}
+   
+   % Table generated by Excel2LaTeX from sheet 'Sheet4'
+   \begin{table}[h!]
+   		\centering
+   		\scriptsize
+   		\smallskip
+   		\caption{Retirement with Real Earnings Predictions by Occupational Code (COCS)}
+   		\begin{threeparttable}
+   			\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
+   				\toprule
+   				Year  &  Crafts & Engineers& General Admin. & Laborers& Managers& Prof. Admin.& Operators& Scientists& Technicians& Total \\
+   				\midrule
+   			2001  & 23 (16) & 13 (10) & 4 (1) & 7 (5) & 15 (14) & 11 (9) & 8 (2) & 2 (1) & 5 (4) & 88 (62) \\
+   			2002  & 23 (29) & 12 (16) & 4 (15) & 6 (11) & 15 (26) & 10 (18) & 8 (6) & 2 (1) & 5 (4) & 85 (126) \\
+   			2003  & 23 (26) & 13 (13) & 5 (5) & 6 (6) & 13 (21) & 12 (13) & 10 (15) & 3 (2) & 6 (2) & 91 (103) \\
+   			2004  & 32 (32) & 18 (23) & 7 (9) & 9 (7) & 16 (30) & 18 (25) & 11 (15) & 3 (3) & 8 (6) & 122 (150) \\
+   			2005  & 40 (39) & 24 (17) & 8 (13) & 10 (7) & 21 (27) & 26 (31) & 12 (15) & 4 (4) & 11 (12) & 156 (165) \\
+   			2006  & 35 (58) & 25 (29) & 6 (10) & 9 (9) & 21 (32) & 29 (37) & 10 (13) & 3 (4) & 9 (15) & 147 (207) \\
+   			2007  & 24 (44) & 19 (25) & 9 (9) & 8 (9) & 24 (26) & 35 (40) & 10 (6) & 3 (4) & 9 (6) & 140 (169) \\
+   			2008  & 50 (71) & 29 (33) & 19 (20) & 20 (12) & 57 (63) & 72 (84) & 27 (32) & 5 (7) & 19 (23) & 298 (345) \\
+   			2009  & 13 (14) & 8 (6) & 6 (3) & 6 (7) & 17 (8) & 22 (10) & 7 (11) & 1 (1) & 5 (5) & 85 (65) \\
+   			2010  & 10 (19) & 8 (17) & 5 (1) & 4 (8) & 16 (23) & 19 (16) & 5 (4) & 1 (3) & 4 (3) & 72 (94) \\
+   			2011  & 25 (36) & 16 (25) & 14 (8) & 10 (9) & 40 (27) & 47 (34) & 11 (5) & 2 (1) & 10 (13) & 175 (158) \\
+   			2012  & 29 (29) & 21 (23) & 16 (11) & 12 (10) & 51 (46) & 64 (36) & 14 (4) & 3 (2) & 13 (16) & 223 (177) \\
+   			\bottomrule
+   		\end{tabular}%
+   		\begin{tablenotes}
+   			\item[1] the number before the parentheses is predicted retirement number.
+   			\item[2] the number inside the parentheses is actual retirement number.
+   		\end{tablenotes}
+   	\end{threeparttable}
+   	\label{tab:EIcocs}%
+   \end{table}%
+   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Models for Voluntary Quitting without External Economic Variables}
 
@@ -1163,17 +1284,17 @@ one employee quit with 67 years old and less than 85 points. all quit before 65 
 II. shorten the length of risk set. how to shorten the risk set.
 iii. model comparison. (survival model, time series model, and logistic regression model)
 
-A second area of interest in analyzing turnover is voluntary quitting.  Using the same methodology and set of variables applied to retirement modelling, we constructed a predictive model for quitting. The challenge of modelling quitting in the current context is that the current data has approximately 600 out of 8000 employees quitting during the 10-year study window resulting in a very high proportion of censored data.  With this data density, the model cannot generate a smooth baseline to achieve a good forecasting model using age as the dependent variable because employees quit across such wide range of ages (20 to 64); see Figure \ref{fig:agevq} and Table \ref{tab:vqmodelstats}.  Modelling years of service (YCS) as dependent variable compresses the reference frame leading to better estimates with employees usually quitting within the first 10 years of service as shown in Figure \ref{fig:ycsvq}. Since an employee will not quit if their are eligible for pension we remove those employees from the risk set when they meet either one of requirements.  With those cases now censored the indicators {\it P85} and {\it A65} are no longer useful for modelling.
+A second area of interest in analyzing turnover is voluntary quitting.  Using the same methodology and set of variables applied to retirement modelling, we constructed a predictive model for quitting. The challenge of modelling quitting in the current context is that the current data has approximately 600 out of 8000 employees quitting during the 10-year study window resulting in a very high proportion of censored data.  With this data density, the model cannot generate a smooth baseline to achieve a good forecasting model using age as the dependent variable because employees quit across such wide range of ages (20 to 64); see Figure \ref{fig:agevq} and Table \ref{tab:vqmodelstats}.  Modelling years of service (YCS) as dependent variable compresses the reference frame leading to better estimates with employees usually quitting within the first 10 years of service as shown in Figure \ref{fig:ycsvq}. Since an employee will not quit if their are eligible for pension we remove those employees from the risk set when they meet either one of requirements.  With those cases now censored the indicators P85 and A65 are no longer useful for modelling.
 
-Among all the models shown in Table \ref{tab:vqmodelstats}, model XX with {\it division}, {\it COCS}, {\it age at credited}, and {\it ERIP} as explanatory variables fit best.  A discrete version of the Cox model based on logistic regression also performs well with both models showing similar MAPE and $G_2$ values; see \citet{allison2010} for more detail on discrete models. 
+Among all the models shown in Table \ref{tab:vqmodelstats}, model XX with DIR, COCS, AGEC, and ERIP as explanatory variables fit best.  A discrete version of the Cox model based on logistic regression also performs well with both models showing similar MAPE and $G_2$ values; see \citet{allison2010} for more detail on discrete models. 
 
 Our results suggest that voluntary quitting is influenced by an employee's age at the start of their service. The coefficient estimate for age is -0.025. As the reference age is 35.44, this means that the hazard of quitting for an employee that started working at age 36.44 is $exp(-.025)=.975$ that of an employee starting at age 35.44. For each additional year of age at beginning of service we estimate 2.5\% drop in hazard of quitting. The employee's survival probability at any time, $t$, can be computed as $S(t)^{1.025} = (S(t)^{e^{0.025}})$ if age is one year below average, where $S(t)$ is the baseline survival probability for a reference employee of average age at initial employment. Moving in the other direction, the employee's survival probability increases to $S(t)^{0.975}=(S(t)^{e^{-0.025}})$ for a one year increase in the employee's starting age. Together, this implies that at any given voluntary quitting age, the employee who starts earlier is more likely to quit than an equivalent employee who starts working later.
 
-The early retirement incentive option {\it ERIP} also shows a significant impact on an employee's quitting behavior.  The coefficient for this indicator was 1.111 leading to a hazard ratio of $e^{.1.111} = 3.04$.  This indicates that, on average, an individual's hazard of quitting increased by almost 3 times during this period.  It is unclear why an optional early retirement program would influence quitting but it is possible that the program led to leadership or organizational disruptions [NEED CITATION HERE] or simply that it took place during  2008 [When did it take place], a time of significant economic upheaval. This indicates that employees are more likely to quit during this specific period.
+The early retirement incentive option ERIP also shows a significant impact on an employee's quitting behavior.  The coefficient for this indicator was 1.111 leading to a hazard ratio of $e^{.1.111} = 3.04$.  This indicates that, on average, an individual's hazard of quitting increased by almost 3 times during this period.  It is unclear why an optional early retirement program would influence quitting but it is possible that the program led to leadership or organizational disruptions [NEED CITATION HERE] or simply that it took place during  2008 [When did it take place], a time of significant economic upheaval. This indicates that employees are more likely to quit during this specific period.
 
-The {\it division} variable was also a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 6 so that it's hazard rate is determined by the baseline.  Relative to this baseline, division 7 has a similar hazard of quitting according to the model estimates. Conversely, the other divisions all have negative coefficients with hazard ratios less than 1 indicating that individuals within these groups have lower hazard of quitting than group 6.
+The DIR variable was also a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 6 so that it's hazard rate is determined by the baseline.  Relative to this baseline, division 7 has a similar hazard of quitting according to the model estimates. Conversely, the other divisions all have negative coefficients with hazard ratios less than 1 indicating that individuals within these groups have lower hazard of quitting than group 6.
 
-The {\it COCS} variable was another significant predictor.  For analysis, the baseline level was engineer for this variable so that it's hazard rate is determined by the baseline. Relative to this group, all the other divisions have negative coefficients with hazard ratios less than 1. In particular, the crafts group with coefficient of -1.165 and a hazard ratio of 0.312 shows a much lower hazard of quitting than the engineering group.  This may reflect that differences in sociological or demographic factors among workers in these job categories, differences in compensation relative to other opportunities, or other differences in local or national economic mobility.
+The COCS variable was another significant predictor. For analysis, the baseline level was engineer for this variable so that it's hazard rate is determined by the baseline. Relative to this group, all the other divisions have negative coefficients with hazard ratios less than 1. In particular, the crafts group with coefficient of -1.165 and a hazard ratio of 0.312 shows a much lower hazard of quitting than the engineering group.  This may reflect that differences in sociological or demographic factors among workers in these job categories, differences in compensation relative to other opportunities, or other differences in local or national economic mobility.
 
 In general, differences in quitting rates could be caused by differences in age demographics, leadership, departmental and job function, or departmental leadership.
 
@@ -1225,7 +1346,7 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 		\toprule
 		\multicolumn{1}{c}{	\textbf{Model}} & \multicolumn{1}{c}{\textbf{DF}}  &\multicolumn{1}{c}{\textbf{LR}}   & \multicolumn{1}{c}{\textbf{AIC0}}  &\multicolumn{1}{c}{\textbf{AIC}}   &\multicolumn{1}{c}{\textbf{SBC0}} & \multicolumn{1}{c}{\textbf{SBC}}   & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ MAPE\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ MAPE\end{tabular}}} &\multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Pred. \\ $G^2$\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Holdout \\ $G^2$\end{tabular}}}  \\
 		\midrule
-		Age (Dependent)  & 19    & 1226.81 & 7148.92 & 5960.11 & 7148.92 & 6041.44 & 83.71 & 91.35 & 1213.96 & 197.21 \\
+		AGE (Dependent)  & 19    & 1226.81 & 7148.92 & 5960.11 & 7148.92 & 6041.44 & 83.71 & 91.35 & 1213.96 & 197.21 \\
 		YCS (Dependent) & 19    & 1012.39 & 7822.87 & 6848.48 & 7822.87 & 6929.70 & 23.90 & 21.05 & 65.63 & 2.48 \\
 		%YCS (Dependent) reduced the riskset & 19    & 1012.39 & 7822.87 & 6848.48 & 7822.87 & 6929.70 & 21.11 & 21.12 & 32.85 & 3.32 \\
 	   YCS (Dependent) reduced riskset  & 19    & 838.42 & 7711.61 & 6911.19 & 7711.61 & 6992.52 & 15.16 & 18.77 & 26.25 & 2.08 \\
@@ -1246,29 +1367,30 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 	\begin{threeparttable}
 		\begin{tabular}{llL{2.5cm}L{1.5cm}L{2.5cm}L{1.5cm}}
 			\toprule
-			&       & \multicolumn{2}{c}{\textbf{Period Model}} & \multicolumn{2}{c}{\textbf{Yearly model}} \\
+			&       & \multicolumn{2}{c}{\textbf{Model w/o external variable}} & \multicolumn{2}{c}{\textbf{Model with Real Dividend}} \\
 			\hline
 			Parameter &   Label & Parameter (Standard Error) & Hazard Ratio & Parameter (Standard Error) & Hazard Ratio \\
 			\midrule
-			division & dir1  & -3.496 (0.264)*** & 0.03  & -3.066 (0.263)*** & 0.047 \\
-			division & dir2  & -3.100 (0.204)***     & 0.045 & -2.652 (0.198)*** & 0.071 \\
-			division & dir3  & -3.430 (0.258)***    & 0.032 & -3.015 (0.253)*** & 0.049 \\
-			division & dir4  & -2.929 (0.288)***   & 0.053 & -2.533 (0.288)*** & 0.079 \\
-			division & dir5  & -3.106 (0.314)***   & 0.045 & -2.739 (0.314)*** & 0.065 \\
-			division & dir7  & 0.011 (0.144)       & 1.011 & 0.028 (0.145)     & 1.029 \\
-			division & dir8  & -1.117 (0.159)***   & 0.327 & -0.806 (0.157)*** & 0.447 \\
-			division & dir9  & -4.811 (0.714)***   & 0.008 & -3.985 (0.586)*** & 0.019 \\
-			division & dir10 & -1.65 (0.138)***    & 0.192 & -1.325 (0.136)*** & 0.266 \\
-			COCS     & C     & -1.165 (0.275)***   & 0.312 & -1.163 (0.274)*** & 0.313 \\
-			COCS     & G     & -0.864 (0.2)***     & 0.421 & -0.794 (0.198)*** & 0.452 \\
-			COCS     & L     & -0.656 (0.229)**    & 0.519 & -0.711 (0.228)**  & 0.491 \\
-			COCS     & M     & -0.488 (0.151)**    & 0.614 & -0.541 (0.15)***  & 0.582 \\
-			COCS     & P     & -0.541 (0.137)***   & 0.582 & -0.530 (0.135)*** & 0.588 \\
-			COCS     & R     & -0.981 (0.318)**    & 0.375 & -0.950 (0.308)**  & 0.387 \\
-			COCS     & S     & -0.682 (0.276)*     & 0.506 & -0.691 (0.275)*   & 0.501 \\
-			COCS     & T     & -0.531 (0.201)**    & 0.588 & -0.608 (0.203)**  & 0.544 \\
-			Age at Credited  & & -0.025 (0.005)*** & 0.975 & -0.025 (0.005)*** & 0.975 \\
-			ERIP   & 1     & 1.111 (0.137)***    & 3.036 & 0.851 (0.135)***  & 2.343 \\
+			DIR & Dir1  & -3.066 (0.263)*** & 0.047 & -3.305 (0.269)*** & 0.037 \\
+			DIR & Dir2  & -2.652 (0.198)*** & 0.071 & -2.875 (0.204)*** & 0.056 \\
+			DIR & Dir3  & -3.015 (0.253)*** & 0.049 & -3.258 (0.258)*** & 0.038 \\
+			DIR & Dir4  & -2.533 (0.288)*** & 0.079 & -2.769 (0.292)*** & 0.063 \\
+			DIR & Dir5  & -2.739 (0.314)*** & 0.065 & -2.934 (0.317)*** & 0.053 \\
+			DIR & Dir7  & 0.028 (0.145) & 1.029 & 0.101 (0.146) & 1.107 \\
+			DIR & Dir8  & -0.806 (0.157)*** & 0.447 & -0.968 (0.163)*** & 0.38 \\
+			DIR & Dir9  & -3.985 (0.586)*** & 0.019 & -4.207 (0.588)*** & 0.015 \\
+			DIR & Dir10 & -1.325 (0.136)*** & 0.266 & -1.5 (0.142)*** & 0.223 \\
+			COCS  & C     & -1.163 (0.274)*** & 0.313 & -1.11 (0.275)*** & 0.329 \\
+			COCS  & G     & -0.794 (0.198)*** & 0.452 & -0.796 (0.198)*** & 0.451 \\
+			COCS  & L     & -0.711 (0.228)** & 0.491 & -0.619 (0.229)** & 0.539 \\
+			COCS  & M     & -0.541 (0.15)*** & 0.582 & -0.497 (0.15)*** & 0.609 \\
+			COCS  & P     & -0.53 (0.135)*** & 0.588 & -0.506 (0.136)*** & 0.603 \\
+			COCS  & R     & -0.95 (0.308)** & 0.387 & -0.886 (0.309)** & 0.412 \\
+			COCS  & S     & -0.691 (0.275)* & 0.501 & -0.682 (0.276)* & 0.506 \\
+			COCS  & T     & -0.608 (0.203)** & 0.544 & -0.564 (0.204)** & 0.569 \\
+			AGEC &       & -0.025 (0.005)*** & 0.975 & -0.026 (0.005)*** & 0.974 \\
+			ERIP  & 1     & 0.851 (0.135)*** & 2.343 & 0.479 (0.149)** & 1.614 \\
+			Real Dividends &       &       &       & 0.085 (0.017)*** & 1.089 \\
 			\bottomrule
 		\end{tabular}%
 		\begin{tablenotes}
@@ -1289,14 +1411,46 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 \end{figure}
 
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.6\textwidth]{vq.png}
-	\caption{Voluntary Quitting Forecasting}
-	\label{fig:predictvq}	
-	
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{vq.png}
+%	\caption{Voluntary Quitting Forecasting}
+%	\label{fig:predictvq}	
+%	
+%\end{figure}
 
+\begin{table}[h!]
+	\centering
+	\scriptsize
+	\smallskip
+	\caption{Voluntary Quitting Model Predictions by Occupational Code (COCS)}
+	\begin{threeparttable}
+		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
+			\toprule
+			Year  &  Crafts & Engineers& General Admin. & Laborers& Managers& Prof. Admin.& Operators& Scientists& Technicians& Total \\
+			\midrule
+           2001  & 3 (2) & 12 (14) & 4 (2) & 4 (3) & 8 (12) & 11 (16) & 2 (0) & 2 (2) & 4 (1) & 49 (52) \\
+           2002  & 2 (1) & 13 (10) & 3 (3) & 3 (2) & 7 (8) & 11 (11) & 1 (0) & 1 (4) & 3 (5) & 45 (44) \\
+           2003  & 2 (0) & 17 (13) & 3 (1) & 4 (2) & 7 (14) & 12 (10) & 1 (1) & 1 (5) & 3 (2) & 51 (48) \\
+           2004  & 2 (2) & 23 (20) & 4 (4) & 3 (2) & 7 (5) & 12 (12) & 1 (0) & 1 (1) & 4 (3) & 57 (49) \\
+           2005  & 1 (5) & 23 (23) & 3 (3) & 2 (2) & 7 (8) & 11 (18) & 1 (0) & 1 (0) & 3 (4) & 53 (63) \\
+           2006  & 1 (1) & 22 (32) & 2 (2) & 1 (2) & 6 (6) & 10 (16) & 1 (3) & 1 (1) & 2 (2) & 46 (65) \\
+           2007  & 1 (2) & 17 (29) & 2 (3) & 1 (2) & 6 (6) & 9 (14) & 1 (2) & 1 (0) & 2 (2) & 39 (60) \\
+           2008  & 1 (2) & 23 (34) & 5 (5) & 2 (0) & 11 (4) & 19 (18) & 2 (5) & 3 (1) & 4 (5) & 69 (74) \\
+           2009  & 1 (1) & 9 (16) & 2 (4) & 1 (5) & 5 (4) & 9 (6) & 1 (0) & 1 (1) & 2 (3) & 29 (40) \\
+           2010  & 1 (1) & 9 (13) & 3 (7) & 1 (4) & 4 (4) & 9 (2) & 1 (2) & 1 (1) & 2 (4) & 30 (38) \\
+           2011  & 1 (0) & 8 (9) & 3 (4) & 1 (2) & 3 (3) & 9 (3) & 1 (0) & 1 (2) & 1 (1) & 29 (24) \\
+           2012  & 1 (1) & 8 (6) & 3 (7) & 1 (0) & 3 (4) & 10 (14) & 1 (0) & 1 (2) & 2 (2) & 30 (36) \\
+           	\bottomrule
+		\end{tabular}%
+		\begin{tablenotes}
+			\item[1] the number before the parentheses is predicted retirement number.
+			\item[2] the number inside the parentheses is actual retirement number.
+		\end{tablenotes}
+		
+	\end{threeparttable}
+	\label{tab:VQcocscode}
+\end{table}
 
 \begin{table}[]
 	\scriptsize
@@ -1307,11 +1461,11 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 			\toprule
 			\textbf{Economic Inidcator}\tnote{1} &\multicolumn{1}{c}{\textbf{$\chi^2$}} &  \multicolumn{1}{c}{\textbf{P-value}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Hazard \\ ratio\end{tabular}}}   &  \multicolumn{1}{c}{\textbf{MAPE}} &\multicolumn{1}{c}{\textbf{$G^2$}} \\ \midrule
 			Without Econmic indicator &            &                &              & 15.71 & 28.33 \\
-			MHP NSA                   & 37.93      & \textless.001  & 1.012        & 13.62 & 18.44 \\
-			MHP SA                    & 37.75      & \textless.001  & 1.012        & 13.64 & 18.50 \\
-			Southeast MHP NSA         & 39.80      & \textless.001  & 1.020        & 13.74 & 18.67 \\
-			Southeast MHP SA          & 39.63      & \textless.001  & 1.020        & 13.75 & 18.68 \\
-			SP500                     & 0.02       & 0.879          & 1.000        & 15.46 & 27.79 \\
+			MHP                   & 37.93      & \textless.001  & 1.012        & 13.62 & 18.44 \\
+			SAMHP                    & 37.75      & \textless.001  & 1.012        & 13.64 & 18.50 \\
+			SEMHP         & 39.80      & \textless.001  & 1.020        & 13.74 & 18.67 \\
+			SESAMHP          & 39.63      & \textless.001  & 1.020        & 13.75 & 18.68 \\
+			S\&P500                     & 0.02       & 0.879          & 1.000        & 15.46 & 27.79 \\
 			Dividend                  & 31.21      & \textless.001  & 1.077        & 13.01 & 18.01 \\
 			Earnings                  & 8.83       & 0.003          & 1.009        & 15.81 & 23.88 \\
 			Consumer Price Index      & 35.84      & \textless.001  & 1.024        & 24.26 & 42.95 \\
@@ -1320,7 +1474,7 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 			Real Earnings             & 3.71       & 0.054          & 1.005        & 14.16 & 23.34 \\
 			Long Interest Rate        & 12.04      & 0.001          & 0.789        & 19.10 & 38.73 \\
 			Unemployment Rate         & 2.99       & 0.084          & 1.068        & 17.04 & 34.96 \\
-			P E10                     & 16.22      & \textless.001  & 0.968        & 17.95 & 35.19 \\
+			P/E 10                     & 16.22      & \textless.001  & 0.968        & 17.95 & 35.19 \\
 			Wilshire5000              & 10.75      & 0.001          & 1.031        & 15.84 & 21.31 \\ \bottomrule
 		\end{tabular}
 		\begin{tablenotes}
@@ -1336,6 +1490,40 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 	\caption{Voluntary Quitting with Real Dividend}
 	\label{fig:vqrealdividend}
 \end{figure}
+
+\begin{table}[h!]
+	\centering
+	\scriptsize
+	\smallskip
+	\caption{Voluntary Quitting Model with External Variables Predictions by Occupational Code (COCS)}
+	\begin{threeparttable}
+		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
+			\toprule
+			Year  &  Crafts & Engineers& General Admin. & Laborers& Managers& Prof. Admin.& Operators& Scientists& Technicians& Total \\
+			\midrule
+		     2001  & 3 (2) & 12 (14) & 3 (2) & 4 (3) & 7 (12) & 10 (16) & 2 (0) & 1 (2) & 4 (1) & 46 (52) \\
+		     2002  & 2 (1) & 11 (10) & 2 (3) & 3 (2) & 6 (8) & 8 (11) & 1 (0) & 1 (4) & 3 (5) & 37 (44) \\
+		     2003  & 2 (0) & 14 (13) & 2 (1) & 3 (2) & 6 (14) & 9 (10) & 1 (1) & 1 (5) & 3 (2) & 41 (48) \\
+		     2004  & 1 (2) & 20 (20) & 3 (4) & 3 (2) & 6 (5) & 10 (12) & 1 (0) & 1 (1) & 3 (3) & 47 (49) \\
+		     2005  & 1 (5) & 22 (23) & 3 (3) & 2 (2) & 6 (8) & 10 (18) & 1 (0) & 1 (0) & 3 (4) & 50 (63) \\
+		     2006  & 1 (1) & 24 (32) & 2 (2) & 1 (2) & 7 (6) & 10 (16) & 1 (3) & 1 (1) & 2 (2) & 50 (65) \\
+		     2007  & 1 (2) & 21 (29) & 2 (3) & 1 (2) & 7 (6) & 11 (14) & 1 (2) & 2 (0) & 2 (2) & 48 (60) \\
+		     2008  & 1 (2) & 22 (34) & 5 (5) & 2 (0) & 11 (4) & 20 (18) & 2 (5) & 3 (1) & 4 (5) & 69 (74) \\
+		     2009  & 1 (1) & 13 (16) & 4 (4) & 1 (5) & 7 (4) & 15 (6) & 1 (0) & 2 (1) & 2 (3) & 47 (40) \\
+		     2010  & 1 (1) & 10 (13) & 3 (7) & 1 (4) & 5 (4) & 11 (2) & 1 (2) & 1 (1) & 2 (4) & 35 (38) \\
+		     2011  & 1 (0) & 7 (9) & 2 (4) & 1 (2) & 3 (3) & 8 (3) & 1 (0) & 1 (2) & 1 (1) & 25 (24) \\
+		     2012  & 1 (1) & 8 (6) & 3 (7) & 1 (0) & 3 (4) & 11 (14) & 1 (0) & 1 (2) & 2 (2) & 30 (36) \\
+		     
+			\bottomrule
+		\end{tabular}%
+		\begin{tablenotes}
+			\item[1] the number before the parentheses is predicted retirement number.
+			\item[2] the number inside the parentheses is actual retirement number.
+		\end{tablenotes}
+		
+	\end{threeparttable}
+	\label{tab:VQEIcocscode}
+\end{table}
 
 
 \section{Conclusions and Managerial Implications}
