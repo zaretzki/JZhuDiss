@@ -1096,7 +1096,7 @@ The baseline survival function and log hazard function are shown in Figure \ref{
 	\centering
 	\scriptsize
 	\smallskip
-	\caption{Predictions by Occupational Code (COCS)}
+	\caption{Retirement Predictions by Occupational Code (COCS) without external variables}
 	\begin{threeparttable}
 		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
 			\toprule
@@ -1248,7 +1248,7 @@ Summarize the predictive capabilities for aggregates.  Strengths and weaknesses.
    		\centering
    		\scriptsize
    		\smallskip
-   		\caption{Retirement with Real Earnings Predictions by Occupational Code (COCS)}
+   		\caption{Retirement Predictions by Occupational Code (COCS) with External Variable.}
    		\begin{threeparttable}
    			\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
    				\toprule
@@ -1423,7 +1423,7 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 	\centering
 	\scriptsize
 	\smallskip
-	\caption{Voluntary Quitting Model Predictions by Occupational Code (COCS)}
+	\caption{Voluntary Quitting Predictions by Occupational Code (COCS) without external variables}
 	\begin{threeparttable}
 		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
 			\toprule
@@ -1495,7 +1495,7 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 	\centering
 	\scriptsize
 	\smallskip
-	\caption{Voluntary Quitting Model with External Variables Predictions by Occupational Code (COCS)}
+	\caption{Voluntary Quitting Predictions by Occupational Code (COCS) with External Variables}
 	\begin{threeparttable}
 		\begin{tabular}{cL{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}L{1.2cm}l}
 			\toprule
@@ -1530,13 +1530,41 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 
 Several key questions:
 \begin{enumerate}
-	\item How accurately can retirement(quitting) be predicted?
-	\item What factors indicate an individual is more likely to retire(quit)?
+	\item How accurately can retirement(quitting) be predicted?  Summarize the results of the predictions overall.
+    \item How many employees will retire(quit) next year by occupational category and/or division?  Summarize the table.
+	\item What factors indicate an individual is more likely to retire(quit)?  
+retire = division, year of service at hire, age at hire, ERIP, points = 85 and age=65 interaction term.
+quitting = division, occupation, age at start of years of service, ERIP.
 	\item Which external economic factors are most predictive of retirement or quitting?
-	\item What is the magnitude  of impact of an Early Retirement Incentive Programs (ERIP)?
-	\item How do the tenure and age impact retirement?
-	\item How many employees will retire(quit) next year by occupational category and division?
+ retirement = real earnings, quitting = real dividends
+	\item What is the magnitude  of impact of an Early Retirement Incentive Programs (ERIP)?  Significant impact on both retirement and quitting in that year.  Why?  Explain dynamics including interaction ERIP*points term for retirement.  Why should it affect quitting.
+	\item How do the tenure and age impact retirement?  Tell the story, early tenure folks are more likely to quit.  Quitting is associated with high real dividends which indicates a robust job market with companies highly profitable.  As individuals age risk (hazard) of quitting decreases as they become closer to retirement/pension eligibility age. Late in their careers, as the achieve full retirement benefit points, they become more likely to retire and are highly impacted by ERIP programs.  Nevertheless, for those that choose to stay beyond age 65, the hazard of retirement recedes to more normal levels.  Most choose to retire by age 70.  
+
+\item Details about model fitting.
+
 \end{enumerate}
+
+1) Restate and Summarize key findings above.
+2) Interpret the findings.  
+3) So What?  Importance of the findings. Managerial implications. What can the model do?
+  How should they use it?  Good, bad, etc.
+3) Possible limitations of study
+4) Next steps/future work.
+5) 
+
+Generally, we found that using the Cox proportional hazards model along with appropriately chosen internal and external variables led to accurate predictions of retirement for a two year forecast window.  The key internal variables that improved model predictions include division, years of service at hire (YCSH), and age at hire (AGEH).  In addition, real earnings as calculated from the stock market were also significant.  Furthermore, we find that retirement hazard increases significantly when an individual hits 85 points of credit for retirement but that this reverts back to a lower hazard after age 65.  Finally, the early retirement incentive plan increase the hazard of retirement, particularly for those that were eligible for full benefits with points exceeding 85.
+
+In the case of quitting, we
+
+Answers and what worked for retirement.
+
+Answers and what worked for quitting.
+
+General findings
+
+Conclusions and Future Work.
+
+
 
 
 Conclusions and Managerial Implications
