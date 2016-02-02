@@ -499,7 +499,7 @@ In order to more accurately capture the nuances and complexities of the data sam
 The results of the simulation are shown in Table \ref{tab:right2}. As discussed above, both a correctly parametric proportional hazards regression model with a Weibull baseline {\tt phreg} and a semi-parametric Cox regression {\tt coxreg} are fit in order to evaluate differences in efficiency. The estimation of age and $\alpha$ are all close to the true values (0.025 and 1.5) when averaged over 100 simulations.  Based on 400 events, the estimates of $\lambda$ increase from 2.694 with no censoring to over 2.8 when censoring is above 50\%.  In general, the results indicate that right censoring has little impact on coefficient estimation and that the semi-parametric estimates show similar efficiency to fully parametric estimates. However, right censoring does impact estimation of the  baseline function for the Cox PH model as shown in the 6th and 7th columns of the Table and Figure \ref{fig:rightbase}.  Panel (a) shows no censoring and the parametric baseline matches the non-parametric although as time increases and the number at risk decreases we see that non-parametric estimate deviates more strongly from the parametric fit.  Panel (b) shows 25\% censoring for 100 replications.  We see that, as the range of the data decreases, the duration of the non-parametric baseline estimate is more restricted, while the parametric fit can be extrapolated with the usual caveats.  In panel (d), the 75\% censoring level, we see increased variability even with the diminished range due to the more restrictive censoring time.  Note that these results are indicative of monotonically increasing hazards and may differ if we consider other baseline distributions
  \begin{table}[htbp]
  	\renewcommand{\arraystretch}{1.5}
- 	%\scriptsize %table fond
+ 	\scriptsize %table fond
  	\centering
  	\caption{Right Censor Simulation Results by Various Start Time}
  	\begin{tabular}{ccccccc}
@@ -841,8 +841,6 @@ The construction of predictive models for turnover involves consideration of sev
 \subsection{Descriptive Analysis}
 
 As described in Section \ref{data.desc}, the current data provides five demographic and career history variables: {\it payroll} (hourly, weekly, or monthly payroll), {\it gender} (M,F), DIR (ten levels of division), {\it occupational code} (crafts, engineers, general administrative, laborers, managers, administrative, operators, scientists, technicians), {\it age at hire}, and {\it years of service at hire}. Table \ref{tab:descriptive} provides marginal counts of the number of workers in the sample within each category.  We see that among occupation codes there are four large categories (C,E,M,\& P)  with over one thousand employees observed throughout the data sample, four medium sized groups with 500-700 employees (G,L,R \& T), and one small group, S, with 208 employees.  Payroll data shows that the largest group is paid monthly, followed by hourly, and weekly.  In terms of gender, approximately 72\% of employees are male. Finally, divisions, while not fixed over the life of the employee, are distributed in a similar fashion to occupational codes with four larger groups and a number of smaller groups.
-
-Beyond these demographic and career factors, our models also include behavioral variables derived from policy requirements for retirement and early retirement incentives that occur throughout the observation period. Histograms of retirement age and accumulated pension points are shown in Figure \ref{fig:hist}. The histogram of retirement age is right skewed and shows an anomalous spike at age equals 62 which is the mode.  We find that 79\% of the employees that retired at 62 also reached or exceeded 85 points. [WHY IS THIS SUCH A POPULAR AGE?  MEDICARE, SOCIAL SECURITY? ASK Y12.]  The average retirement age is 59.72 demonstrating that many individuals retire before 62 and most before age 70. In terms of points accrued at time of retirement, recall that points are the sum of years of service plus current age, we see an irregular distribution with the vast majority retiring with point totals in the range of 85 to 100. Relatively few elect to take a reduced pension and retire with diminished benefits with points below 85. Again we see that 85 points is the mode indicating that retiring immediately after become fully vested in the pension is a popular choice.
 \begin{table}[htbp]
 	\centering
 	\scriptsize
@@ -896,6 +894,8 @@ Beyond these demographic and career factors, our models also include behavioral 
 	\caption{Histogram of Age and Point at Retire}
 	\label{fig:hist}
 \end{figure}
+
+Beyond these demographic and career factors, our models also include behavioral variables derived from policy requirements for retirement and early retirement incentives that occur throughout the observation period. Histograms of retirement age and accumulated pension points are shown in Figure \ref{fig:hist}. The histogram of retirement age is right skewed and shows an anomalous spike at age equals 62 which is the mode.  We find that 79\% of the employees that retired at 62 also reached or exceeded 85 points. [WHY IS THIS SUCH A POPULAR AGE?  MEDICARE, SOCIAL SECURITY? ASK Y12.]  The average retirement age is 59.72 demonstrating that many individuals retire before 62 and most before age 70. In terms of points accrued at time of retirement, recall that points are the sum of years of service plus current age, we see an irregular distribution with the vast majority retiring with point totals in the range of 85 to 100. Relatively few elect to take a reduced pension and retire with diminished benefits with points below 85. Again we see that 85 points is the mode indicating that retiring immediately after become fully vested in the pension is a popular choice.
 
 
 
@@ -953,7 +953,57 @@ Finally, for comparison purposes we include a time series prediction model discu
 Excluding aggregate economic factors, the optimal modelling variables for the prediction of age at retirement include DIR, YCSH, and AGEH.  In addition, based on our understanding of the covenants and parameters of the retirement program we found several additional variables that increase the predictive power of the model. These include ERIP, P85, A65*P85, an interaction term that moderates the impact of the P85 effect after the individual has exceeded 65 years of age, and  ERIP*P85, an interaction term that moderates the impact of the P85 effect while the ERIP is in place.  These variables were introduced in Section \ref{data.desc}.
 
 Table \ref{tab:paraest.} describes the fit parameters and hazard ratios.  As noted above, we did not find that gender, occupational code and payroll category were statistically significant predictors indicating that employees' gender, job types, and payroll status are not associated with choice of retirement age conditional on the other variables in the model.
-
+\begin{table}[htbp]
+	\centering
+	\scriptsize
+	\renewcommand{\arraystretch}{1.5}
+	\caption{Parameter Estimates for Retirement Models}
+	\begin{threeparttable}
+		\begin{tabular}{llL{2.5cm}L{1.5cm}L{2.5cm}L{1.5cm}}
+			\toprule
+			&       & \multicolumn{2}{c}{\textbf{Model W/O External Variable}} & \multicolumn{2}{c}{\textbf{Model with Real Earnings}} \\
+			\hline
+			Parameter &   Label & Parameter (Standard Error) & Hazard Ratio & Parameter (Standard Error) & Hazard Ratio \\
+			\midrule
+			%			division & dir2  & -0.965(0.179)***\tnote{1} & 0.381 &-1.025(0.177)*** & 0.359 \\
+			%			division & dir3  & -0.241(0.112)* & 0.786 & -0.246(0.111)* & 0.782 \\
+			%			division & dir4  & 0.078(0.195) & 1.081 & -0.039(0.195) & 0.962 \\
+			%			division & dir5  & -0.131(0.190) & 0.877 & -0.246(0.190) & 0.782 \\
+			%			division & dir6  & 2.136(0.095)*** & 8.463 & 2.252(0.095)*** & 9.511 \\
+			%			division & dir7  & 2.435(0.129)*** & 11.418 & 2.437(0.129)*** & 11.437 \\
+			%			division & dir8  & 0.864(0.106)*** & 2.373 & 0.816(0.106)*** & 2.261 \\
+			%			division & dir9  & -3.023(0.581)*** & 0.049 & -2.774(0.504)*** & 0.062 \\
+			%			division & dir10 & 0.793(0.093)*** & 2.211 & 0.709(0.093)*** & 2.031 \\
+			%			YCSH  &       & 0.019(0.004)*** & 1.019 & 0.043(0.004)*** & 1.044 \\
+			%			ERIP & 1     & 0.859(0.169)*** & .     & 0.942(0.109)*** & . \\
+			%			AGEH &       & -0.172(0.013)*** & 0.842 & -0.187(0.013)*** & 0.829 \\
+			%			P85   & 1     & 1.435(0.091)*** & .     & 0.682(0.072)*** & . \\
+			%			A65*P85 & 1     & -1.610(0.206)*** & .     & -0.662(0.177)*** & . \\
+			%			ERIP*P85 & 1     & 0.469(0.179)** & .     & 0.600(0.130)*** & . \\
+			DIR & Dir2  & -0.965 (0.179)*** & 0.381 & -0.969 (0.177)*** & 0.38 \\
+			DIR & Dir3  & -0.241 (0.112)* & 0.786 & -0.242 (0.111)* & 0.785 \\
+			DIR & Dir4  & 0.078 (0.195) & 1.081 & 0.013 (0.195) & 1.013 \\
+			DIR & Dir5  & -0.131 (0.19) & 0.877 & -0.216 (0.19) & 0.806 \\
+			DIR & Dir6  & 2.136 (0.095)*** & 8.463 & 2.261 (0.093)*** & 9.594 \\
+			DIR & Dir7  & 2.435 (0.129)*** & 11.418 & 2.515 (0.128) & 12.363 \\
+			DIR & Dir8  & 0.864 (0.106)*** & 2.373 & 0.855 (0.106)*** & 2.352 \\
+			DIR & Dir9  & -3.023 (0.581)*** & 0.049 & -2.731 (0.504)*** & 0.065 \\
+			DIR & Dir10 & 0.793 (0.093)*** & 2.211 & 0.726 (0.093)*** & 2.068 \\
+			YCSH  & 1     & 0.019 (0.004)*** & 1.019 & 0.023 (0.004)*** & 1.023 \\
+			ERIP  &       & 0.859 (0.169)*** & .     & 0.489 (0.133)*** & . \\
+			AGEH  &       & -0.172 (0.013)*** & 0.842 & -0.193 (0.014)*** & 0.825 \\
+			P85   & 1     & 1.435 (0.091)*** & .     & 0.756 (0.073)*** & . \\
+			P85*A65 & 1     & -1.61 (0.206)*** & .     & -1.019 (0.197)*** & . \\
+			ERIP*P85 & 1     & 0.469 (0.179)** & .     & 0.506 (0.141)*** & . \\
+			Real Earnings &       &       &       & 0.013 (0.001)*** & 1.013 \\
+			\bottomrule
+		\end{tabular}%
+		\begin{tablenotes}
+			\item[1] * denotes $P<0.05$, ** denotes $P<0.01$, and *** denotes $P<0.001$.
+		\end{tablenotes}
+	\end{threeparttable}
+	\label{tab:paraest.}%
+\end{table}%	
 P85 is an indicator that a person is eligible for maximum retirement benefits and naturally this has a strong impact on the probability that a person will retire.  From a quantitative point of view, with all other factors held constant, for those that achieve 85 points before the age of 65, the hazard ratio is $e^{1.44} = 4.22$ meaning that the hazard of retirement becomes 4.22 times more likely.  While not surprising, this quantification is important in predicting individual and aggregate retirement and reflects the modal spike observed in the histogram in Figure \ref{fig:point}.  
 
 An alternative eligibility criteria for retirement occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, the impact of this 65 year effect is included in the baseline hazard, which should increase after this point.  Figure \ref{fig:basepred} shows the baseline survival and cumulative hazard function for a standard case. Independent of the P85 effect, we see a further steep increase in the cumulative hazard/decrease in survival between age 62 and 65. By including an interaction between the indicators of age greater than 65 and points greater than 85, A65*P85, we can estimate how the impact of reaching 85 points changes when a person exceeds regular retirement age.  In this case, the interaction term is estimated at -1.61 indicating a diminishing effect on the P85 criteria to $e^{1.44-1.61} =0.84$.  In addition, as can be seen from the trend of the cumulative hazard, the baseline hazard seems to return lower levels.  Hence, those that exceed both criteria actually have a reduced hazard of retiring over those have only met the age 65 criteria.  It seems that the fact that the individual remains on the job after hitting both criteria indicates a diminished intention to retire.
@@ -969,7 +1019,7 @@ According to our model, retirement can also be influenced by an employee's age a
 \end{figure}
 
 In the fiscal year 2008, the employer in this study created a temporary early retirement incentive program (ERIP). The response window for this option was 3 months although the specific details beyond this are unknown. In order to deal with the increased level of retirement during this period we include a time dependent indicator variable for each employee that indicates their age when this program was in effect.  The coefficient for this indicator was 0.86 leading to a hazard ratio of $e^{.86} = 2.21$ which indicates that, on average, an individuals hazard of retirement increased by almost 2.2 times during this period.  If more information were known about the requirements or targets of this ERIP, a more case specific estimate may be possible.  The effect of the ERIP is considerable as indicated by the huge uptick in events in 2008; see Figure \ref{fig:predict}.  If this one-time effect were not included in the model it may bias the other estimates parameters considerably.
-
+	
 As a further step, we test the ERIP effect on the employees who are eligible for getting a pension, i.e. points greater than 85.  After adding an interaction term between ERIP and the indicator that a person exceeds 85 points, the hazard ratio for the ERIP increases substantially to 15.85 from 2.21, more than seven times the basic ERIP effect. In contrast, employees that were eligible only for partial retirement, an interaction between ERIP and indicator variables that employees achieve only 65 or 75 points, were not statistically significant.
 
 The DIR variable was also a significant predictor.  For analysis, the baseline level was chosen arbitrarily as division 1 so that its hazard rate is determined by the baseline.  Relative to this baseline, divisions 6 and 7 have very high hazard ratios, 8.363 and 11.405 respectively, which indicates, other factors being equal, that the employees in division 6 and 7 are much more likely to retire at any age than those from division 1.  Conversely, division 9 has a hazard ratio of $e^{-3.023} = .049$ indicating that individuals within this group have 1/20 the hazard of group 1.  This may indicate that the division is new and contains younger employees.  In general, differences in retirement rates could be caused by differences in age demographics, departmental and job functions, or departmental leadership.
@@ -1023,57 +1073,7 @@ The baseline survival function and log hazard function are shown in Figure \ref{
 %	\label{tab:paraest.}%
 %\end{table}%
 
-\begin{table}[htbp]
-	\centering
-	\scriptsize
-	\renewcommand{\arraystretch}{1.5}
-	\caption{Parameter Estimates for Retirement Models}
-	\begin{threeparttable}
-		\begin{tabular}{llL{2.5cm}L{1.5cm}L{2.5cm}L{1.5cm}}
-			\toprule
-			&       & \multicolumn{2}{c}{\textbf{Model W/O External Variable}} & \multicolumn{2}{c}{\textbf{Model with Real Earnings}} \\
-			\hline
-			Parameter &   Label & Parameter (Standard Error) & Hazard Ratio & Parameter (Standard Error) & Hazard Ratio \\
-			\midrule
-%			division & dir2  & -0.965(0.179)***\tnote{1} & 0.381 &-1.025(0.177)*** & 0.359 \\
-%			division & dir3  & -0.241(0.112)* & 0.786 & -0.246(0.111)* & 0.782 \\
-%			division & dir4  & 0.078(0.195) & 1.081 & -0.039(0.195) & 0.962 \\
-%			division & dir5  & -0.131(0.190) & 0.877 & -0.246(0.190) & 0.782 \\
-%			division & dir6  & 2.136(0.095)*** & 8.463 & 2.252(0.095)*** & 9.511 \\
-%			division & dir7  & 2.435(0.129)*** & 11.418 & 2.437(0.129)*** & 11.437 \\
-%			division & dir8  & 0.864(0.106)*** & 2.373 & 0.816(0.106)*** & 2.261 \\
-%			division & dir9  & -3.023(0.581)*** & 0.049 & -2.774(0.504)*** & 0.062 \\
-%			division & dir10 & 0.793(0.093)*** & 2.211 & 0.709(0.093)*** & 2.031 \\
-%			YCSH  &       & 0.019(0.004)*** & 1.019 & 0.043(0.004)*** & 1.044 \\
-%			ERIP & 1     & 0.859(0.169)*** & .     & 0.942(0.109)*** & . \\
-%			AGEH &       & -0.172(0.013)*** & 0.842 & -0.187(0.013)*** & 0.829 \\
-%			P85   & 1     & 1.435(0.091)*** & .     & 0.682(0.072)*** & . \\
-%			A65*P85 & 1     & -1.610(0.206)*** & .     & -0.662(0.177)*** & . \\
-%			ERIP*P85 & 1     & 0.469(0.179)** & .     & 0.600(0.130)*** & . \\
-               DIR & Dir2  & -0.965 (0.179)*** & 0.381 & -0.969 (0.177)*** & 0.38 \\
-               DIR & Dir3  & -0.241 (0.112)* & 0.786 & -0.242 (0.111)* & 0.785 \\
-               DIR & Dir4  & 0.078 (0.195) & 1.081 & 0.013 (0.195) & 1.013 \\
-               DIR & Dir5  & -0.131 (0.19) & 0.877 & -0.216 (0.19) & 0.806 \\
-               DIR & Dir6  & 2.136 (0.095)*** & 8.463 & 2.261 (0.093)*** & 9.594 \\
-               DIR & Dir7  & 2.435 (0.129)*** & 11.418 & 2.515 (0.128) & 12.363 \\
-               DIR & Dir8  & 0.864 (0.106)*** & 2.373 & 0.855 (0.106)*** & 2.352 \\
-               DIR & Dir9  & -3.023 (0.581)*** & 0.049 & -2.731 (0.504)*** & 0.065 \\
-               DIR & Dir10 & 0.793 (0.093)*** & 2.211 & 0.726 (0.093)*** & 2.068 \\
-               YCSH  & 1     & 0.019 (0.004)*** & 1.019 & 0.023 (0.004)*** & 1.023 \\
-               ERIP  &       & 0.859 (0.169)*** & .     & 0.489 (0.133)*** & . \\
-               AGEH  &       & -0.172 (0.013)*** & 0.842 & -0.193 (0.014)*** & 0.825 \\
-               P85   & 1     & 1.435 (0.091)*** & .     & 0.756 (0.073)*** & . \\
-               P85*A65 & 1     & -1.61 (0.206)*** & .     & -1.019 (0.197)*** & . \\
-               ERIP*P85 & 1     & 0.469 (0.179)** & .     & 0.506 (0.141)*** & . \\
-               Real Earnings &       &       &       & 0.013 (0.001)*** & 1.013 \\
-               \bottomrule
-		\end{tabular}%
-		\begin{tablenotes}
-			\item[1] * denotes $P<0.05$, ** denotes $P<0.01$, and *** denotes $P<0.001$.
-		\end{tablenotes}
-	\end{threeparttable}
-	\label{tab:paraest.}%
- \end{table}%		
+		
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=5in]{retire2.png}
