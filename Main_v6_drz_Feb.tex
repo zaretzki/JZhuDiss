@@ -83,9 +83,9 @@ In order to analyze the data, we used the Cox proportional hazards models (PH). 
 
 In many industries with older worker populations, retirement is a major source of HR disruption causing delays and other problems in processing the flow of work.  Replacing retired workers can also be a major expense both in HR staff time and recruiting costs.  Effective predictive models can also help managers identify divisions, departments, or potentially individuals in an organization that are likely to leave giving the organization more lead time for planning and recruitment of replacements.  For example, in large organizations that utilize skilled workers in both white collar and blue collar jobs, accurate forecasts of predictive models of openings in the next 6 to 12 months can be extremely beneficial in maintaining continuity of operations.  Similarly, other firms with younger employee populations may be more impacted by employee quitting and would benefit from predictions.
 
-While aggregate forecast models of turnover and, more specifically, retirement exist \citep{zhu2015}, such models have limited ability to provide estimates at division or job category levels.  Such models also do not take into account demographic structure of the population such as age, years of service, pension type, and potentially numerous other factors that can influence the probability of retirement.  By modeling the distribution of time until retirement at the individual level we can include much more relevant information such as age, retirement plan type, job classification, organizational division, years of service, pension benefit details, individual survey responses if they exist, as well as external social and economic trends that are geographically relevant.   This model could potentially provide both accurate predictions as well as giving managers and researchers feedback on how different factors and incentives may influence retirement and other HR decisions such as early retirement incentives.
+While aggregate forecast models of turnover and, more specifically, retirement exist \citep{zhu2015}, such models have limited ability to provide estimates at division or job category levels.  Such models also do not take into account demographic structure of the population such as age, years of service, pension type, and potentially numerous other factors that can influence the probability of retirement. By modeling the distribution of time until retirement at the individual level we can include much more relevant information such as age, retirement plan type, job classification, organizational division, years of service, pension benefit details, individual survey responses if they exist, as well as external social and economic trends that are geographically relevant. This model could potentially provide both accurate predictions as well as giving managers and researchers feedback on how different factors and incentives may influence retirement and other HR decisions such as early retirement incentives.
 
-
+\citet{holt2011}
 
 %As a funded research project, a large organizational secondary dataset including 12-year employees demographic information and records is transformed, analyzed %and modeled by Cox proportional hazard regression models with a time dependent variable using competing risks analysis to examine the statistically significant %factors and to predict employees' conditional retiring probabilities. This study also examines the forecasting capability of Cox proportional hazard model on %the data with two kinds of bias (left truncation and right censor) by simulation.
 
@@ -1212,7 +1212,7 @@ The baseline survival function and log hazard function are shown in Figure \ref{
  Aggregate predictions for employee retirement are shown in Figure \ref{fig:predict} and Tables \ref{tab:cocscode}. %- \ref{tab:division}.
  The model predictions capture the fluctuations in actual retirement, and also capture the peak year of 2008 when the ERI was introduced. The out-of-sample predictions for holdout years (2011 and 2012) are very close to the actual number indicating that the model performs well on both the training and holdout samples. Besides predicting the overall retirement, the model can also provide predictions by category. Table \ref{tab:cocscode} columns 1 \& 2 show average actual retirement events (in parentheses) and average yearly predictions by occupational code. These are computed by summing the retirement probabilities of individuals by job classification then by year and averaging.  Training (2000-2010) and holdout (2011-2012) periods are reported in columns 1 and 2 respectively.  Within the training sample we see close agreement on average between predictions and observed across all job classifications. This reflects the effectiveness of the model but also the fact that this is average over a longer period and estimates the same data used to train the model.  Holdout sample predictions are much more variable reflecting the fact that the estimates are a forecast and the shorter averaging period.  Nevertheless, some large categories show fairly effective predictions in areas such as Manager, Laborer, and General Administration.  Significant under-predictions are observed in crafts, technician, and engineering but such forecasts still provide a useful baseline for managers.  Significant over-predictions are observed in professional administration and operator categories. Although both deviations may lead to significant over-hiring, only operator category was significantly over-predicted.  We note that the overestimation in the operator category exactly matches underestimation in the technician category and the model may not distinguish these categories effectively.%[NOW USE BOOTSTRAP TO UNDERSTAND UNCERTAINTY.] [Maybe use average squared deviations]
 
-\subsection{Models for Retirement with External Economic Variables}
+\subsection{Models for Retirement with External Economic Variables} \label{sec:rewExt}
 The impact of the external economy on retirement decision making is a topic of considerable interest.  To explore these effects we include lagged versions of a number economic factors using the counting process data formulation with calendar year based intervals to set up and test the impact on retirement. Parameter estimates for common effects across models with and without economic variables remain constant as can be observed in Table \ref{tab:paraest.}.
 \begin{table}[h!]
 	\scriptsize
@@ -1292,9 +1292,41 @@ As shown in Table \ref{tab:EI}, among economic indices tested, S\&P500, REAL EAR
 
 Unadjusted Monthly Housing Price (MHP) is another influential index and inclusion in the model resulted in the lowest MAPE value. Fluctuations in the lag also correlate strongly with the retirement number as shown in Figure \ref{fig:MHP}. However, the retirement number does not decrease coinciding with the decreasing of MHP after the 2008 financial crisis.  Returning to Table \ref{fig:predict} columns 4, we notice that most of the holdout predictions are inferior to the model without external variables.  This likely results from the increasing deviation between MHP and retirement in the post 2009 period.
 
+%\begin{figure}[htbp]
+% 	\centering
+% 	\includegraphics[width=1\textwidth]{regain.png}
+% 	\caption{Lift Chart for Retirement Models}
+% 	\label{fig:regain}
+% \end{figure}%
+
+Another perspective on the predictive effectiveness of the survival models is based on looking at lift and gains plots.  Figure \ref{fig:regainlift} compares the optimal retirement model, model 7 from Table \ref{tab:modelstats}, against the same model with the external variable Real Earnings added.  The gains plot on the left compares the ranked model fit probabilities (Depth of File) against the cumulative \% of positive response.  Ideally, if the model fits well, there will be a large proportion of retirees captured in the first percentiles.  For example, the figure indicates that the 25\% of employees predicted most likely to retire contain close to 75\% of retirees in the year 2011 and, furthermore, the top 50\% contain about 95\% of retirees in observed in that year.  The figure compares models with and without Real Earnings to a random ordering model.  The random ordering model plotted on  the diagonal is a worst case reference which essentially produces random predictions.  In this baseline case only 10\% retirees are gained for each  additional 10\% of employees included.  Results indicate that the model with Real Earnings included predicts well but is not as effective as the model without.  In either case, we find that the model does provide meaningful and accurate predictions of retirement propensity.
+
+Figure \ref{fig:relift2} provides another perspective indicating for a fixed sample percentage, how much "lift" or additional targets we find above the baseline percent observed in the sample. For example, suppose that 3\% of active employees retired in 2011. If we consider a sample of 10\% of employees with highest predicted probabilities from model 7, then the lift plot indicates that about 4 times as many retirees, or about 12\% of this sample will appear in this group. The model with an external variable performs slightly worse in the first decile identifying only 3 times as many retirees or about 9\% of the sample.  In either case, the model does a reasonable job predicting retirement probability at the individual level.  [Need to contrast individual predictions and group level.  A reference to the Applied Predictive Modelling, Kuhn \& Johnson 2013]
+
+Target 1000 we get 75\% of retiring employees.
+
+
+
+
+
+
+
+1) The gains and lift charts provide estimates of model quality.
+2) The gains shows that aggregate predicted model probabilities are reasonably consistent with actual probabilities so that aggregate predictions should be accurate.
+3) The lift chart indicates that the model is able to sort individuals that are more likely to retire in order.  For example, in model x, the top 5\% of model scores have 4.31 times as many retires as a random sample of the same size.  These lift figures are consistent across the first
+
+\begin{figure}[h!]
+	\centering
+	\subfloat[Cumulative Gain Chart]{\label{fig:regain2}\includegraphics[width=0.35\textwidth]{regain2.png}}
+	\subfloat[Cumulative Lift Chart]{\label{fig:relift2}\includegraphics[width=0.35\textwidth]{relift2.png}}
+	\caption{Retirement Models: Gain and Lift Charts of Predictive Efficiency for 2011 Holdout Data.}
+	\label{fig:regainlift}
+\end{figure}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Models for Voluntary Quitting without External Economic Variables}
+\subsection{Models for Voluntary Quitting without External Economic Variables} \label{VQ:woE}
 
 %I. dependent variable are YCSH, because age is not able to predict well. Why plot YCSH by vq and age by vq to describe why.
 %one employee quit with 67 years old and less than 85 points. all quit before 65 years.
@@ -1314,7 +1346,7 @@ Among all the models shown in Table \ref{tab:vqmodelstats}, model 3 with DIV, OC
 
 \begin{table}[htbp]
 	\scriptsize
-	\caption{Voluntary Quitting Models Statistics}
+	\caption{Model Assessment for Voluntary Quitting}
 	\renewcommand{\arraystretch}{1.5}
 	\renewcommand{\arraystretch}{1.5}
 	\begin{tabular}{C{0.5cm}L{2cm}L{2.5cm}llllllll}
@@ -1419,13 +1451,15 @@ The OC variable was another significant predictor. For analysis, the baseline le
 	\subfloat[Survival Function]{\label{fig:vqsurv}\includegraphics[width=0.5\textwidth]{VQSURV.png}}
 	\subfloat[Log of Cumulative Hazard]{\label{fig:vqcumh}\includegraphics[width=0.5\textwidth]{VQlogcumhaz.png}}
 	%\subfloat[Cumulative Hazard]{\label{fig:vqcum}\includegraphics[width=0.35\textwidth]{VQCUM.png}}
-	\caption{Voluntary Quitting Model Baselines with 95\% Confident Intervals}
+	\caption{Voluntary Quitting Model Baselines with 95\% Confidence Intervals}
 	\label{fig:vqbasepred}
 \end{figure}
 %In general, differences in quitting rates could be caused by differences in age demographics, leadership, departmental and job function, or departmental leadership.
 The baseline survival function and log hazard function for quitting are shown in Figure \ref{fig:vqbasepred}. The survival probability decreases steeply between 0 and 10 years of service. By 10 years of service at 10 the survival probability has decreased to close to 0.25, which indicates that 75\% of employees quit within the first 10 years of service.  The slope of survival function flattens to 0 from 10 to 30 years of service.  Accompanying the survival function is the log of the cumulative hazard ratio.  Again, the steep rise in the cumulative hazard between years of service at 0 to 10 indicates the increased quitting activity during this period.  After this the cumulative hazard levels off indicating a drop in the hazard rate at these future points.
 
-Predictive results appear in Table \ref{tab:cocscode} column 5 and 6. 
+Predictive results for voluntary quitting without external variables appear in columns 5 and 6 of Table \ref{tab:cocscode}.  The quitting volumes are much lower than retirements in general but average predictions are highly accurate for both training and holdout with the most sizeable deviation occurring for general administration under-predicting by 2.6 units on average.
+
+
 
 
 %\begin{figure}[h!]
@@ -1482,6 +1516,24 @@ Because voluntary quitting is more sensitive affected by macro economics, we fur
 We found one indicators are statistically significant and also improve the model forecasting due to lower MAPE and $G^2$ than the values of selected model without economic indicator, which is Real Dividend as shown in Table \ref{tab:vqEI}. According to the estimates of Table \ref{tab:EI}, Real dividend is the most important factor among all the indicators as it has lowest $G^2$ and MAPE. The test results show that it has strong impact on the quitting behaviors. As shown in Figure \ref{fig:vqrealdividend}, the fluctuation of voluntary quitting plot is corresponding with 1 year lag of the trend of Real dividend.
 
 
+Predictive results for voluntary quitting with external variables appear in columns 7 and 8 of Table \ref{tab:cocscode}.  The predictions closely match those of the voluntary quitting model that didn't include external variables discussed in Section \ref{VQ:woE} and indicating that, while the model seems highly effective, the presence of the external variables does not seem to provide a substantial improvement to the predictions.
+
+\begin{figure}[h!]
+ 	\centering
+ 	\subfloat[Cumulative Gain Chart]{\label{fig:vqgain2}\includegraphics[width=0.35\textwidth]{vqgain2.png}}
+ 	\subfloat[Cumulative Lift Chart]{\label{fig:vqlift2}\includegraphics[width=0.35\textwidth]{vqlift2.png}}
+  	\caption{Voluntary Quitting Models: Gain Chart and Lift Chart for 2011 Holdout}
+ 	\label{fig:vqgainlift}
+ \end{figure}
+
+
+As with the retirement models, lift and gains plots can also be used to assess the effectiveness of predictive models for quitting by using out of sample predictive accuracy.  Figure \ref{fig:vqgainlift} compares the optimal retirement model, model 3 from Table \ref{tab:vqmodelstats}, against the same model with the external variable Real Dividends added.  Gains and lift charts are interpreted as they were in the retirement case discussed in Section \ref{sec:rewExt}.  The gains figure indicates that both models with and without Real Dividends perform with similar predictive accuracy at the individual level indicating that including the external variable provides little practical impact to the model.  The number of employees quitting over the sample window is lower than observed for retirement and, given the information provided by the data, predicting quitting at the individual level is more difficult.
+
+After sorting predicted probabilities, we find among the 25\% of employees predicted most likely to quit in 2011 holdout sample, 50\% of actual quitting cases were observed. Furthermore, the top 50\% of predictions contain about 66.7\% of quitting cases, and the top 60\% contains close to 75\% of actual cases. Results indicate that the model with Real Dividends included predicts well but is not as effective as the model without.  In either case, we find that the model does provide predictions of quitting propensity that can be useful.
+
+%Figure \ref{fig:vqgain2}, the lift plot, shows that top 25\% of employees with high %predicted retiring probabilities contains around 50\% of quitters, top 50\% contains about %66.7\% quitters, top 60\% contains 75\% of quitters, and top 70\% contains 91\% quitters %in year 2011 for two models, compared to the baseline.
+
+Figure \ref{fig:vqlift2} provides estimates of lift.  It indicates that among the top 25\% of the file, model 3 captures twice as many of the actual quitting cases as a random sample of the same size.  The model including Real Dividends performs similarly.  Based upon this finding, we can be confident that the model provides a useful target group for human resource administrators, allowing them to modify and focus their retention strategy for maximum effect. It also identifies an enriched population for management researchers to study the reasons why workers decide to quit.
 
 %Another alternative eligibility criteria occurs when individuals exceed an age of 65 years and so we would anticipate the hazard increasing at this point in an employees career.  Because the response variable in our model is age, we cannot estimate the effect of this within the proportional hazards setting because the impact is included in the baseline hazard which should increase after this point; see Figure \ref{fig:basepred} (explain).  However, by including an interaction between the Age 65 and points 85 indicator, we can estimate how the impact of reaching 85 points diminishes beyond regular retirement age.  In this case, the interaction term is estimated at -1.61 leading to a decreasing effect of the 85 points criteria to $e^{1.44-1.61} = 0.84$ indicating that people that exceed both criteria actually have a reduced hazard of retiring over those have only met the Age 65 criteria.  In other words, the fact that the individual remains on the job after hitting either criteria indicates that the other criteria has less impact (or that they are intending to work longer).
 
@@ -1546,25 +1598,11 @@ We found one indicators are statistically significant and also improve the model
 
 Generally, we found that using the Cox proportional hazards model along with appropriately chosen internal and external variables led to accurate predictions of retirement.  In the training sample we found that prediction error as measured by MAPE was approximately 25\% while the predictions in the smaller 2 year holdout window were approximately 5\%.  Although this included only two validation points, these results indicate that the method has good potential
 
- \begin{figure}[htbp]
- 	\centering
- 	\includegraphics[width=1\textwidth]{regain.png}
- 	\caption{Gain Chart for Retirement Models}
- 	\label{fig:regain}
- \end{figure}%
- [LETS USE A GAINS CHART OR PRECISION RECALL OR SOMETHING].
 The key internal variables that improved model predictions include division, years of service at hire (YCSH), and age at hire (AGEH).  In addition, S\&P 500 real earnings also showed a significant association with risk of retirement although the magnitude at approximately 1.3\% was (greater or less) than other effects for small changes.  We also find that retirement hazard increases significantly when an individual hits 85 points of retirement credit and is eligible for full benefits but then reverts back to a lower hazard after age 65.  Furthermore, the early retirement incentive plan implemented by the organization in 2008 had a major impact with a large increase in the hazard of retirement, particularly for those that were eligible for full benefits with points exceeding 85.  In terms of prediction, in out-of-sample tests, taking into account individual and external information provides a significant improvement over more traditional forecasting methods \citet{feldman1994}.  It also provides useful predictions on subgroups that are not possible for standard forecasting models.
 
-Quitting behavior differed significantly by division, occupation, and age at start of service, which reflects both differences in worker satisfaction across the organization, and by job type. Age connects logically since, for a given number of years of service, the employee that starts earlier, will be younger and, therefore, may see a more significant long term opportunity in a new position elsewhere.  The 2008 early retirement incentive program was also correlated with a significant amount of quitting.  It is unclear if the higher hazard of quitting was directly due to disruptions, management or otherwise, caused by the accelerated retirements or was related somehow to the drastic economic changes during that time period.  In terms of predictive power, the quitting model performs well with MAPE in the training sample estimated at 15.16\% and 18.77\% in the holdout sample
- \begin{figure}[htbp]
- 	\centering
- 	\includegraphics[width=1\textwidth]{vqgain.png}
- 	\caption{Gain Chart for voluntary quitting Models}
- 	\label{fig:vqgain}
- \end{figure}%[
-%[GAINS CHART HERE ALSO].
+Quitting behavior differed significantly by division, occupation, and age at start of service, which reflects both differences in worker satisfaction across the organization, and by job type. Age connects logically since, for a given number of years of service, the employee that starts earlier, will be younger and, therefore, may see a more significant long term opportunity in a new position elsewhere.  The 2008 early retirement incentive program was also correlated with a significant amount of quitting.  It is unclear if the higher hazard of quitting was directly due to disruptions, management or otherwise, caused by the accelerated retirements or was related somehow to the drastic economic changes during that time period.  In terms of predictive power, the quitting model performs well with MAPE in the training sample estimated at 15.16\% and 18.77\% in the holdout sample.
+ %[GAINS CHART HERE ALSO].
 Both estimates are far superior to traditional forecasting techniques.  As with retirement, external information in the form of S\&P real corporate dividends were positively correlated with quitting indicating that as profits at large private sector companies increase, the hazard of quitting rises significantly.
-
 
 Drawing on this list of findings, this work provides a number of valuable managerial implications.  Foremost, this work shows that fairly accurate survival model based retirement prediction is feasible in large organizations when defined benefit plans are in place.  These models are accurate enough to provide useful predictive visibility for human resources management professionals.  Such models are of particular value when a large portion of the workforce has specialized skills that require an extensive search process to replace or if the organization requires long lead times in the hiring process due to security or other concerns.  The model also provides guidance as to expected retirement and quitting behavior across subgroups of the organization. Significant deviations from these expectations, particularly  in terms of  abnormal quitting behavior, may indicate the need for management intervention.  Finally, such models can alert managers to key external factors that may indicate increases in retirement or quitting behavior.  The use of lagged variables may allow management to craft incentive policies in response to changes in the external economy.
 
